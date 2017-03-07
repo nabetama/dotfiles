@@ -1,0 +1,34 @@
+# aliases.
+# General
+alias ls='ls -FG'
+alias ll='ls -tlrh'
+alias l='ll'
+alias la='ls -tlra'
+alias c='clear'
+alias h='history'
+alias ctags='/usr/local/bin/ctags'
+alias diff='colordiff'
+
+# git, github
+alias gc="git checkout"
+alias gcb="git checkout -b"
+alias glog="git log -n 30 --oneline --reverse"
+alias gdiff='git diff --color=auto'
+
+# python REPL
+alias p="ptpython"
+alias bp="bpython"
+
+# dstat
+alias dstat-full='dstat -Tclmdrn'
+alias dstat-mem='dstat -Tclm'
+alias dstat-cpu='dstat -Tclr'
+alias dstat-net='dstat -Tclnd'
+alias dstat-disk='dstat -Tcldr'
+
+# applications
+alias vscode='code'
+
+# godoc
+alias godocs='godoc -http ":6060" -analysis type'
+

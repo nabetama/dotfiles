@@ -1,0 +1,102 @@
+# .zshrc
+
+# completion
+# 補完. インストール時のfunctionsをつかう
+fpath=(/usr/local/share/zsh/functions ${fpath})
+autoload -U compinit && compinit
+
+# Asking
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:descriptions' format '%B%d%b'
+zstyle ':completion:*:default' menu select=1
+
+# Completion candidate displayed compactly
+# 補完候補コンパクトに表示
+setopt list_packed
+
+# Color a file completion candidate
+# ファイル補完候補に色を付ける
+zstyle ':completion:*' list-colorsP
+
+# ------------------------------------
+# Command History
+# ------------------------------------
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+
+# Exclude duplicate history
+# 重複した履歴は除く
+setopt hist_ignore_dups
+
+# Share command input history with other tabs, consoles and other windows
+# コンソールの他のタブや、他のウィンドウとコマンド入力履歴を共有
+setopt share_history
+
+# Activate history completion on input.
+# 入力途中の履歴補完を有効化する
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end
+
+# ------------------------------------
+# emacs keybind
+# ------------------------------------
+bindkey -e
+
+# ------------------------------------
+# cd
+# ------------------------------------
+setopt auto_pushd
+# that you can get dirs list by cd -[tab]
+setopt auto_cd
+
+# ------------------------------------
+# Corrected if the entered command name is incorrect
+# 入力コマンドが間違ってたら修正してくれる
+# ------------------------------------
+setopt correct
+
+
+# ------------------------------------
+# Prompt
+# ------------------------------------
+# Execute variable expansion / command substitution / arithmetic operation
+# 変数展開・コマンド置換・算術演算を実行する。
+setopt prompt_subst
+# Enable replacement function starting with "%"
+# 「%」文字から始まる置換機能を有効にする。
+setopt prompt_percent
+# To make it easy to copy, delete the right prompt after executing the command
+# コピペしやすいようにコマンド実行後は右プロンプトを消す。
+setopt transient_rprompt
+
+# vcs(mainly git)
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' formats '[%b]'
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+
+_vcs_precmd () { vcs_info }
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _vcs_precmd 
+PROMPT='%~ %F{yellow}${vcs_info_msg_0_}%f'
+RPROMPT=''
+
+# Displayed in prompt when temporarily leaving vim
+[[ -n "$VIMRUNTIME" ]] && \
+  PROMPT="%{${bg[black]}${fg[green]}%}(vim)%{${reset_color}%} $PROMPT"
+
+# ------------------------------------
+# Read settings
+# ------------------------------------
+[ -f ~/.dotfiles/zsh/global    ] && source ~/.dotfiles/zsh/global
+[ -f ~/.dotfiles/zsh/alias     ] && source ~/.dotfiles/zsh/alias
+[ -f ~/.dotfiles/zsh/functions ] && source ~/.dotfiles/zsh/functions
+[ -f ~/.dotfiles/zsh/helper/http_status ] && source ~/.dotfiles/zsh/helper/http_status
+
+# ------------------------------------
+# Read local settings
+# ------------------------------------
+[ -f ~/.localrc ] && source ~/.localrc
