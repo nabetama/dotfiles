@@ -25,72 +25,72 @@ brew tap caskroom/fonts
 
 # Packages
 packages=(
-    # GNU core utilities (those that come with OS X are outdated)
-    coreutils
+  # GNU core utilities (those that come with OS X are outdated)
+  coreutils
 
-    # GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
-    findutils
+  # GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
+  findutils
 
-    # recent versions of some OS X tools
-    homebrew/dupes/grep
-    apple-gcc42
+  # recent versions of some OS X tools
+  homebrew/dupes/grep
+  apple-gcc42
 
-    # Shell
-    zsh
-    bash
+  # Shell
+  zsh
+  bash
 
-    # Tmux
-    tmux
-    reattach-to-user-namespace 
+  # Tmux
+  tmux
+  reattach-to-user-namespace 
 
-    # Git
-    git
-    hub 
-    tig
+  # Git
+  git
+  hub 
+  tig
 
-    # Emcas
-    cask
+  # Emcas
+  cask
 
-    # Image
-    imagemagick
+  # Image
+  imagemagick
 
-    #font
-    ricty
+  #font
+  ricty
 
-    # Utils
-    ag
-    autoconf
-    automake
-    curl
-    direnv
-    glide
-    libyaml
-    markdown
-    nkf
-    openssl
-    peco
-    proctools
-    readline
-    rmtrash
-    tree
-    wget
+  # Utils
+  ag
+  autoconf
+  automake
+  curl
+  direnv
+  glide
+  libyaml
+  markdown
+  nkf
+  openssl
+  peco
+  proctools
+  readline
+  rmtrash
+  tree
+  wget
 
 
-    # Languages
-    pyenv
-    rbenv
-    ruby-build
+  # Languages
+  pyenv
+  rbenv
+  ruby-build
 )
 echo "installing binaries..."
 brew install ${packages[@]} && brew cleanup
 
 # fonts
 fonts=(
-    font-m-plus
-    font-source-code-pro
-    font-clear-sans
-    font-roboto
-    font-go
+  font-m-plus
+  font-source-code-pro
+  font-clear-sans
+  font-roboto
+  font-go
 )
 # install fonts
 echo "installing fonts..."
