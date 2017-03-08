@@ -75,6 +75,9 @@ packages=(
   tree
   wget
 
+  # golang, delve
+  # see: https://github.com/derekparker/delve/blob/master/Documentation/installation/osx/install.md
+  go-delve/delve/delve
 
   # Languages
   pyenv
