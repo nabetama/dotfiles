@@ -1,5 +1,10 @@
 # dotfiles
 
+## TODO
+
+bootstrap.sh内で `$HOME/.<filename>`を作っていくところをどうするか
+
+
 ## Setup
 
 Run this
