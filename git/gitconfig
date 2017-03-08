@@ -1,0 +1,58 @@
+[include]
+  path = ~/.gitconfig.local
+
+[user]
+  name = nabetama
+  email = mao.nabeta@gmail.com
+
+[credential]
+  helper = osxkeychain          
+
+[color]
+  branch = auto
+  diff = auto
+  grep = auto
+  interactive = auto
+  status = auto
+  ui = auto
+
+[core]
+  editor = vim
+  precomposeunicode = true
+
+[merge]
+  ff = false
+  conflictstyle = diff3 
+
+[pull]
+  rebase = true
+
+[push]
+  default = simple
+
+[grep]
+  lineNumber = true
+
+[diff]
+  algorithm = patience
+
+[ghq]
+  root = ~/src
+
+[blame]
+  date = relative
+
+[alias]
+  delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
+  unstage = reset -q HEAD --
+
+  co  = checkout
+  cb  = checkout -b
+  develop = checkout develop
+  feature = checkout feature
+  master = checkout master
+
+[ghq "alias"]
+    g = get
+    l = look
+    ls = list
