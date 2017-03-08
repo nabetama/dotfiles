@@ -75,6 +75,8 @@ packages=(
   tree
   wget
 
+  # golang, delve
+  go-delve/delve/delve
 
   # Languages
   pyenv
