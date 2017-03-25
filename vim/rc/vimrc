@@ -36,7 +36,7 @@ let s:toml      = '~/.vim/rc/dein.toml'
 let s:toml_lazy = '~/.vim/rc/deinlazy.toml'
 
 " Cache TOML.
-if dein#load_cache([expand('<sfile>'), s:toml, s:toml_lazy])
+if dein#load_state([expand('<sfile>'), s:toml, s:toml_lazy])
   call dein#load_toml(s:toml,      {'lazy': 0})
   call dein#load_toml(s:toml_lazy, {'lazy': 1})
   call dein#save_cache()
