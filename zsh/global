@@ -54,6 +54,4 @@ pyenv shell 2.7.11
 for f (~/.dotfiles/peco/*.zsh) source "${f}"
 bindkey '^r' peco-select-history
 bindkey '^j' peco-ghq
-bindkey '^B' peco-git-branch-checkout
-
-
+bindkey '^g' peco-git-branch-checkout
