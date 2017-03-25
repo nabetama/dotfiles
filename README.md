@@ -2,7 +2,7 @@
 
 ## TODO
 
-bootstrap.sh内で `$HOME/.<filename>`を作っていくところをどうするか
+vim周りのbug fix
 
 
 ## Setup
