@@ -102,7 +102,7 @@ RPROMPT=''
 for f (~/.dotfiles/peco/*.zsh) source "${f}"
 bindkey '^r' peco-select-history
 bindkey '^]' peco-ghq
-bindkey '^b' peco-git-branch-checkout
+bindkey '^B' peco-git-branch-checkout
 
 # ------------------------------------
 # Read local settings
