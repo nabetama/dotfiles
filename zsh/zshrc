@@ -97,14 +97,6 @@ RPROMPT=''
 [ -f ~/.dotfiles/zsh/helper/http_status ] && source ~/.dotfiles/zsh/helper/http_status
 
 # ------------------------------------
-# Peco
-# ------------------------------------
-for f (~/.dotfiles/peco/*.zsh) source "${f}"
-bindkey '^r' peco-select-history
-bindkey '^]' peco-ghq
-bindkey '^B' peco-git-branch-checkout
-
-# ------------------------------------
 # Read local settings
 # ------------------------------------
 [ -f ~/.localrc ] && source ~/.localrc
