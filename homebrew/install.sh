@@ -45,17 +45,11 @@ packages=(
 
   # Git
   git
-  hub 
+  hub
   tig
-
-  # Emcas
-  cask
 
   # Image
   imagemagick
-
-  #font
-  ricty
 
   # Utils
   ag
