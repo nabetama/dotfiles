@@ -1,3 +1,10 @@
+"---------------------------------------------------------------------------
+" nabetama's .vimrc
+"---------------------------------------------------------------------------
+
+"---------------------------------------------------------------------------
+" profile file ~/.vim/rc/*
+
 if &compatible
   set nocompatible
 endif
@@ -17,7 +24,7 @@ function! s:source_rc(path, ...) abort "{{{
   let tempfile = tempname()
   try
     call writefile(content, tempfile)
-    execute printf('source %s', fnameescape(tempfile))
+    execute 'source' fnameescape(tempfile)
   finally
     if filereadable(tempfile)
       call delete(tempfile)
@@ -25,64 +32,15 @@ function! s:source_rc(path, ...) abort "{{{
   endtry
 endfunction"}}}
 
-let s:dein_dir = expand('~/.cache/dein')
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+" Set augroup.
+augroup MyAutoCmd
+  autocmd!
+  autocmd FileType,Syntax,BufNewFile,BufNew,BufRead *?
+        \ call vimrc#on_filetype()
+  autocmd CursorHold *.toml syntax sync minlines=300
+augroup END
 
-call s:source_rc('init.rc.vim')
-
-call dein#begin(s:dein_dir)
-
-let s:toml      = '~/.vim/rc/dein.toml'
-let s:toml_lazy = '~/.vim/rc/deinlazy.toml'
-
-" Cache TOML.
-if dein#load_state([expand('<sfile>'), s:toml, s:toml_lazy])
-  call dein#load_toml(s:toml,      {'lazy': 0})
-  call dein#load_toml(s:toml_lazy, {'lazy': 1})
-  call dein#save_cache()
+if has('vim_starting')
+  call s:source_rc('init.rc.vim')
 endif
 
-call s:source_rc('plugins.rc.vim')
-
-call dein#end()
-
-if dein#check_install()
-  call dein#install()
-endif
-
-"---------------------------------------------------------------------------
-" Encoding:
-"
-call s:source_rc('encoding.rc.vim')
-
-"---------------------------------------------------------------------------
-" Search:
-set ignorecase
-set smartcase
-set incsearch
-set nohlsearch
-set wrapscan
-
-"---------------------------------------------------------------------------
-" Edit:
-"
-call s:source_rc('edit.rc.vim')
-
-"---------------------------------------------------------------------------
-" View:
-"
-call s:source_rc('view.rc.vim')
-
-"---------------------------------------------------------------------------
-" FileType:
-"
-call s:source_rc('filetype.rc.vim')
-
-"---------------------------------------------------------------------------
-" Mappings:
-"
-
-call s:source_rc('mappings.rc.vim')
-colorscheme badwolf
-
-set secure
