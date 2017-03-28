@@ -1,9 +1,9 @@
 # dotfiles
 
-## TODO
+# TODO
 
-vim周りのbug fix
-
+- vim周りの設定が出来てない
+    - dein.vimの関数がかなり古くなってるのでそのへんをよく読む。
 
 ## Setup
 
