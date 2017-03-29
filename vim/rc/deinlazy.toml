@@ -51,7 +51,7 @@ hook_source = 'source ~/.vim/rc/plugins/unite.rc.vim'
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 on_cmd = 'Denite'
-hook_[source = 'source ~/.vim/rc/plugins/denite.rc.vim'
+hook_source = 'source ~/.vim/rc/plugins/denite.rc.vim'
 
 
 [[plugins]]
