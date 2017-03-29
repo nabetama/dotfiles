@@ -2,17 +2,16 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'Shougo/vimproc.vim'
-
-  [plugins.build]
-  windows = 'tools\\update-dll-mingw'
-  cygwin  = 'make -f make_cygwin.mak'
-  mac     = 'make -f make_mac.mak'
-  linux   = 'make'
-  unix    = 'gmake'
+repo = 'hail2u/vim-css3-syntax'
 
 [[plugins]]
-repo = 'Shougo/unite.vim'
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'elzr/vim-json'
+
+[[plugins]]
+repo = 'vim-jp/autofmt'
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
@@ -21,63 +20,19 @@ repo = 'tpope/vim-fugitive'
 repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
-repo = 'mxw/vim-jsx'
-on_ft = 'javascript'
+repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
-repo = 'jiangmiao/simple-javascript-indenter'
-on_ft = 'javascript'
+repo = 'osyo-manga/unite-vimpatches'
 
 [[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = 'toml'
+repo = 'mattn/webapi-vim'
 
 [[plugins]]
-repo = 'elzr/vim-json'
-on_ft = 'json'
+repo = 'vim-jp/vimdoc-ja'
 
 [[plugins]]
-repo = 'vim-jp/autofmt'
-
-[[plugins]]
-repo = 'hynek/vim-python-pep8-indent'
-on_ft = 'python'
-
-[[plugins]]
-repo  = 'mattn/emmet-vim'
-on_ft = ['html', 'htmldjango', 'jinja', 'j2', 'smarty']
-
-# Operators
-
-[[plugins]]
-repo = 'rcmdnk/vim-markdown'
-on_ft = ['markdown', 'mkd']
-
-[[plugins]]
-repo = 'marijnh/tern_for_vim'
-on_ft = 'javascript'
-build = 'npm install'
-
-[[plugins]]
-repo = 'vim-ruby/vim-ruby'
-on_map = '<Plug>'
-on_ft = 'ruby'
-
-[[plugins]]
-repo = 'Shougo/unite-build'
-
-[[plugins]]
-repo = 'Shougo/unite-help'
-on_source = 'unite.vim'
-
-[[plugins]]
-repo = 'jelera/vim-javascript-syntax'
-on_ft = 'javascript'
-
-[[plugins]]
-repo = 'nsf/gocode'
-rtp = 'vim'
-on_ft = 'go'
+repo = 'tsukkee/unite-tag'
 
 [[plugins]]
 repo = 'Yggdroot/indentLine'
@@ -100,10 +55,6 @@ repo = 'rking/ag.vim'
 # Colorscheme
 [[plugins]]
 repo = 'itchyny/landscape.vim'
-repo = 'KKPMW/moonshine-vim'
-
 [[plugins]]
 repo = 'nabetama/badwolf'
 
-[[plugins]]
-repo = 'atelierbram/vim-colors_duotones'

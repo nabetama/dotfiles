@@ -2,19 +2,19 @@
 " Key-mappings:
 "
 
-" Use <C-Space>.
-nmap <C-Space>  <C-@>
-cmap <C-Space>  <C-@>
-
 " Visual mode keymappings: "{{{
-" <TAB>: indent.
-xnoremap <TAB>  >
-" <S-TAB>: unindent.
-xnoremap <S-TAB>  <
-" }}}
+" Indent
+nnoremap > >>
+nnoremap < <<
+xnoremap > >gv
+xnoremap < <gv
 
+if (!has('nvim') || $DISPLAY != '') && has('clipboard')
+  xnoremap <silent> y "*y:let [@+,@"]=[@*,@*]<CR>
+endif
+"}}}
 
-" Command-line mode keymappings:"{{{
+" Command-line mode keymappings like emacs:"{{{
 " <C-a>, A: move to head.
 cnoremap <C-a>          <Home>
 " <C-b>: previous char.
@@ -29,69 +29,127 @@ cnoremap <C-f>          <Right>
 cnoremap <C-n>          <Down>
 " <C-p>: previous history.
 cnoremap <C-p>          <Up>
-" <C-k>, K: delete to end.
-cnoremap <C-k> <C-\>e getcmdpos() == 1 ?
-      \ '' : getcmdline()[:getcmdpos()-2]<CR>
 " <C-y>: paste.
 cnoremap <C-y>          <C-r>*
 " <C-g>: Exit.
 cnoremap <C-g>          <C-c>
 "}}}
 
+" [Space]: Other useful commands "{{{
+" Smart space mapping.
+nmap  <Space>   [Space]
+nnoremap  [Space]   <Nop>
+
+" Set autoread.
+nnoremap [Space]ar
+      \ :<C-u>call vimrc#toggle_option('autoread')<CR>
+" Set spell check.
+nnoremap [Space]p
+      \ :<C-u>call vimrc#toggle_option('spell')<CR>
+      \: set spelllang=en_us<CR>
+      \: set spelllang+=cjk<CR>
+nnoremap [Space]w
+      \ :<C-u>call vimrc#toggle_option('wrap')<CR>
+
+" Easily edit .vimrc
+nnoremap <silent> [Space]ev  :<C-u>edit $MYVIMRC<CR>
+
+" s: Windows and buffers(High priority) "{{{
+" The prefix key.
+nnoremap    [Window]   <Nop>
+nmap    s [Window]
+nnoremap <silent> [Window]p  :<C-u>vsplit<CR>:wincmd w<CR>
+nnoremap <silent> [Window]o  :<C-u>only<CR>
+nnoremap <silent> <Tab>      :wincmd w<CR>
+nnoremap <silent><expr> q winnr('$') != 1 ? ':<C-u>close<CR>' : ""
+"}}}
+
+" e: Change basic commands "{{{
+" The prefix key.
+nnoremap [Alt]   <Nop>
+nmap    S  [Alt]
+
+" Indent paste.
+nnoremap <silent> [Alt]p o<Esc>pm``[=`]``^
+nnoremap <silent> [Alt]P O<Esc>Pm``[=`]``^
+"}}}
+
+" Better x
+nnoremap x "_x
+
+" Disable Ex-mode.
+nnoremap Q  q
+
+" Useless command.
+nnoremap M  m
+
+" Smart <C-f>, <C-b>.
+noremap <expr> <C-f> max([winheight(0) - 2, 1])
+      \ . "\<C-d>" . (line('w$') >= line('$') ? "L" : "M")
+noremap <expr> <C-b> max([winheight(0) - 2, 1])
+      \ . "\<C-u>" . (line('w0') <= 1 ? "H" : "M")
+
 " Disable ZZ.
 nnoremap ZZ  <Nop>
 
-" easy escape. "{{{
-inoremap jj <ESC>
-inoremap jf <ESC>
+" Select rectangle.
+xnoremap r <C-v>
+
+" Redraw.
+nnoremap <silent> <C-l>    :<C-u>redraw!<CR>
+
+" If press l on fold, fold open.
+nnoremap <expr> l foldclosed(line('.')) != -1 ? 'zo0' : 'l'
+" If press l on fold, range fold open.
+xnoremap <expr> l foldclosed(line('.')) != -1 ? 'zogv0' : 'l'
+
+" Substitute.
+xnoremap s :s//g<Left><Left>
+
+" Sticky shift in English keyboard."{{{
+" Sticky key.
+inoremap <expr> ;  vimrc#sticky_func()
+cnoremap <expr> ;  vimrc#sticky_func()
+snoremap <expr> ;  vimrc#sticky_func()
 "}}}
 
-" goto last edited point. {{{
-nnoremap ;l '.
-" }}}
+" Easy escape."{{{
+inoremap jj           <ESC>
+cnoremap <expr> j
+      \ getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
 
-" tabで対応ペアにジャンプ {{{
-nnoremap <Tab> %
-vnoremap <Tab> %
-" }}}
+inoremap j<Space>     j
+"}}}
 
-" fold {{{
-set foldmethod=marker
-nmap <silent> ,fc :<C-U>%foldclose<CR>
-nmap <silent> ,fo :<C-U>%foldopen<CR>
-nmap <silent> ,fO ,zR<CR>
-" }}}
+" a>, i], etc... "{{{
+" <angle>
+onoremap aa  a>
+xnoremap aa  a>
+onoremap ia  i>
+xnoremap ia  i>
 
-" Tab settings {{{
-nnoremap    [Tag]   <Nop>
-nmap    t [Tag]
-" Tab jump
-for s:n in range(1, 9)
-  execute 'nnoremap <silent> [Tag]'.s:n  ':<C-u>tabnext'.s:n.'<CR>'
-endfor
-" t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
+" [rectangle]
+onoremap ar  a]
+xnoremap ar  a]
+onoremap ir  i]
+xnoremap ir  i]
+"}}}
 
-map <silent> [Tag]c :tablast <bar> tabnew<CR>
-" tc 新しいタブを一番右に作る
-map <silent> [Tag]x :tabclose<CR>
-" tx タブを閉じる
-map <silent> [Tag]n :tabnext<CR>
-" tn 次のタブ
-map <silent> [Tag]p :tabprevious<CR>
-" tp 前のタブ
-" }}}
+" Improved increment.
+nmap <C-a> <SID>(increment)
+nmap <C-x> <SID>(decrement)
+nnoremap <silent> <SID>(increment)    :AddNumbers 1<CR>
+nnoremap <silent> <SID>(decrement)   :AddNumbers -1<CR>
+command! -range -nargs=1 AddNumbers
+      \ call vimrc#add_numbers((<line2>-<line1>+1) * eval(<args>))
 
-" quickhighlight {{{
-nmap <Leader>m <Plug>(quickhl-manual-this)
-xmap <Leader>m <Plug>(quickhl-manual-this)
-nmap <Leader>M <Plug>(quickhl-manual-reset)
-xmap <Leader>M <Plug>(quickhl-manual-reset)
-" }}}
+" nnoremap <silent> #    <C-^>
+nnoremap ;;     ;
 
-" QuickRun {{{
-nnoremap <Space>q :QuickRun <Enter>
-" }}}
+" Change current word and repeatable
+nnoremap cn *``cgn
+nnoremap cN *``cgN
 
-" Show full path of file {{{
-nnoremap <Leader>fp :echo expand("%:p")<CR>
-" }}}
+" Change selected word and repeatable
+vnoremap <expr> cn "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgn"
+vnoremap <expr> cN "y/\\V\<C-r>=escape(@\", '/')\<CR>\<CR>" . "``cgN"

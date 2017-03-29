@@ -22,9 +22,13 @@ brew tap homebrew/versions
 brew tap homebrew/binary
 brew tap thoughtbot/formulae
 brew tap caskroom/fonts
+brew tap neovim/neovim
 
 # Packages
 packages=(
+  # editor
+  neovim/neovim/neovim
+
   # GNU core utilities (those that come with OS X are outdated)
   coreutils
 
