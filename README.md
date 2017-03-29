@@ -2,8 +2,8 @@
 
 # TODO
 
-- vim周りの設定が出来てない
-    - dein.vimの関数がかなり古くなってるのでそのへんをよく読む。
+- more improve to use dein.vim
+    - Key Mapping
 
 ## Setup
 
