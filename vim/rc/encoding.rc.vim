@@ -3,4 +3,4 @@
 "
 
 " Default
-set filefmrmat=unix
+set fileformat=unix
