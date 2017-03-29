@@ -53,4 +53,3 @@ call denite#custom#var('menu', 'menus', s:menus)
 call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
       \ [ '.git/', '.ropeproject/', '__pycache__/',
       \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
-
