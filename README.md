@@ -4,6 +4,8 @@
 
 - more improve to use dein.vim
     - Key Mapping
+- setting VSCode
+    - Snippets, User settings and more...
 
 ## Setup
 
