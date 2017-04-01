@@ -17,6 +17,7 @@ end
 
 cleans = [
           ".vim",
+          ".config",
           ".zshrc",
           ".tigrc",
           ".tmux.conf",
@@ -30,6 +31,7 @@ CLEAN.concat(cleans.map{|c| File.join(HOME,c)})
 task :default => :setup
 task :setup => [
               "vim:link",
+              "nvim:link",
               "git:link",
               "tig:link",
               "tmux:link",
@@ -40,13 +42,26 @@ task :setup => [
 namespace :vim do
   desc "Create symbolic link to HOME"
   task :link do
-    
+
     # If .vim is already exist, backup it
     if File.exist?(File.join(HOME, ".vim")) && !File.symlink?(File.join(HOME, ".vim")) 
       mv File.join(HOME, ".vim"), File.join(HOME, ".vim.org")
     end
-    
+
     symlink_ File.join(PWD, "vim"), File.join(HOME,".vim")
+  end
+end
+
+namespace :nvim do
+  desc "Create symbolic link to HOME"
+  task :link do
+
+    # If .vim is already exist, backup it
+    if File.exist?(File.join(HOME, ".config")) && !File.symlink?(File.join(HOME, ".config")) 
+      mv File.join(HOME, ".config"), File.join(HOME, ".config.org")
+    end
+
+    symlink_ File.join(PWD, "config"), File.join(HOME,".config")
   end
 end
 
