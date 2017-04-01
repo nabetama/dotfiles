@@ -81,6 +81,7 @@ packages=(
   pyenv
   rbenv
   ruby-build
+  lua
 )
 echo "installing binaries..."
 brew install ${packages[@]} && brew cleanup
