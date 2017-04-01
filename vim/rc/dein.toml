@@ -61,6 +61,4 @@ repo = 'rking/ag.vim'
 # Colorscheme
 [[plugins]]
 repo = 'itchyny/landscape.vim'
-[[plugins]]
-repo = 'nabetama/badwolf'
 
