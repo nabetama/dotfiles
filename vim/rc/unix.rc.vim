@@ -60,4 +60,4 @@ endif
 set mouse=
 
 " Colorscheme
-colorscheme default
+colorscheme landscape
