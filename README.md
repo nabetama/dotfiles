@@ -2,8 +2,9 @@
 
 # TODO
 
-- more improve to use dein.vim
-    - Key Mapping
+- Vim
+    - key mapping
+    - gitgutter
 - setting VSCode
     - Snippets, User settings and more...
 
