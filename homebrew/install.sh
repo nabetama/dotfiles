@@ -78,10 +78,18 @@ packages=(
   go-delve/delve/delve
 
   # Languages
+  ## python
   pyenv
+
+  ## ruby
   rbenv
   ruby-build
+
+  ## lua(for vim)
   lua
+
+  ## javaScript
+  yarn
 )
 echo "installing binaries..."
 brew install ${packages[@]} && brew cleanup
