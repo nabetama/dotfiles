@@ -91,6 +91,9 @@ packages=(
 
   ## javaScript
   yarn
+
+  ## php
+  brew-php-switcher
 )
 echo "installing binaries..."
 brew install ${packages[@]} && brew cleanup
