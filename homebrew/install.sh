@@ -20,6 +20,7 @@ fi
 brew tap homebrew/dupes
 brew tap homebrew/versions
 brew tap homebrew/binary
+brew tap homebrew/homebrew-php
 brew tap thoughtbot/formulae
 brew tap caskroom/fonts
 brew tap neovim/neovim
