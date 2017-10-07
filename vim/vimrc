@@ -6,6 +6,14 @@ call plug#begin('~/.vim/plugged')
 " example
 " Plug 'junegunn/vim-easy-align'
 
+" Go
+Plug 'fatih/vim-go'
+
 " Initialize plugin system
 call plug#end()
 
+" load other settings
+" Keymapping
+execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/keymapping.rc.vim'
+
+" 
