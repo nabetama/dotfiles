@@ -22,7 +22,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'nixprime/cpsm'
 
 " Go
-Plug 'fatih/vim-go', {'for': 'go'}
+Plug 'fatih/vim-go', {'for': 'go', 'do': 'GoInstallBinaries'}
 
 " JavaScript
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}	" syntax highlighting
@@ -39,10 +39,10 @@ call plug#end()
 " ============================================================================
 " load other settings
 " ============================================================================
+" initialize
+execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/init.rc.vim'
 " plugin settings
 execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/plugins.rc.vim'
-" default
-execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/looks.rc.vim'
 " Keymapping
 execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/keymapping.rc.vim'
 "  
