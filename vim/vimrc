@@ -9,11 +9,13 @@ call plug#begin('~/.vim/plugged')
 " example
 " Plug 'junegunn/vim-easy-align'
 
+" =====
 " ctrlp
 Plug 'kien/ctrlp.vim'
 " matcher for ctrlp
 Plug 'nixprime/cpsm'
 
+" ====
 " Go
 Plug 'fatih/vim-go'
 
