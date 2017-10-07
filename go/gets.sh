@@ -20,6 +20,9 @@ PKGS=(
     github.com/tools/godep
     github.com/motemen/gore
     github.com/tcnksm/ghr
+
+    # ctrlp file searcher
+    github.com/mattn/files
 )
 
 for pkg in ${PKGS[@]}

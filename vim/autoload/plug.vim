@@ -1,0 +1,1 @@
+../modules/github.com/junegunn/vim-plug/plug.vim

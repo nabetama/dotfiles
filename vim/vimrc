@@ -1,5 +1,48 @@
-" profile file ~/.vim/rc/*
-if 1
-  execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/vimrc'
-endif
+" ============================================================================
+" vim-plug
+" ============================================================================
+" Specify a directory for plugins
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
 
+" Make sure you use single quotes
+" example
+" Plug 'junegunn/vim-easy-align'
+
+" looks
+Plug 'Yggdroot/indentLine'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" grep tool
+Plug 'rking/ag.vim'
+
+" ctrlp
+Plug 'kien/ctrlp.vim'
+Plug 'nixprime/cpsm'
+
+" Go
+Plug 'fatih/vim-go', {'for': 'go', 'do': 'GoInstallBinaries'}
+
+" JavaScript
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}	" syntax highlighting
+Plug 'mxw/vim-jsx'					" syntax highlighting
+Plug 'w0rp/ale'						" Syntax checking
+Plug 'skywind3000/asyncrun.vim'				" for auto formatt
+
+" HTML/JSX
+Plug 'mattn/emmet-vim'
+
+" Initialize plugin system
+call plug#end()
+
+" ============================================================================
+" load other settings
+" ============================================================================
+" initialize
+execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/init.rc.vim'
+" plugin settings
+execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/plugins.rc.vim'
+" Keymapping
+execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/keymapping.rc.vim'
+"  
