@@ -9,15 +9,29 @@ call plug#begin('~/.vim/plugged')
 " example
 " Plug 'junegunn/vim-easy-align'
 
-" =====
+" looks
+Plug 'Yggdroot/indentLine'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" grep tool
+Plug 'rking/ag.vim'
+
 " ctrlp
 Plug 'kien/ctrlp.vim'
-" matcher for ctrlp
 Plug 'nixprime/cpsm'
 
-" ====
 " Go
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', {'for': 'go'}
+
+" JavaScript
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}	" syntax highlighting
+Plug 'mxw/vim-jsx'					" syntax highlighting
+Plug 'w0rp/ale'						" Syntax checking
+Plug 'skywind3000/asyncrun.vim'				" for auto formatt
+
+" HTML/JSX
+Plug 'mattn/emmet-vim'
 
 " Initialize plugin system
 call plug#end()
