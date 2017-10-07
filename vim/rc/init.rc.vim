@@ -2,7 +2,6 @@
 " init.rc.vim
 " =====================================================================
 "
-" =========
 " vim looks
 " Show line number
 set number
@@ -81,4 +80,7 @@ set display=lastline
 " conceal level
 set conceallevel=2 concealcursor=niv
 set colorcolumn=99
+
+" update time
+set updatetime=250
 
