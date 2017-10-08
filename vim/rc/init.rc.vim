@@ -84,3 +84,5 @@ set colorcolumn=99
 " update time
 set updatetime=250
 
+" incremental search
+set incsearch
