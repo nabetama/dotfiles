@@ -1,88 +1,88 @@
 " =====================================================================
 " init.rc.vim
 " =====================================================================
-"
-" vim looks
-" Show line number
-set number
-" show tab, list
-set list
-set listchars=tab:▸\ ,trail:-,extends:»,precedes:«,nbsp:%
-" Always display statusline
-set laststatus=2
-" Height of command line.
-set cmdheight=2
-" Not show command on statusline.
-set noshowcmd
-" Show title.
-set title
-" Title length.
-set titlelen=95
-" Disable tabline.
-set showtabline=0
+" ----------------------------------------------
+"  General settings
+" ----------------------------------------------
+set autoindent                    " take indent for new line from previous line
+set smartindent                   " enable smart indentation
+set autoread                      " reload file if the file changes on the disk
+set autowrite                     " write when switching buffers
+set autowriteall                  " write on :quit
+" set clipboard=unnamedplus " TODO:
+set colorcolumn=101               " highlight the 80th column as an indicator
+set completeopt-=preview          " remove the horrendous preview window
+set encoding=utf-8
+set expandtab                     " expands tabs to spaces
+set list                          " show trailing whitespace
+set listchars=tab:\|\ ,trail:▫
+set nospell                       " disable spelling
+set noswapfile                    " disable swapfile usage
+set nowrap
+set noerrorbells                  " No bells!
+set novisualbell                  " I said, no bells!
+set number                        " show number ruler
+set ruler                         " show cursor position
+set formatoptions=tcqron          " set vims text formatting options
+set softtabstop=2
+set tabstop=2
+set textwidth=100
+set title                         " let vim set the terminal title
+set updatetime=100                " redraw the status bar often
 
-" backup
-set nowritebackup
-set nobackup
-set noswapfile
-set backupdir-=.
+" Allow vim to set a custom font or color for a word
+syntax enable
 
-" Disable bell.
-set t_vb=
-set novisualbell
-set belloff=all
+" set the leader button
+let mapleader = ','
 
-" Display candidate supplement
-set nowildmenu
-set wildmode=list:longest,full
-" Increase history amount.
-set history=1000
-" Display all the information of the tag by the supplement of the Insert mode.
-set showfulltag
-" Can supplement a tag in a command-line.
-set wildoptions=tagfile
+" Autosave buffers before leaving them
+autocmd BufLeave * silent! :wa
 
-" Don't complete from other buffer.
-set complete=.
-" Set popup menu max height.
-set pumheight=20
+"----------------------------------------------
+" Colors
+"----------------------------------------------
+set background=dark
+colorscheme PaperColor
 
-" Report changes.
-set report=0
+highlight Search guibg=DeepPink4 guifg=White ctermbg=53 ctermfg=White
 
-" Maintain a current line at the time of movement as much as possible
-set nostartofline
+" Toggle background with <leader>bg
+map <leader>bg :let &background = (&background == "dark"? "light" : "dark")<cr>
 
-" Splitting a window will put the new window below the current one.
+"----------------------------------------------
+" Searching
+"----------------------------------------------
+set incsearch                     " move to match as you type the search query
+set hlsearch                      " disable search result highlighting
+
+" Clear search highlights
+map <leader>c :nohlsearch<cr>
+
+" These mappings will make it so that going to the next one in a search will
+" center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+"----------------------------------------------
+" Navigation
+"----------------------------------------------
+" Disable arrow keys
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+"----------------------------------------------
+" Splits
+"----------------------------------------------
+" Create horizontal splits below the current window
 set splitbelow
-" Splitting a window will put the new window right the current one.
 set splitright
-" Set minimal width for current window.
-set winwidth=30
-" Set minimal height for current window.
-" set winheight=20
-set winheight=1
-" Set maximam maximam command line window.
-set cmdwinheight=5
-" No equal window size.
-set noequalalways
 
-" Adjust window size of preview and help.
-set previewheight=8
-set helpheight=12
+" Creating splits
+nnoremap <leader>v :vsplit<cr>
+nnoremap <leader>h :split<cr>
 
-set ttyfast
-" When a line is long, do not omit it in @.
-set display=lastline
-" Display an invisible letter with hex format.
-"set display+=uhex
-
-" conceal level
-set conceallevel=2 concealcursor=niv
-set colorcolumn=99
-
-" update time
-set updatetime=250
-
-" incremental search
-set incsearch
+" Closing splits
+nnoremap <leader>q :close<cr>
