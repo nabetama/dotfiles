@@ -1,88 +1,207 @@
 " =====================================================================
 " init.rc.vim
 " =====================================================================
-"
-" vim looks
-" Show line number
-set number
-" show tab, list
-set list
-set listchars=tab:▸\ ,trail:-,extends:»,precedes:«,nbsp:%
-" Always display statusline
-set laststatus=2
-" Height of command line.
-set cmdheight=2
-" Not show command on statusline.
-set noshowcmd
-" Show title.
-set title
-" Title length.
-set titlelen=95
-" Disable tabline.
-set showtabline=0
+" ----------------------------------------------
+"  General settings
+" ----------------------------------------------
+set autoindent                    " take indent for new line from previous line
+set smartindent                   " enable smart indentation
+set autoread                      " reload file if the file changes on the disk
+set autowrite                     " write when switching buffers
+set autowriteall                  " write on :quit
+" set clipboard=unnamedplus " TODO:
+set colorcolumn=101               " highlight the 80th column as an indicator
+set completeopt-=preview          " remove the horrendous preview window
+set encoding=utf-8
+set expandtab                     " expands tabs to spaces
+set list                          " show trailing whitespace
+set listchars=tab:\|\ ,trail:▫
+set nospell                       " disable spelling
+set noswapfile                    " disable swapfile usage
+set nowrap
+set noerrorbells                  " No bells!
+set novisualbell                  " I said, no bells!
+set number                        " show number ruler
+set ruler                         " show cursor position
+set formatoptions=tcqron          " set vims text formatting options
+set softtabstop=2
+set tabstop=2
+set textwidth=100
+set title                         " let vim set the terminal title
+set updatetime=100                " redraw the status bar often
+set laststatus=2                  " statusline height is 2
+set matchpairs& matchpairs+=<:>   " add <> to matchpairs
 
-" backup
-set nowritebackup
-set nobackup
-set noswapfile
-set backupdir-=.
+" Allow vim to set a custom font or color for a word
+syntax enable
 
-" Disable bell.
-set t_vb=
-set novisualbell
-set belloff=all
+" set the leader button
+let mapleader = ','
 
-" Display candidate supplement
-set nowildmenu
-set wildmode=list:longest,full
-" Increase history amount.
-set history=1000
-" Display all the information of the tag by the supplement of the Insert mode.
-set showfulltag
-" Can supplement a tag in a command-line.
-set wildoptions=tagfile
+" Autosave buffers before leaving them
+autocmd BufLeave * silent! :wa
 
-" Don't complete from other buffer.
-set complete=.
-" Set popup menu max height.
-set pumheight=20
+" Command-line mode keymappings
+cnoremap <C-a> <Home>
+cnoremap <C-b> <Left>
+cnoremap <C-d> <Del>
+cnoremap <C-e> <End>
+cnoremap <C-f> <Right>
+cnoremap <C-n> <Down>
+cnoremap <C-p> <Up>
 
-" Report changes.
-set report=0
+" easy escape
+inoremap jj <esc>
+" goto last edited point
+nnoremap ;l '.
 
-" Maintain a current line at the time of movement as much as possible
-set nostartofline
+" jump to pair
+nnoremap <tab>  %
+vnoremap <tab>  %
 
-" Splitting a window will put the new window below the current one.
+" Show full path of file
+nnoremap <leader>fp :echo expand("%:p")<cr>
+
+" quickhighlight
+nmap <leader>m <Plug>(quickhl-manual-this)
+xmap <leader>m <Plug>(quickhl-manual-this)
+nmap <leader>M <Plug>(quickhl-manual-reset)
+xmap <leader>M <Plug>(quickhl-manual-reset)
+
+" QuickRun
+nnoremap <leader>r :QuickRun <enter>
+
+"----------------------------------------------
+" Colors
+"----------------------------------------------
+set background=dark
+colorscheme PaperColor
+
+highlight Search guibg=DeepPink4 guifg=White ctermbg=53 ctermfg=White
+
+" Toggle background with <leader>bg
+map <leader>bg :let &background = (&background == "dark"? "light" : "dark")<cr>
+
+"----------------------------------------------
+" Searching
+"----------------------------------------------
+set incsearch                     " move to match as you type the search query
+set hlsearch                      " disable search result highlighting
+set ignorecase                    " ignore match
+
+" Clear search highlights
+map <leader>c :nohlsearch<cr>
+
+" These mappings will make it so that going to the next one in a search will
+" center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+"----------------------------------------------
+" Navigation
+"----------------------------------------------
+" Disable arrow keys
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+"----------------------------------------------
+" Splits
+"----------------------------------------------
+" Create horizontal splits below the current window
 set splitbelow
-" Splitting a window will put the new window right the current one.
 set splitright
-" Set minimal width for current window.
-set winwidth=30
-" Set minimal height for current window.
-" set winheight=20
-set winheight=1
-" Set maximam maximam command line window.
-set cmdwinheight=5
-" No equal window size.
-set noequalalways
 
-" Adjust window size of preview and help.
-set previewheight=8
-set helpheight=12
+" Creating splits
+nnoremap <leader>v :vsplit<cr>
+nnoremap <leader>h :split<cr>
 
-set ttyfast
-" When a line is long, do not omit it in @.
-set display=lastline
-" Display an invisible letter with hex format.
-"set display+=uhex
+" Closing splits
+nnoremap <leader>q :close<cr>
 
-" conceal level
-set conceallevel=2 concealcursor=niv
-set colorcolumn=99
+"----------------------------------------------
+" Tab
+"----------------------------------------------
+nnoremap  [Tag] <nop>
+nmap      t     [Tag]
+for s:n in range(1, 9)
+  execute 'nnoremap <sillent> [tag]'.s:n  ':<C-u>tabnext'.s:n.'<cr>'
+endfor
+" jump
+map <silent> [Tag]c :tablast <bar> tabnew<CR>
+map <silent> [Tag]x :tabclose<CR>
+map <silent> [Tag]n :tabnext<CR>
+map <silent> [Tag]p :tabprevious<CR>
 
-" update time
-set updatetime=250
 
-" incremental search
-set incsearch
+" =====================================================================
+" Plugin: vim-go
+" =====================================================================
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+
+" =====================================================================
+" Plugin: ctrlp
+" =====================================================================
+" default
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_user_command = 'files -a %s'                " using mattn/files
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'           " cache dir
+let g:ctrlp_clear_cache_on_exit = 1                     " clear cache on exit vim
+nnoremap <space>g :<c-u>CtrlPLine<cr>
+nnoremap <space>b :<c-u>CtrlPBuffer<cr>
+nnoremap <space><space> :<c-u>CtrlPMixed<cr>
+
+" let g:ctrlp_lazy_update = 1                           " same vim lazy redraw
+let g:ctrlp_max_height = 20                             " ctrlp window height
+" ignore directories, files
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn|node_modules|build)$',
+  \ 'file': '\v\.(exe|so|dll|swp|zip|jpg|png)$',
+  \ }
+
+" key mappings
+let g:ctrlp_prompt_mappings = {
+  \ 'PrtBS()':              ['<c-h>'],
+  \ 'PrtDeleteWord()':      ['<c-w>'],
+  \ 'PrtCurEnd()':          ['<c-e>'],
+  \ 'PrtCurLeft()':         ['<c-b>'],
+  \ 'PrtCurRight()':        ['<c-f>'],
+  \ 'PrtSelectMove("j")':   ['<c-j>'],
+  \ 'PrtSelectMove("k")':   ['<c-k>'],
+  \ 'PrtHistory(-1)':       ['<c-n>'],
+  \ 'PrtHistory(1)':        ['<c-p>'],
+  \ 'AcceptSelection("e")': ['<cr>'],
+  \ 'ToggleRegex()':        ['<c-r>'],
+  \ 'ToggleByFname()':      ['<c-d>'],
+  \ 'PrtExit()':            ['<c-l>', '<esc>', '<c-c>'],
+  \ 'ToggleFocus()':        ['<nop>'],
+  \ 'PrtExpandDir()':       ['<nop>'],
+  \ 'AcceptSelection("h")': ['<nop>'], 
+  \ 'AcceptSelection("t")': ['<nop>'],
+  \ 'AcceptSelection("v")': ['<nop>'],
+  \ 'ToggleType(1)':        ['<nop>'],
+  \ 'ToggleType(-1)':       ['<nop>'],
+  \ 'PrtInsert()':          ['<nop>'],
+  \ 'PrtCurStart()':        ['<nop>'],
+  \ 'PrtClearCache()':      ['<nop>'],
+  \ 'PrtDeleteEnt()':       ['<nop>'],
+  \ 'CreateNewFile()':      ['<nop>'],
+  \ 'MarkToOpen()':         ['<nop>'],
+  \ 'OpenMulti()':          ['<nop>'],
+  \ 'PrtDelete()':          ['<nop>'],
+  \ 'PrtSelectMove("t")':   ['<nop>'],
+  \ 'PrtSelectMove("b")':   ['<nop>'],
+  \ 'PrtSelectMove("u")':   ['<nop>'],
+  \ 'PrtSelectMove("d")':   ['<nop>'],
+  \ }
+
+" =====================================================================
+" Plugin: lightline.vim
+" =====================================================================
+let g:lightline = {
+  \ 'colorscheme': 'landscape',
+  \ }

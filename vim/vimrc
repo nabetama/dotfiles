@@ -21,17 +21,25 @@ Plug 'rking/ag.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'nixprime/cpsm'
 
+Plug 'thinca/vim-quickrun'
+
 " Go
 Plug 'fatih/vim-go', {'for': 'go', 'do': 'GoInstallBinaries'}
 
 " JavaScript
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}	" syntax highlighting
-Plug 'mxw/vim-jsx'					" syntax highlighting
-Plug 'w0rp/ale'						" Syntax checking
-Plug 'skywind3000/asyncrun.vim'				" for auto formatt
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}   " syntax highlighting
+Plug 'mxw/vim-jsx'                                      " syntax highlighting
+Plug 'w0rp/ale'                                         " Syntax checking
+Plug 'skywind3000/asyncrun.vim'                         " for auto formatt
 
 " HTML/JSX
 Plug 'mattn/emmet-vim'
+
+" color, looks
+Plug 'itchyny/lightline.vim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 't9md/vim-quickhl'
+
 
 " Initialize plugin system
 call plug#end()
@@ -41,8 +49,3 @@ call plug#end()
 " ============================================================================
 " initialize
 execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/init.rc.vim'
-" plugin settings
-execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/plugins.rc.vim'
-" Keymapping
-execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/keymapping.rc.vim'
-"  
