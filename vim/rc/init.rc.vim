@@ -92,7 +92,6 @@ nnoremap <leader>q :close<cr>
 " Tab
 "----------------------------------------------
 " TODO: tab番号で選択できるようにする
-nnoremap <C-n> :tabe .<cr>
 
 " =====================================================================
 " Plugin: vim-go
@@ -107,22 +106,16 @@ let g:go_highlight_structs = 1
 " default
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_user_command = 'files -a %s'                " using mattn/files
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'           " cache dir
+let g:ctrlp_clear_cache_on_exit = 1                     " clear cache on exit vim
+nnoremap <space>g :<c-u>CtrlPLine<cr>
+nnoremap <space>b :<c-u>CtrlPBuffer<cr>
+nnoremap <space><space> :<c-u>CtrlPMixed<cr>
 
-" file searcher
-" use mattn/files
-let g:ctrlp_user_command = 'files -a %s'
-
-" cache
-let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
-let g:ctrlp_clear_cache_on_exit = 1
-
-" same vim lazy redraw
-" let g:ctrlp_lazy_update = 1
-
-" ctrlp window height
-let g:ctrlp_max_height = 20
-
-" ignore dir's
+" let g:ctrlp_lazy_update = 1                           " same vim lazy redraw
+let g:ctrlp_max_height = 20                             " ctrlp window height
+" ignore directories, files
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn|node_modules|build)$',
   \ 'file': '\v\.(exe|so|dll|swp|zip|jpg|png)$',
@@ -163,4 +156,3 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtSelectMove("u")':   ['<nop>'],
   \ 'PrtSelectMove("d")':   ['<nop>'],
   \ }
-
