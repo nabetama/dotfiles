@@ -29,6 +29,8 @@ set tabstop=2
 set textwidth=100
 set title                         " let vim set the terminal title
 set updatetime=100                " redraw the status bar often
+set laststatus=2                  " statusline height is 2
+set matchpairs& matchpairs+=<:>   " add <> to matchpairs
 
 " Allow vim to set a custom font or color for a word
 syntax enable
@@ -38,6 +40,36 @@ let mapleader = ','
 
 " Autosave buffers before leaving them
 autocmd BufLeave * silent! :wa
+
+" Command-line mode keymappings
+cnoremap <C-a> <Home>
+cnoremap <C-b> <Left>
+cnoremap <C-d> <Del>
+cnoremap <C-e> <End>
+cnoremap <C-f> <Right>
+cnoremap <C-n> <Down>
+cnoremap <C-p> <Up>
+
+" easy escape
+inoremap jj <esc>
+" goto last edited point
+nnoremap ;l '.
+
+" jump to pair
+nnoremap <tab>  %
+vnoremap <tab>  %
+
+" Show full path of file
+nnoremap <leader>fp :echo expand("%:p")<cr>
+
+" quickhighlight
+nmap <leader>m <Plug>(quickhl-manual-this)
+xmap <leader>m <Plug>(quickhl-manual-this)
+nmap <leader>M <Plug>(quickhl-manual-reset)
+xmap <leader>M <Plug>(quickhl-manual-reset)
+
+" QuickRun
+nnoremap <leader>r :QuickRun <enter>
 
 "----------------------------------------------
 " Colors
@@ -91,7 +123,17 @@ nnoremap <leader>q :close<cr>
 "----------------------------------------------
 " Tab
 "----------------------------------------------
-" TODO: tab番号で選択できるようにする
+nnoremap  [Tag] <nop>
+nmap      t     [Tag]
+for s:n in range(1, 9)
+  execute 'nnoremap <sillent> [tag]'.s:n  ':<C-u>tabnext'.s:n.'<cr>'
+endfor
+" jump
+map <silent> [Tag]c :tablast <bar> tabnew<CR>
+map <silent> [Tag]x :tabclose<CR>
+map <silent> [Tag]n :tabnext<CR>
+map <silent> [Tag]p :tabprevious<CR>
+
 
 " =====================================================================
 " Plugin: vim-go
@@ -155,4 +197,11 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtSelectMove("b")':   ['<nop>'],
   \ 'PrtSelectMove("u")':   ['<nop>'],
   \ 'PrtSelectMove("d")':   ['<nop>'],
+  \ }
+
+" =====================================================================
+" Plugin: lightline.vim
+" =====================================================================
+let g:lightline = {
+  \ 'colorscheme': 'landscape',
   \ }

@@ -21,6 +21,8 @@ Plug 'rking/ag.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'nixprime/cpsm'
 
+Plug 'thinca/vim-quickrun'
+
 " Go
 Plug 'fatih/vim-go', {'for': 'go', 'do': 'GoInstallBinaries'}
 
@@ -33,8 +35,11 @@ Plug 'skywind3000/asyncrun.vim'                         " for auto formatt
 " HTML/JSX
 Plug 'mattn/emmet-vim'
 
-" Colors
+" color, looks
+Plug 'itchyny/lightline.vim'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 't9md/vim-quickhl'
+
 
 " Initialize plugin system
 call plug#end()
