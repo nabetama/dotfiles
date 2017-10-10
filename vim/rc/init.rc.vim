@@ -55,6 +55,7 @@ map <leader>bg :let &background = (&background == "dark"? "light" : "dark")<cr>
 "----------------------------------------------
 set incsearch                     " move to match as you type the search query
 set hlsearch                      " disable search result highlighting
+set ignorecase                    " ignore match
 
 " Clear search highlights
 map <leader>c :nohlsearch<cr>
