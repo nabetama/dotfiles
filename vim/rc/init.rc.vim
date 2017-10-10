@@ -71,6 +71,17 @@ xmap <leader>M <Plug>(quickhl-manual-reset)
 " QuickRun
 nnoremap <leader>r :QuickRun <enter>
 
+" insert mode keymaps like emacs
+imap <c-p> <up>
+imap <c-n> <down>
+imap <c-b> <left>
+imap <c-f> <right>
+imap <c-e> <end>
+imap <c-d> <del>
+imap <c-h> <bs>
+" imap <c-a> <esc>^i
+" imap <c-k> <esc>^i
+
 "----------------------------------------------
 " Colors
 "----------------------------------------------
@@ -133,14 +144,6 @@ map <silent> [Tag]c :tablast <bar> tabnew<CR>
 map <silent> [Tag]x :tabclose<CR>
 map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
-
-
-" =====================================================================
-" Plugin: vim-go
-" =====================================================================
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
 
 " =====================================================================
 " Plugin: ctrlp
@@ -205,3 +208,30 @@ let g:ctrlp_prompt_mappings = {
 let g:lightline = {
   \ 'colorscheme': 'landscape',
   \ }
+
+" =====================================================================
+" Language: golang
+" =====================================================================
+au FileType go set noexpandtab
+au FileType go set shiftwidth=4
+au FileType go set softtabstop=4
+au FileType go set tabstop=4
+
+" enable syntax highlighting
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+
+" Show type information
+let g:go_auto_type_info = 1
+
+" Highlight variable uses
+let g:go_auto_sameids = 1
+
+" Fix for location list when vim-go is used together with Syntastic
+let g:go_list_type = "quickfix"
