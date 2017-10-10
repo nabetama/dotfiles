@@ -86,3 +86,79 @@ nnoremap <leader>h :split<cr>
 
 " Closing splits
 nnoremap <leader>q :close<cr>
+
+"----------------------------------------------
+" Tab
+"----------------------------------------------
+" TODO: 番号で選択できるようにする
+
+" =====================================================================
+" Plugin: vim-go
+" =====================================================================
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+
+" =====================================================================
+" Plugin: ctrlp
+" =====================================================================
+" default
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+" file searcher
+" use mattn/files
+let g:ctrlp_user_command = 'files -a %s'
+
+" cache
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+let g:ctrlp_clear_cache_on_exit = 1
+
+" same vim lazy redraw
+" let g:ctrlp_lazy_update = 1
+
+" ctrlp window height
+let g:ctrlp_max_height = 20
+
+" ignore dir's
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn|node_modules|build)$',
+  \ 'file': '\v\.(exe|so|dll|swp|zip|jpg|png)$',
+  \ }
+
+" key mappings
+let g:ctrlp_prompt_mappings = {
+  \ 'PrtBS()':              ['<c-h>'],
+  \ 'PrtDeleteWord()':      ['<c-w>'],
+  \ 'PrtCurEnd()':          ['<c-e>'],
+  \ 'PrtCurLeft()':         ['<c-b>'],
+  \ 'PrtCurRight()':        ['<c-f>'],
+  \ 'PrtSelectMove("j")':   ['<c-j>'],
+  \ 'PrtSelectMove("k")':   ['<c-k>'],
+  \ 'PrtHistory(-1)':       ['<c-n>'],
+  \ 'PrtHistory(1)':        ['<c-p>'],
+  \ 'AcceptSelection("e")': ['<cr>'],
+  \ 'ToggleRegex()':        ['<c-r>'],
+  \ 'ToggleByFname()':      ['<c-d>'],
+  \ 'PrtExit()':            ['<c-l>', '<esc>', '<c-c>'],
+  \ 'ToggleFocus()':        ['<nop>'],
+  \ 'PrtExpandDir()':       ['<nop>'],
+  \ 'AcceptSelection("h")': ['<nop>'], 
+  \ 'AcceptSelection("t")': ['<nop>'],
+  \ 'AcceptSelection("v")': ['<nop>'],
+  \ 'ToggleType(1)':        ['<nop>'],
+  \ 'ToggleType(-1)':       ['<nop>'],
+  \ 'PrtInsert()':          ['<nop>'],
+  \ 'PrtCurStart()':        ['<nop>'],
+  \ 'PrtClearCache()':      ['<nop>'],
+  \ 'PrtDeleteEnt()':       ['<nop>'],
+  \ 'CreateNewFile()':      ['<nop>'],
+  \ 'MarkToOpen()':         ['<nop>'],
+  \ 'OpenMulti()':          ['<nop>'],
+  \ 'PrtDelete()':          ['<nop>'],
+  \ 'PrtSelectMove("t")':   ['<nop>'],
+  \ 'PrtSelectMove("b")':   ['<nop>'],
+  \ 'PrtSelectMove("u")':   ['<nop>'],
+  \ 'PrtSelectMove("d")':   ['<nop>'],
+  \ }
+
