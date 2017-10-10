@@ -3,14 +3,12 @@
 # TODO
 
 - Vim
-    - key mapping
-    - gitgutter
-- setting VSCode
-    - Snippets, User settings and more...
+  - gitgutter
+  - filetypes
+  - autoload
+  - use emacs keybind when insert mode
 
 ## Setup
-
-Run this
 
 ```sh
 $ mkdir -p ~/src/github.com/nabetama/
