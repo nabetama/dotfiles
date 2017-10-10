@@ -25,10 +25,10 @@ Plug 'nixprime/cpsm'
 Plug 'fatih/vim-go', {'for': 'go', 'do': 'GoInstallBinaries'}
 
 " JavaScript
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}	" syntax highlighting
-Plug 'mxw/vim-jsx'					" syntax highlighting
-Plug 'w0rp/ale'						" Syntax checking
-Plug 'skywind3000/asyncrun.vim'				" for auto formatt
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}   " syntax highlighting
+Plug 'mxw/vim-jsx'                                      " syntax highlighting
+Plug 'w0rp/ale'                                         " Syntax checking
+Plug 'skywind3000/asyncrun.vim'                         " for auto formatt
 
 " HTML/JSX
 Plug 'mattn/emmet-vim'
@@ -44,8 +44,3 @@ call plug#end()
 " ============================================================================
 " initialize
 execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/init.rc.vim'
-" plugin settings
-execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/plugins.rc.vim'
-" Keymapping
-execute 'source' fnamemodify(expand('<sfile>'), ':h').'/rc/keymapping.rc.vim'
-"  
