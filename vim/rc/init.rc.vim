@@ -28,9 +28,14 @@ set softtabstop=2
 set tabstop=2
 set textwidth=100
 set title                         " let vim set the terminal title
+set titlelen=95                   " let vim set the terminal title
 set updatetime=100                " redraw the status bar often
 set laststatus=2                  " statusline height is 2
 set matchpairs& matchpairs+=<:>   " add <> to matchpairs
+set cmdheight=2                   " command line height
+set wildmenu                      " enables a menu at the bottom
+set wildmode=list:longest,full    " do completion in the command line via tab
+
 
 " Allow vim to set a custom font or color for a word
 syntax enable
@@ -208,6 +213,14 @@ let g:ctrlp_prompt_mappings = {
 let g:lightline = {
   \ 'colorscheme': 'landscape',
   \ }
+
+" =====================================================================
+" Plugin: vim-gitgutter
+" =====================================================================
+let g:gitgutter_max_signs = 1024
+let g:gitgutter_sign_added = '✚'
+let g:gitgutter_sign_modified = '➜'
+let g:gitgutter_sign_removed = '✘'
 
 " =====================================================================
 " Language: golang

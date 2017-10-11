@@ -35,7 +35,7 @@ Plug 'skywind3000/asyncrun.vim'                         " for auto formatt
 " HTML/JSX
 Plug 'mattn/emmet-vim'
 
-" color, looks
+" color, looks, highlight
 Plug 'itchyny/lightline.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 't9md/vim-quickhl'
