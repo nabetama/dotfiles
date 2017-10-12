@@ -250,8 +250,8 @@ let g:ale_linters = {
 \  'javascript': ['eslint'],
 \}
 let g:ale_sign_column_always = 1            " always show signs columns
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '△'
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 " move to previous error
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
