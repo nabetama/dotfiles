@@ -159,8 +159,9 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_user_command = 'files -a %s'                " using mattn/files
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'           " cache dir
 let g:ctrlp_clear_cache_on_exit = 1                     " clear cache on exit vim
-nnoremap <space>g :<c-u>CtrlPLine<cr>
-nnoremap <space>b :<c-u>CtrlPBuffer<cr>
+nnoremap <silent><space>p :<c-u>CtrlPMRUFiles<cr>
+nnoremap <silent><space>g :<c-u>CtrlPLine<cr>
+nnoremap <silent><space>b :<c-u>CtrlPBuffer<cr>
 nnoremap <space><space> :<c-u>CtrlPMixed<cr>
 
 " let g:ctrlp_lazy_update = 1                           " same vim lazy redraw
@@ -168,7 +169,7 @@ let g:ctrlp_max_height = 20                             " ctrlp window height
 " ignore directories, files
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn|node_modules|build)$',
-  \ 'file': '\v\.(exe|so|dll|swp|zip|jpg|png)$',
+  \ 'file': '\v\.(exe|so|dll|swp|zip|jpg|png|pdf|DS_Store)$',
   \ }
 
 " key mappings
