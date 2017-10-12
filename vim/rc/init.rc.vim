@@ -67,15 +67,6 @@ vnoremap <tab>  %
 " Show full path of file
 nnoremap <leader>fp :echo expand("%:p")<cr>
 
-" quickhighlight
-nmap <leader>m <Plug>(quickhl-manual-this)
-xmap <leader>m <Plug>(quickhl-manual-this)
-nmap <leader>M <Plug>(quickhl-manual-reset)
-xmap <leader>M <Plug>(quickhl-manual-reset)
-
-" QuickRun
-nnoremap <leader>r :QuickRun <enter>
-
 " insert mode keymaps like emacs
 imap <c-p> <up>
 imap <c-n> <down>
@@ -151,6 +142,19 @@ map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
 
 " =====================================================================
+" Plugin: QuickRun
+" =====================================================================
+nnoremap <leader>r :QuickRun <enter>
+
+" =====================================================================
+" Plugin: vim-quickrun
+" =====================================================================
+nmap <leader>m <Plug>(quickhl-manual-this)
+xmap <leader>m <Plug>(quickhl-manual-this)
+nmap <leader>M <Plug>(quickhl-manual-reset)
+xmap <leader>M <Plug>(quickhl-manual-reset)
+
+" =====================================================================
 " Plugin: ctrlp
 " =====================================================================
 " default
@@ -212,8 +216,18 @@ let g:ctrlp_prompt_mappings = {
 " Plugin: lightline.vim
 " =====================================================================
 let g:lightline = {
-  \ 'colorscheme': 'landscape',
-  \ }
+\  'active': {
+\    'left': [
+\      ['mode', 'paste'],
+\      ['readonly', 'filename', 'modified'],
+\      ['ale'],
+\    ]
+\  },
+\  'colorscheme': 'landscape',
+\  'component_function': {
+\    'ale': 'ALEGetStatusLine'
+\  }
+\}
 
 " =====================================================================
 " Plugin: indentLine
@@ -228,6 +242,30 @@ let g:gitgutter_max_signs = 1024
 let g:gitgutter_sign_added = '✚'
 let g:gitgutter_sign_modified = '➜'
 let g:gitgutter_sign_removed = '✘'
+
+" =====================================================================
+" Plugin: ale
+" =====================================================================
+let g:ale_linters = {
+\  'javascript': ['eslint'],
+\}
+let g:ale_sign_column_always = 1            " always show signs columns
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+" move to previous error
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+" move to next error
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+let g:ale_lint_on_save = 1                  " check at save only
+let g:ale_lint_on_text_changed = 0          " not checking at input text
+let g:ale_echo_msg_format = '[%linter%] %s' " error message format
+
+" fixer
+let g:ale_fixers = {
+\  'javascript': ['eslint'],
+\}
+let g:ale_fix_on_save = 1
 
 " =====================================================================
 " Language: golang
