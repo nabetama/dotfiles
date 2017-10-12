@@ -35,7 +35,7 @@ set matchpairs& matchpairs+=<:>   " add <> to matchpairs
 set cmdheight=2                   " command line height
 set wildmenu                      " enables a menu at the bottom
 set wildmode=list:longest,full    " do completion in the command line via tab
-
+set backspace=indent,eol,start    " Enable backspace deletes indent and new line
 
 " Allow vim to set a custom font or color for a word
 syntax enable
@@ -215,6 +215,12 @@ let g:lightline = {
   \ }
 
 " =====================================================================
+" Plugin: indentLine
+" =====================================================================
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indentLine_faster = 1
+
+" =====================================================================
 " Plugin: vim-gitgutter
 " =====================================================================
 let g:gitgutter_max_signs = 1024
@@ -388,4 +394,3 @@ au FileType vim set tabstop=4
 au FileType yaml set expandtab
 au FileType yaml set shiftwidth=2
 au FileType yaml set softtabstop=2
-au FileType yaml set tabstop=2
