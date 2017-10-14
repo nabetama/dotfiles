@@ -2,11 +2,9 @@
 
 # TODO
 
-- Vim
-  - gitgutter
-  - filetypes
-  - autoload
-  - use emacs keybind when insert mode
+- neovim
+- fzf or CtrlP
+- bootstrap.sh
 
 ## Setup
 

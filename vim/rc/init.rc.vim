@@ -172,7 +172,7 @@ nnoremap <space><space> :<c-u>CtrlPMixed<cr>
 let g:ctrlp_max_height = 20                             " ctrlp window height
 " ignore directories, files
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn|node_modules|build)$',
+  \ 'dir':  '\v[\/]\.(git|hg|svn|node_modules|build|yarn)$',
   \ 'file': '\v\.(exe|so|dll|swp|zip|jpg|png|pdf|DS_Store)$',
   \ }
 
