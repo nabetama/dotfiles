@@ -56,8 +56,8 @@ namespace :nvim do
   desc "Create symbolic link to HOME"
   task :link do
 
-    # If .vim is already exist, backup it
-    if File.exist?(File.join(HOME, ".config")) && !File.symlink?(File.join(HOME, ".config")) 
+    # If .config is already exist, backup it
+    if File.exist?(File.join(HOME, ".config")) && !File.symlink?(File.join(HOME, ".config"))
       mv File.join(HOME, ".config"), File.join(HOME, ".config.org")
     end
 
@@ -74,7 +74,7 @@ namespace :zsh do
       mv File.join(HOME, ".zshrc"), File.join(HOME, ".zshrc.org")
     end
 
-    symlink_ File.join(PWD, "zsh/zshrc"), File.join(HOME, ".zshrc")      
+    symlink_ File.join(PWD, "zsh/zshrc"), File.join(HOME, ".zshrc")
   end
 end
 
