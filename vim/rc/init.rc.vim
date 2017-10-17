@@ -53,8 +53,8 @@ cnoremap <C-b> <Left>
 cnoremap <C-d> <Del>
 cnoremap <C-e> <End>
 cnoremap <C-f> <Right>
-cnoremap <C-n> <Down>
-cnoremap <C-p> <Up>
+" cnoremap <C-n> <Down> TODO
+" cnoremap <C-p> <Up> TODO
 
 " easy escape
 inoremap jj <esc>
