@@ -3,7 +3,6 @@
 # TODO
 
 - neovim
-- fzf or CtrlP
 - bootstrap.sh
     - mac and linux
 

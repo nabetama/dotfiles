@@ -155,63 +155,34 @@ xmap <leader>m <Plug>(quickhl-manual-this)
 nmap <leader>M <Plug>(quickhl-manual-reset)
 xmap <leader>M <Plug>(quickhl-manual-reset)
 
-" =====================================================================
-" Plugin: ctrlp
-" =====================================================================
-" default
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_user_command = 'files -a %s'                " using mattn/files
-let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'           " cache dir
-let g:ctrlp_clear_cache_on_exit = 1                     " clear cache on exit vim
-nnoremap <silent><space>p :<c-u>CtrlPMRUFiles<cr>
-nnoremap <silent><space>g :<c-u>CtrlPLine<cr>
-nnoremap <silent><space>b :<c-u>CtrlPBuffer<cr>
-nnoremap <space><space> :<c-u>CtrlPMixed<cr>
 
-" let g:ctrlp_lazy_update = 1                           " same vim lazy redraw
-let g:ctrlp_max_height = 20                             " ctrlp window height
-" ignore directories, files
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn|node_modules|build|yarn)$',
-  \ 'file': '\v\.(exe|so|dll|swp|zip|jpg|png|pdf|DS_Store)$',
-  \ }
+" =====================================================================
+" Plugin: fzf.vim
+" =====================================================================
+nnoremap <c-p> :FZF<cr>
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>x :Commands<CR>
+nnoremap <Leader>f :Files<CR>
+" Files preview
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+nnoremap <Leader>gf :GFiles<CR>
 
-" key mappings
-let g:ctrlp_prompt_mappings = {
-  \ 'PrtBS()':              ['<c-h>'],
-  \ 'PrtDeleteWord()':      ['<c-w>'],
-  \ 'PrtCurEnd()':          ['<c-e>'],
-  \ 'PrtCurLeft()':         ['<c-b>'],
-  \ 'PrtCurRight()':        ['<c-f>'],
-  \ 'PrtSelectMove("j")':   ['<c-j>'],
-  \ 'PrtSelectMove("k")':   ['<c-k>'],
-  \ 'PrtHistory(-1)':       ['<c-n>'],
-  \ 'PrtHistory(1)':        ['<c-p>'],
-  \ 'AcceptSelection("e")': ['<cr>'],
-  \ 'ToggleRegex()':        ['<c-r>'],
-  \ 'ToggleByFname()':      ['<c-d>'],
-  \ 'PrtExit()':            ['<c-l>', '<esc>', '<c-c>'],
-  \ 'ToggleFocus()':        ['<nop>'],
-  \ 'PrtExpandDir()':       ['<nop>'],
-  \ 'AcceptSelection("h")': ['<nop>'], 
-  \ 'AcceptSelection("t")': ['<nop>'],
-  \ 'AcceptSelection("v")': ['<nop>'],
-  \ 'ToggleType(1)':        ['<nop>'],
-  \ 'ToggleType(-1)':       ['<nop>'],
-  \ 'PrtInsert()':          ['<nop>'],
-  \ 'PrtCurStart()':        ['<nop>'],
-  \ 'PrtClearCache()':      ['<nop>'],
-  \ 'PrtDeleteEnt()':       ['<nop>'],
-  \ 'CreateNewFile()':      ['<nop>'],
-  \ 'MarkToOpen()':         ['<nop>'],
-  \ 'OpenMulti()':          ['<nop>'],
-  \ 'PrtDelete()':          ['<nop>'],
-  \ 'PrtSelectMove("t")':   ['<nop>'],
-  \ 'PrtSelectMove("b")':   ['<nop>'],
-  \ 'PrtSelectMove("u")':   ['<nop>'],
-  \ 'PrtSelectMove("d")':   ['<nop>'],
-  \ }
+" Use ripgrep
+nnoremap <Leader>g :Rg<CR>
+" ripgrep with preview
+command! -bang -nargs=* Rg
+      \ call fzf#vim#grep(
+      \   'rg --line-number --no-heading '.shellescape(<q-args>), 0,
+      \   fzf#vim#with_preview({'options': '--exact --reverse --delimiter : --nth 3..'}, 'right:50%:wrap'))
+
+" mru files
+command! FZFMru call fzf#run({
+            \ 'source': v:oldfiles,
+            \ 'sink': 'e',
+            \ 'options': '-m -x +s',
+            \ 'down': '40%'})
+nnoremap <Leader>mr :FZFMru<CR>
 
 " =====================================================================
 " Plugin: lightline.vim

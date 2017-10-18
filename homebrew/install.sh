@@ -70,6 +70,7 @@ packages=(
   peco
   proctools
   readline
+  ripgrep
   rmtrash
   tree
   wget

@@ -17,11 +17,10 @@ Plug 'airblade/vim-gitgutter'
 " grep tool
 Plug 'rking/ag.vim'
 
-" ctrlp
-Plug 'kien/ctrlp.vim'
-Plug 'nixprime/cpsm'
+" fzf
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
-Plug 'thinca/vim-quickrun'
 
 " Go
 Plug 'fatih/vim-go', {'for': 'go', 'do': 'GoInstallBinaries'}
@@ -40,6 +39,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 't9md/vim-quickhl'
 
+Plug 'thinca/vim-quickrun'
 
 " Initialize plugin system
 call plug#end()
