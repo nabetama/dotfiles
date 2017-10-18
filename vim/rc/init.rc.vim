@@ -118,8 +118,8 @@ noremap <Right> <NOP>
 " Splits
 "----------------------------------------------
 " Create horizontal splits below the current window
-set splitbelow
-set splitright
+set splitbelow      " To open a new window, display it on the lower side
+set splitright      " To open a new window, display it on the right side
 
 " Creating splits
 nnoremap <leader>v :vsplit<cr>
