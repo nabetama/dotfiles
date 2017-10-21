@@ -338,6 +338,14 @@ au FileType javascript set softtabstop=2
 au FileType javascript set tabstop=2
 
 "----------------------------------------------
+" Language: jsx
+"----------------------------------------------
+augroup FiletypeGroup
+    autocmd!
+    au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+augroup END
+
+"----------------------------------------------
 " Language: JSON
 "----------------------------------------------
 au FileType json set expandtab
