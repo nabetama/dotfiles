@@ -37,6 +37,8 @@ set wildmenu                      " enables a menu at the bottom
 set wildmode=list:longest,full    " do completion in the command line via tab
 set backspace=indent,eol,start    " Enable backspace deletes indent and new line
 set clipboard+=unnamed            " Share the clipboard between vim and Mac OS
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete    " Omni completion
 
 " Allow vim to set a custom font or color for a word
 syntax enable

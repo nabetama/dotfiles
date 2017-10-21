@@ -24,6 +24,7 @@ cleans = [
           ".gitconfig",
           ".gitignore.global",
           ".gemrc",
+          ".ctags",
          ]
 
 CLEAN.concat(cleans.map{|c| File.join(HOME,c)})
@@ -37,7 +38,8 @@ task :setup => [
               "tmux:link",
               "zsh:link",
               "peco:link",
-              "etc:link"]
+              "etc:link",
+              "ctags:link" ]
 
 namespace :vim do
   desc "Create symbolic link to HOME"
@@ -111,5 +113,16 @@ namespace :tig do
   task :link do
     tigs  =  Dir.glob("tig" +  "/*").map{|path| File.basename(path)}
     same_name_symlinks File.join(PWD, "tig"), tigs
+  end
+end
+
+namespace :ctags do
+  task :link do
+    # If `.ctags` is already exist, backup it
+    if File.exist?(File.join(HOME, ".ctags")) && !File.symlink?(File.join(HOME, ".ctags"))
+      mv File.join(HOME, ".ctags"), File.join(HOME, ".ctags.org")
+    end
+
+    symlink_ File.join(PWD, "ctags"), File.join(HOME, ".ctags")
   end
 end
