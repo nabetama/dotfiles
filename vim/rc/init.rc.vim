@@ -221,18 +221,29 @@ let g:gitgutter_sign_removed = '✘'
 " Plugin: ale
 " =====================================================================
 let g:ale_linters = {
+\  'go': ['gometalinter'],
 \  'javascript': ['eslint'],
+\  'jsx': ['stylelint', 'eslint'],
+\  'python': ['flake8'],
 \}
-let g:ale_sign_column_always = 1            " always show signs columns
-let g:ale_sign_error = '✖'
-let g:ale_sign_warning = '△'
+let g:ale_linter_aliases = {'jsx': 'css'}
+let g:ale_set_loclist = 0                   " also disable the loclist
+let g:ale_set_quickfix = 1                  " The quickfix list be enabled
+let g:ale_lint_on_text_changed = 'never'    " 
+let g:ale_lint_on_enter = 1                 " linters to run on opening a file
+let g:ale_lint_on_save = 1                  " check at save only
+let g:ale_open_list = 1                     " to show Vim windows for the loclist or quickfix items
+                                            " when a file contains warnings or errors
+let g:ale_keep_list_window_open = 1         " keep the window open even after errors disappear.
+
+let g:ale_sign_column_always = 0            " always show signs columns
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 " move to previous error
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 " move to next error
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
-let g:ale_lint_on_save = 1                  " check at save only
-let g:ale_lint_on_text_changed = 0          " not checking at input text
 let g:ale_echo_msg_format = '[%linter%] %s' " error message format
 
 " fixer
@@ -249,15 +260,22 @@ au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set tabstop=4
 
+" ale
+let g:ale_go_gometalinter_options = '--fast --enable=staticcheck --enable=gosimple --enable=unused'
+
 " enable syntax highlighting
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
+let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
+
+" omnicomplete
+let g:go_gocode_unimported_packages = 1
 
 " Show type information
 let g:go_auto_type_info = 1
