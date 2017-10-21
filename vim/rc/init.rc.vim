@@ -88,7 +88,7 @@ colorscheme PaperColor
 highlight Search guibg=DeepPink4 guifg=White ctermbg=53 ctermfg=White
 
 " Toggle background with <leader>bg
-map <leader>bg :let &background = (&background == "dark"? "light" : "dark")<cr>
+" map <leader>bg :let &background = (&background == "dark"? "light" : "dark")<cr>
 
 "----------------------------------------------
 " Searching

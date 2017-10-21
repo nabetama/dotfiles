@@ -6,8 +6,6 @@
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
-" example
-" Plug 'junegunn/vim-easy-align'
 
 " looks
 Plug 'Yggdroot/indentLine'
@@ -27,9 +25,11 @@ Plug 'fatih/vim-go', {'for': 'go', 'do': 'GoInstallBinaries'}
 
 " JavaScript
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}   " syntax highlighting
-Plug 'mxw/vim-jsx'                                      " syntax highlighting
+Plug 'mxw/vim-jsx', {'for': 'javascript'}               " syntax highlighting
+Plug 'othree/yajs.vim', {'for': 'javascript'}           " syntax highlighting for ES6
+Plug 'othree/es.next.syntax.vim', {'for': 'javascript'} " syntax highlighting for stage-0
 Plug 'w0rp/ale'                                         " Syntax checking
-Plug 'skywind3000/asyncrun.vim'                         " for auto formatt
+Plug 'skywind3000/asyncrun.vim', {'for': 'javascript'}  " for auto format
 
 " HTML/JSX
 Plug 'mattn/emmet-vim'
