@@ -25,6 +25,7 @@ brew tap thoughtbot/formulae
 brew tap caskroom/fonts
 brew tap neovim/neovim
 brew tap universal-ctags/universal-ctags
+brew tap sanemat/font
 
 # Packages
 packages=(
@@ -72,6 +73,7 @@ openssl
 peco
 proctools
 readline
+ricty --powerline --vim-powerline
 ripgrep
 rmtrash
 tree
