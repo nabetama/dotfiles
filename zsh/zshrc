@@ -3,7 +3,7 @@
 # completion
 # 補完. インストール時のfunctionsをつかう
 fpath=(/usr/local/share/zsh/functions ${fpath})
-autoload -U compinit && compinit
+autoload -Uz compinit -C && compinit -C
 
 # Asking
 zstyle ':completion:*' verbose yes
@@ -81,7 +81,7 @@ zstyle ':vcs_info:*' actionformats '[%b|%a]'
 _vcs_precmd () { vcs_info }
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd _vcs_precmd 
-PROMPT='%~ %F{yellow}${vcs_info_msg_0_}%f '
+PROMPT='%F{cyan}${HOST}%f %~ %F{yellow}${vcs_info_msg_0_}%f '
 RPROMPT=''
 
 # Displayed in prompt when temporarily leaving vim
