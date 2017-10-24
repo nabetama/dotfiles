@@ -232,7 +232,7 @@ let g:ale_set_quickfix = 1                  " The quickfix list be enabled
 let g:ale_lint_on_text_changed = 'never'    " 
 let g:ale_lint_on_enter = 1                 " linters to run on opening a file
 let g:ale_lint_on_save = 1                  " check at save only
-let g:ale_open_list = 1                     " to show Vim windows for the loclist or quickfix items
+let g:ale_open_list = 0                     " to show Vim windows for the loclist or quickfix items
                                             " when a file contains warnings or errors
 let g:ale_keep_list_window_open = 1         " keep the window open even after errors disappear.
 
