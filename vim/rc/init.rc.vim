@@ -144,16 +144,6 @@ map <silent> [Tag]x :tabclose<CR>
 map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
 
-"----------------------------------------------
-" Input completion
-"----------------------------------------------
-inoremap { {}<Left>
-inoremap ( ()<Left>
-inoremap [ []<Left>
-" inoremap {<Enter> {}<Left><CR><ESC><S-o>
-" inoremap (<Enter> ()<Left><CR><ESC><S-o>
-" inoremap [<Enter> []<Left><CR><ESC><S-o>
-
 " =====================================================================
 " Plugin: QuickRun
 " =====================================================================
