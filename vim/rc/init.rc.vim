@@ -144,6 +144,16 @@ map <silent> [Tag]x :tabclose<CR>
 map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
 
+"----------------------------------------------
+" Input completion
+"----------------------------------------------
+inoremap { {}<Left>
+inoremap ( ()<Left>
+inoremap [ []<Left>
+" inoremap {<Enter> {}<Left><CR><ESC><S-o>
+" inoremap (<Enter> ()<Left><CR><ESC><S-o>
+" inoremap [<Enter> []<Left><CR><ESC><S-o>
+
 " =====================================================================
 " Plugin: QuickRun
 " =====================================================================
@@ -433,3 +443,10 @@ au FileType vim set tabstop=4
 au FileType yaml set expandtab
 au FileType yaml set shiftwidth=2
 au FileType yaml set softtabstop=2
+
+"----------------------------------------------
+" Language: racket
+"----------------------------------------------
+au FileType racket set expandtab
+au FileType racket set shiftwidth=2
+au FileType racket set softtabstop=2
