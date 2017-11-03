@@ -114,3 +114,6 @@ font-go
 # install fonts
 echo "installing fonts..."
 brew cask install ${fonts[@]}
+
+# install scheme
+brew cask install racket

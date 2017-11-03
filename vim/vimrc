@@ -19,7 +19,6 @@ Plug 'rking/ag.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-
 " Go
 Plug 'fatih/vim-go', {'for': 'go', 'do': 'GoInstallBinaries'}
 
@@ -33,6 +32,9 @@ Plug 'skywind3000/asyncrun.vim', {'for': 'javascript'}  " for auto format
 
 " HTML/JSX
 Plug 'mattn/emmet-vim'
+
+" racket(scheme)
+Plug 'wlangstroth/vim-racket'   " syntax highlighting
 
 " color, looks, highlight
 Plug 'itchyny/lightline.vim'
