@@ -24,6 +24,7 @@ brew tap homebrew/homebrew-php
 brew tap thoughtbot/formulae
 brew tap caskroom/fonts
 brew tap neovim/neovim
+brew tap osx-cross/avr
 brew tap universal-ctags/universal-ctags
 brew tap sanemat/font
 
@@ -95,10 +96,15 @@ ruby-build
 lua
 
 ## javaScript
+npm
 yarn
 
 ## php
 brew-php-switcher
+
+## keyboard
+dfu-programmer
+avr-gcc
 )
 echo "installing binaries..."
 brew install ${packages[@]} && brew cleanup
