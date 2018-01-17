@@ -22,6 +22,7 @@ brew tap homebrew/versions
 brew tap homebrew/binary
 brew tap homebrew/homebrew-php
 brew tap thoughtbot/formulae
+brew tap caskroom/cask
 brew tap caskroom/fonts
 brew tap neovim/neovim
 brew tap osx-cross/avr
@@ -123,3 +124,7 @@ brew cask install ${fonts[@]}
 
 # install scheme
 brew cask install racket
+
+# install GUI
+brew cask install spectacle
+brew cask install vanilla
