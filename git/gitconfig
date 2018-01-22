@@ -1,5 +1,7 @@
 [include]
   path = ~/.gitconfig.local
+[exclude]
+  path = ~/.gitconfig.global
 
 [user]
   name = nabetama
