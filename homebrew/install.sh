@@ -122,9 +122,12 @@ font-go
 echo "installing fonts..."
 brew cask install ${fonts[@]}
 
-# install scheme
+#---  development ---
+# Scheme(racket)
 brew cask install racket
+# Haskell Platform
+brew cask install haskell-platform
 
-# install GUI
+# GUI app
 brew cask install spectacle
 brew cask install vanilla
