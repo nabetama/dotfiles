@@ -23,11 +23,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'fatih/vim-go', {'for': 'go', 'do': 'GoInstallBinaries'}
 
 " JavaScript
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}   " syntax highlighting
-Plug 'mxw/vim-jsx', {'for': 'javascript'}               " syntax highlighting
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}   " js syntax highlighting
 Plug 'othree/yajs.vim', {'for': 'javascript'}           " syntax highlighting for ES6
+Plug 'maxmellon/vim-jsx-pretty', {'for': 'javascript'}  " syntax highlighting for JSX
 Plug 'othree/es.next.syntax.vim', {'for': 'javascript'} " syntax highlighting for stage-0
 Plug 'w0rp/ale'                                         " Syntax checking
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
 Plug 'skywind3000/asyncrun.vim', {'for': 'javascript'}  " for auto format
 
 " HTML/JSX
