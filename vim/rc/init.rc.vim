@@ -161,7 +161,9 @@ xmap <leader>M <Plug>(quickhl-manual-reset)
 " =====================================================================
 " Plugin: fzf.vim
 " =====================================================================
-nnoremap <c-p> :FZF<cr>
+nnoremap <c-p> :call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --others --cached'}))<cr>
+
+
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>x :Commands<CR>
 nnoremap <Leader>f :Files<CR>
