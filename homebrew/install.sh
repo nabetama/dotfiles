@@ -117,6 +117,7 @@ font-source-code-pro
 font-clear-sans
 font-roboto
 font-go
+font-fira-code
 )
 # install fonts
 echo "installing fonts..."
