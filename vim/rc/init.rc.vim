@@ -21,7 +21,7 @@ set noswapfile                    " disable swapfile usage
 set nowrap
 set noerrorbells                  " No bells!
 set novisualbell                  " I said, no bells!
-set number                        " show number ruler
+" set number                        " show number ruler
 set ruler                         " show cursor position
 set formatoptions=tcqron          " set vims text formatting options
 set softtabstop=2
