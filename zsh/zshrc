@@ -93,7 +93,7 @@ RPROMPT=''
 # Read settings
 # ------------------------------------
 [ -f ~/.dotfiles/zsh/git/contrib/completion/git-completion.zsh ] && \
-	 zstyle ':completion:*:*:git:*' ~/.dotfiles/zsh/git/contrib/completion/git-completion.zsh
+	 zstyle ':completion:*:*:git:*' script ~/.dotfiles/zsh/git/contrib/completion/git-completion.zsh
 [ -f ~/.dotfiles/zsh/global    ] && source ~/.dotfiles/zsh/global
 [ -f ~/.dotfiles/zsh/alias     ] && source ~/.dotfiles/zsh/alias
 [ -f ~/.dotfiles/zsh/functions ] && source ~/.dotfiles/zsh/functions
