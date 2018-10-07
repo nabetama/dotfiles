@@ -17,10 +17,6 @@ if [ "${ANS}" = "Y" ]; then
 fi
 
 # Add Repository
-brew tap homebrew/dupes
-brew tap homebrew/versions
-brew tap homebrew/binary
-brew tap homebrew/homebrew-php
 brew tap thoughtbot/formulae
 brew tap caskroom/cask
 brew tap caskroom/fonts
@@ -32,17 +28,13 @@ brew tap sanemat/font
 # Packages
 packages=(
 # editor
-neovim/neovim/neovim
+neovim
 
 # GNU core utilities (those that come with OS X are outdated)
 coreutils
 
 # GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
 findutils
-
-# recent versions of some OS X tools
-homebrew/dupes/grep
-apple-gcc42
 
 # Shell
 zsh
@@ -108,6 +100,7 @@ dfu-programmer
 avr-gcc
 )
 echo "installing binaries..."
+echo ${packages[@]}
 brew install ${packages[@]} && brew cleanup
 
 # fonts
@@ -127,7 +120,7 @@ brew cask install ${fonts[@]}
 # Scheme(racket)
 brew cask install racket
 # Haskell Platform
-brew cask install haskell-platform
+brew install ghc cabal-install stack
 
 # GUI app
 brew cask install spectacle
