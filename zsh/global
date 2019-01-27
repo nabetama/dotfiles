@@ -8,6 +8,7 @@
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/src/github.com/nabetama/scripts/bin
+export PATH="/usr/local/opt/avr-gcc@7/bin:$PATH"
 
 # ------------------------------------
 # Heroku
