@@ -61,9 +61,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # ------------------------------------
-# peco
+# fzf
 # ------------------------------------
-for f (~/.dotfiles/peco/*.zsh) source "${f}"
-bindkey '^r' peco-select-history
-bindkey '^j' peco-ghq
-bindkey '^g' peco-git-branch-checkout
+for f (~/.dotfiles/fzf/*.zsh) source "${f}"
+bindkey '^r' fzf-select-history
+bindkey '^j' fzf-ghq
+bindkey '^g' fzf-git-branch-checkout

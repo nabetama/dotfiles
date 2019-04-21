@@ -1,10 +1,10 @@
 # Previously moved directory
-function peco-cdr () {
-  local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+function fzf-cdr () {
+  local selected_dir=$(cdr -l | awk '{ print $2 }' | fzf)
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
     zle accept-line
   fi
   zle clear-screen
 }
-zle -N peco-cdr
+zle -N fzf-cdr
