@@ -64,7 +64,6 @@ libyaml
 markdown
 nkf
 openssl
-peco
 proctools
 readline
 ricty --powerline --vim-powerline

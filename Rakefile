@@ -37,7 +37,7 @@ task :setup => [
               "tig:link",
               "tmux:link",
               "zsh:link",
-              "peco:link",
+              "fzf:link",
               "etc:link",
               "ctags:link" ]
 
@@ -94,11 +94,10 @@ namespace :tmux do
   end
 end
 
-namespace :peco do
-  desc "Create symbolic link"
+namespace :fzf do
   task :link do
-    sh "mkdir -p $HOME/.config/peco/" 
-    symlink_ File.join(PWD, "peco/config.json"), File.join(HOME, ".config/peco/config.json")
+    tigs  =  Dir.glob("fzf" +  "/*").map{|path| File.basename(path)}
+    same_name_symlinks File.join(PWD, "fzf"), tigs
   end
 end
 
