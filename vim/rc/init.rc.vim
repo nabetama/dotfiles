@@ -127,6 +127,12 @@ set splitright      " To open a new window, display it on the right side
 nnoremap <leader>v :vsplit<cr>
 nnoremap <leader>h :split<cr>
 
+" Move window
+map sh <C-w>h
+map sk <C-w>k
+map sj <C-w>j
+map sl <C-w>l
+
 " Closing splits
 nnoremap <leader>q :close<cr>
 
