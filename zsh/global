@@ -67,3 +67,8 @@ for f (~/.dotfiles/fzf/*.zsh) source "${f}"
 bindkey '^r' fzf-select-history
 bindkey '^j' fzf-ghq
 bindkey '^g' fzf-git-branch-checkout
+
+# ------------------------------------
+# flutter
+# ------------------------------------
+export PATH="$PATH:$HOME/src/github.com/flutter/flutter/bin"
