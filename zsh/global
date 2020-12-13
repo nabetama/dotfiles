@@ -11,6 +11,11 @@ export PATH=$PATH:$HOME/src/github.com/nabetama/scripts/bin
 export PATH="/usr/local/opt/avr-gcc@7/bin:$PATH"
 
 # ------------------------------------
+# homebrew for apple silicon
+# ------------------------------------
+export PATH=$PATH:/opt/homebrew/bin
+
+# ------------------------------------
 # Heroku
 # ------------------------------------
 export PATH="$PATH:/usr/local/heroku/bin"
