@@ -1,11 +1,5 @@
 # dotfiles
 
-# TODO
-
-- neovim
-- bootstrap.sh
-    - mac and linux
-
 ## Setup
 
 ```sh
