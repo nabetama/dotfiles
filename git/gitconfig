@@ -58,3 +58,5 @@
     g = get
     l = look
     ls = list
+[init]
+	defaultBranch = main
