@@ -52,6 +52,8 @@ export PATH=${GOROOT}/bin:${GOPATH}/bin:${PATH}
 # ------------------------------------
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+# portry
+export PATH=$PATH:$HOME/.local/bin
 
 # ------------------------------------
 # Ruby
@@ -62,7 +64,15 @@ eval "$(rbenv init -)"
 # ------------------------------------
 # JavaScript
 # ------------------------------------
-eval "$(nodenv init -)"
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+
+# ------------------------------------
+# Rust
+# ------------------------------------
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # ------------------------------------
 # fzf
