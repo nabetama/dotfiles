@@ -225,7 +225,7 @@ xmap <leader>M <Plug>(quickhl-manual-reset)
 " =====================================================================
 " Plugin: nvim-telescope/telescope.nvim
 " =====================================================================
-nnoremap <c-p> :Telescope find_files<cr>
+nnoremap <c-p> :Telescope git_files<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
