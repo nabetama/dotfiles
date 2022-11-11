@@ -56,12 +56,6 @@ eval "$(pyenv init -)"
 export PATH=$PATH:$HOME/.local/bin
 
 # ------------------------------------
-# Ruby
-# ------------------------------------
-export PATH="$HOME/.rbenv/shims:$PATH"
-eval "$(rbenv init -)"
-
-# ------------------------------------
 # JavaScript
 # ------------------------------------
 export NVM_DIR="$HOME/.nvm"
