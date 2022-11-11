@@ -2,6 +2,11 @@ set number
 
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 
+" looks
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'Yggdroot/indentLine'
+
 " LSP
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
@@ -31,11 +36,6 @@ Plug 'akinsho/nvim-bufferline.lua'
 Plug 'itchyny/lightline.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 't9md/vim-quickhl'
-
-" Git markers
-Plug 'lewis6991/gitsigns.nvim'
-" Git
-Plug 'dinhhuy258/git.nvim'
 
 " grep tool
 Plug 'rking/ag.vim'
@@ -225,41 +225,12 @@ xmap <leader>M <Plug>(quickhl-manual-reset)
 " =====================================================================
 " Plugin: nvim-telescope/telescope.nvim
 " =====================================================================
+nnoremap <c-p> :Telescope find_files<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-" " =====================================================================
-" " Plugin: fzf.vim
-" " =====================================================================
-" nnoremap <c-p> :call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --others --cached'}))<cr>
-" 
-" 
-" nnoremap <Leader>b :Buffers<CR>
-" nnoremap <Leader>x :Commands<CR>
-" nnoremap <Leader>f :Files<CR>
-" " Files preview
-" command! -bang -nargs=? -complete=dir Files
-"   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-" nnoremap <Leader>gf :GFiles<CR>
-" 
-" " Use ripgrep
-" nnoremap <Leader>g :Rg<CR>
-" " ripgrep with preview
-" command! -bang -nargs=* Rg
-"       \ call fzf#vim#grep(
-"       \   'rg --line-number --no-heading '.shellescape(<q-args>), 0,
-"       \   fzf#vim#with_preview({'options': '--exact --reverse --delimiter : --nth 3..'}, 'right:50%:wrap'))
-" 
-" " mru files
-" command! FZFMru call fzf#run({
-"             \ 'source': v:oldfiles,
-"             \ 'sink': 'e',
-"             \ 'options': '-m -x +s',
-"             \ 'down': '40%'})
-" nnoremap <Leader>mr :FZFMru<CR>
-" 
 " =====================================================================
 " Plugin: lightline.vim
 " =====================================================================
