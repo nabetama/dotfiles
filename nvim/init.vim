@@ -56,6 +56,9 @@ Plug 'mattn/emmet-vim'
 " Code formatter
 Plug 'jose-elias-alvarez/null-ls.nvim'
 
+" Run jest
+Plug 'mattkubej/jest.nvim'
+
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
@@ -221,6 +224,10 @@ xmap <leader>m <Plug>(quickhl-manual-this)
 nmap <leader>M <Plug>(quickhl-manual-reset)
 xmap <leader>M <Plug>(quickhl-manual-reset)
 
+" =====================================================================
+" Plugin: mattkubej/jest.nvim
+" =====================================================================
+nnoremap <leader>j :JestFile<cr>
 
 " =====================================================================
 " Plugin: nvim-telescope/telescope.nvim
