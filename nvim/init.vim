@@ -46,7 +46,10 @@ Plug 'junegunn/fzf.vim'
 " QuickRun
 Plug 'thinca/vim-quickrun'
 
-" For React
+" CoC
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" React
 Plug 'windwp/nvim-ts-autotag'	" close tags quickly
 Plug 'windwp/nvim-autopairs'	" for closing brackets
 
@@ -303,34 +306,6 @@ let g:ale_fixers = {
 \  'javascript': ['eslint'],
 \}
 let g:ale_fix_on_save = 1
-
-" =====================================================================
-" Plugin: vim-prettier
-" =====================================================================
-let g:prettier#exec_cmd_async = 1   " forced async
-let g:prettier#quickfix_enabled = 0
-let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
-" max line length that prettier will wrap on
-let g:prettier#config#print_width = 100
-" number of spaces per indentation level
-let g:prettier#config#tab_width = 2
-" use tabs over spaces
-let g:prettier#config#use_tabs = 'false'
-" print semicolons
-let g:prettier#config#semi = 'true'
-" single quotes over double quotes
-let g:prettier#config#single_quote = 'true'
-" print spaces between brackets
-let g:prettier#config#bracket_spacing = 'false'
-" put > on the last line instead of new line
-let g:prettier#config#jsx_bracket_same_line = 'true'
-" avoid|always
-let g:prettier#config#arrow_parens = 'avoid'
-" none|es5|all
-let g:prettier#config#trailing_comma = 'all'
-" always|never|preserve
-let g:prettier#config#prose_wrap = 'preserve'
 
 " =====================================================================
 " Language: golang
