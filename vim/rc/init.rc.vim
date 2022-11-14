@@ -296,29 +296,6 @@ au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set tabstop=4
 
-" ale
-let g:ale_go_gometalinter_options = '--fast --enable=staticcheck --enable=gosimple --enable=unused'
-
-" enable syntax highlighting
-let g:go_fmt_command = "goimports"
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_extra_types = 1
-
-" omnicomplete
-let g:go_gocode_unimported_packages = 1
-
-" Show type information
-let g:go_auto_type_info = 1
-
-" Highlight variable uses
-let g:go_auto_sameids = 1
-
 "----------------------------------------------
 " Language: Bash
 "----------------------------------------------

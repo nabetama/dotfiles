@@ -49,6 +49,9 @@ Plug 'thinca/vim-quickrun'
 " CoC
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" golang
+Plug 'mattn/vim-goimports'
+
 " React
 Plug 'windwp/nvim-ts-autotag'	" close tags quickly
 Plug 'windwp/nvim-autopairs'	" for closing brackets
@@ -155,6 +158,14 @@ highlight Search guibg=DeepPink4 guifg=White ctermbg=53 ctermfg=White
 
 " Toggle background with <leader>bg
 " map <leader>bg :let &background = (&background == "dark"? "light" : "dark")<cr>
+
+"----------------------------------------------
+" Terminal mode
+"----------------------------------------------
+" Press ESC to NORMAL Mode 
+tnoremap <esc> <C-\><C-n>
+" always INSERT MODE in open the terminal
+autocmd TermOpen * startinsert
 
 "----------------------------------------------
 " Searching
