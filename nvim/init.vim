@@ -273,39 +273,16 @@ let g:gitgutter_sign_modified = '➜'
 let g:gitgutter_sign_removed = '✘'
 
 " =====================================================================
-" Plugin: ale
+" Plugin: coc
 " =====================================================================
-let g:ale_linters = {
-\  'go': ['gometalinter'],
-\  'javascript': ['eslint'],
-\  'jsx': ['stylelint', 'eslint'],
-\  'python': ['flake8'],
-\}
-let g:ale_linter_aliases = {'jsx': 'css'}
-let g:ale_set_loclist = 0                   " also disable the loclist
-let g:ale_set_quickfix = 1                  " The quickfix list be enabled
-let g:ale_lint_on_text_changed = 'never'    " 
-let g:ale_lint_on_enter = 1                 " linters to run on opening a file
-let g:ale_lint_on_save = 1                  " check at save only
-let g:ale_open_list = 0                     " to show Vim windows for the loclist or quickfix items
-                                            " when a file contains warnings or errors
-let g:ale_keep_list_window_open = 1         " keep the window open even after errors disappear.
+nmap <silent> <space>df <Plug>(coc-definition)
+nmap <silent> gds :sp<cr><Plug>(coc-definition)
+nmap <silent> gdv :vp<cr><Plug>(coc-definition)
 
-let g:ale_sign_column_always = 0            " always show signs columns
-let g:ale_sign_error = '⤫'
-let g:ale_sign_warning = '⚠'
-let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
-" move to previous error
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-" move to next error
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-let g:ale_echo_msg_format = '[%linter%] %s' " error message format
-
-" fixer
-let g:ale_fixers = {
-\  'javascript': ['eslint'],
-\}
-let g:ale_fix_on_save = 1
+" =====================================================================
+" Plugin: lspsaga
+" =====================================================================
+" TODO...
 
 " =====================================================================
 " Language: golang
@@ -314,9 +291,6 @@ au FileType go set noexpandtab
 au FileType go set shiftwidth=4
 au FileType go set softtabstop=4
 au FileType go set tabstop=4
-
-" ale
-let g:ale_go_gometalinter_options = '--fast --enable=staticcheck --enable=gosimple --enable=unused'
 
 " enable syntax highlighting
 let g:go_fmt_command = "goimports"
