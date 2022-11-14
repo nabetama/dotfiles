@@ -6,6 +6,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'Yggdroot/indentLine'
+Plug 'nvim-tree/nvim-web-devicons'
 
 " LSP
 Plug 'prabirshrestha/vim-lsp'
@@ -25,9 +26,6 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " fuzzy finder over lists
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-
-" Icons
-Plug 'nvim-tree/nvim-web-devicons'
 
 " bufferline
 Plug 'akinsho/nvim-bufferline.lua'
