@@ -1,6 +1,8 @@
 # dotfiles
 
-## Setup
+## Setup 
+
+XXX: The following codes will not work properly...
 
 ```sh
 $ git clone git@github.com:nabetama/dotfiles.git ~/.dotfiles
