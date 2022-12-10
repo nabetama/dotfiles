@@ -114,6 +114,12 @@ let mapleader = ','
 " Autosave buffers before leaving them
 autocmd BufLeave * silent! :wa
 
+" Automagically formatting on save
+autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+" lua <<EOF
+"vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()]]
+"EOF
+
 " Command-line mode keymappings
 cnoremap <C-a> <Home>
 cnoremap <C-b> <Left>
@@ -284,9 +290,12 @@ let g:gitgutter_sign_removed = '✘'
 " =====================================================================
 " Plugin: coc
 " =====================================================================
-nmap <silent> <space>df <Plug>(coc-definition)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gds :sp<cr><Plug>(coc-definition)
-nmap <silent> gdv :vp<cr><Plug>(coc-definition)
+nmap <silent> gdv :vs<cr><Plug>(coc-definition)
 
 " =====================================================================
 " Plugin: lspsaga
