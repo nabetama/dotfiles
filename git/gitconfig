@@ -60,3 +60,5 @@
     ls = list
 [init]
 	defaultBranch = main
+[commit]
+	verbose = true
