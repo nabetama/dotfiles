@@ -3,7 +3,7 @@ print('init.lua')
 vim.cmd.packadd "packer.nvim"
 
 require("packer").startup(function()
-	use'tpope/vim-fugitive'
+	use 'tpope/vim-fugitive'
 	use 'airblade/vim-gitgutter'
 	use 'nvim-tree/nvim-web-devicons'
 	use 'prabirshrestha/vim-lsp'
@@ -32,7 +32,7 @@ require("packer").startup(function()
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
-	use 'NLKNguyen/papercolor-theme'
+  use 'folke/tokyonight.nvim'
 	use 't9md/vim-quickhl'
 
 	-- grep tool
@@ -73,7 +73,8 @@ vim.opt.autoread = true            -- reload file if the file changes on the dis
 vim.opt.autowrite = true                    -- write when switching buffers
 vim.opt.autowriteall= true                  -- write on :quit
 vim.opt.colorcolumn='101'               -- highlight the 100th column as an indicator
-vim.opt.completeopt= {"menuone", "preview" }          -- remove the horrendous preview window
+vim.opt.completeopt= {"menuone", "preview", "noinsert" }          -- remove the horrendous preview window
+vim.keymap.set('i', '<silent><expr> <CR>', 'coc#pum#visible() ? coc#pum#confirm() : "<CR>"')
 vim.opt.encoding='utf-8'
 vim.opt.expandtab= true                     -- expands tabs to spaces
 vim.opt.list= true                          -- show trailing whitespace
@@ -129,7 +130,7 @@ vim.keymap.set('n', '<Tab>', '%')
 vim.keymap.set('v', '<Tab>', '%')
 
 -- show full path of file
-vim.keymap.set('n', '<leader>fp', ':echo expand("%:p")<cr>')
+vim.keymap.set('n', '<leader>fp', ':echo expand("%:p")<CR>')
 
 -- insert mode keymaps like emacs
 vim.keymap.set('i', '<C-p>', '<Up>')
@@ -144,10 +145,7 @@ vim.keymap.set('i', '<C-h>', '<BS>')
 ----------------------------------------------
 --  Colors
 ----------------------------------------------
--- set background=dark
--- kcolorscheme PaperColor
--- highlight Search guibg=DeepPink4 guifg=White ctermbg=53 ctermfg=White
-
+vim.cmd[[colorscheme tokyonight]]
 
 ----------------------------------------------
 --  Terminal mode
@@ -169,7 +167,7 @@ vim.opt.hlsearch = true
 vim.opt.ignorecase = true
 
 -- Clear search highlights
-vim.keymap.set('n', '<Leader>c', ':nohlsearch<cr>')
+vim.keymap.set('n', '<Leader>c', ':nohlsearch<CR>')
 
 -- These mappings will make it so that going to the next one in a search will
 -- center on the line it's found in.
@@ -192,8 +190,8 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 -- Creating splits
-vim.keymap.set('n', '<Leader>v', ':vsplit<cr>')
-vim.keymap.set('n', '<Leader>h', ':split<cr>')
+vim.keymap.set('n', '<Leader>v', ':vsplit<CR>')
+vim.keymap.set('n', '<Leader>h', ':split<CR>')
 
 -- Move window
 vim.keymap.set('n', 'sh', '<C-w>h')
@@ -202,7 +200,7 @@ vim.keymap.set('n', 'sj', '<C-w>j')
 vim.keymap.set('n', 'sl', '<C-w>l')
 
 -- Close window splited
-vim.keymap.set('n', '<leader>q', ':close<cr>')
+vim.keymap.set('n', '<leader>q', ':close<CR>')
 
 
 ----------------------------------------------
@@ -221,16 +219,16 @@ vim.keymap.set('x', '<Leader>M', '<Plug>(quickhl-manual-reset)')
 ----------------------------------------------
 -- Plugin: mattkubej/jest.nvim
 ----------------------------------------------
-vim.keymap.set('n', '<Leader>j', ':JestFile<cr>')
+vim.keymap.set('n', '<Leader>j', ':JestFile<CR>')
 
 ----------------------------------------------
 -- Plugin: nvim-telescope/telescope.nvim
 ----------------------------------------------
-vim.keymap.set('n', '<C-p>', ':Telescope git_files<cr>')
-vim.keymap.set('n', '<Leader>ff', '<cmd>Telescope find_files<cr>')
-vim.keymap.set('n', '<Leader>fg', '<cmd>Telescope live_grep<cr>')
-vim.keymap.set('n', '<Leader>fb', '<cmd>Telescope buffers<cr>')
-vim.keymap.set('n', '<Leader>fh', '<cmd>Telescope help_tags<cr>')
+vim.keymap.set('n', '<C-p>', ':Telescope git_files<CR>')
+vim.keymap.set('n', '<Leader>ff', '<cmd>Telescope find_files<CR>')
+vim.keymap.set('n', '<Leader>fg', '<cmd>Telescope live_grep<CR>')
+vim.keymap.set('n', '<Leader>fb', '<cmd>Telescope buffers<CR>')
+vim.keymap.set('n', '<Leader>fh', '<cmd>Telescope help_tags<CR>')
 
 ----------------------------------------------
 -- Plugin: lualine.nvim
@@ -274,5 +272,10 @@ vim.keymap.set('n', 'gd', '<Plug>(coc-definition)', {silent = true})
 vim.keymap.set('n', 'gt', '<Plug>(coc-type-definition)', {silent = true})
 vim.keymap.set('n', 'gi', '<Plug>(coc-implementation)', {silent = true})
 vim.keymap.set('n', 'gr', '<Plug>(coc-references)', {silent = true})
-vim.keymap.set('n', 'gds', ':sp<cr><Plug>(coc-definition)', {silent = true})
-vim.keymap.set('n', 'gdv', ':vs<cr><Plug>(coc-definition)', {silent = true})
+vim.keymap.set('n', 'gds', ':sp<CR><Plug>(coc-definition)', {silent = true})
+vim.keymap.set('n', 'gdv', ':vs<CR><Plug>(coc-definition)', {silent = true})
+
+----------------------------------------------
+-- Language: golang
+----------------------------------------------
+
