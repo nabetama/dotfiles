@@ -117,10 +117,10 @@ brew cask install ${fonts[@]}
 
 #---  development ---
 # Scheme(racket)
-brew cask install racket
+brew install --cask racket
 # Haskell Platform
-brew install ghc cabal-install stack
+brew install --cask ghc cabal-install stack
 
 # GUI app
-brew cask install spectacle
-brew cask install vanilla
+brew install --cask spectacle
+brew install --cask vanilla
