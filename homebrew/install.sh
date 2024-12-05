@@ -18,8 +18,8 @@ fi
 
 # Add Repository
 brew tap thoughtbot/formulae
-brew tap caskroom/cask
-brew tap caskroom/fonts
+brew tap homebrew/cask
+brew tap homebrew-cask/fonts
 brew tap neovim/neovim
 brew tap osx-cross/avr
 brew tap universal-ctags/universal-ctags
