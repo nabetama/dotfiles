@@ -66,7 +66,7 @@ nkf
 openssl
 proctools
 readline
-ricty --powerline --vim-powerline
+ricty --vim-powerline
 ripgrep
 rmtrash
 tree
@@ -113,7 +113,7 @@ font-fira-code
 )
 # install fonts
 echo "installing fonts..."
-brew cask install ${fonts[@]}
+brew install --cask ${fonts[@]}
 
 #---  development ---
 # Scheme(racket)
