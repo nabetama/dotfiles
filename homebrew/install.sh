@@ -66,7 +66,6 @@ nkf
 openssl
 proctools
 readline
-ricty --vim-powerline
 ripgrep
 rmtrash
 tree
@@ -115,12 +114,8 @@ font-fira-code
 echo "installing fonts..."
 brew install --cask ${fonts[@]}
 
-#---  development ---
-# Scheme(racket)
-brew install --cask racket
-# Haskell Platform
-brew install --cask ghc cabal-install stack
-
 # GUI app
 brew install --cask spectacle
 brew install --cask vanilla
+brew install --cask ghostty
+
