@@ -110,6 +110,9 @@ RPROMPT=''
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# for Claude Code
+export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/nabetama/.sdkman"
 [[ -s "/Users/nabetama/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/nabetama/.sdkman/bin/sdkman-init.sh"
