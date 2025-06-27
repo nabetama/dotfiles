@@ -116,3 +116,16 @@ export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/nabetama/.sdkman"
 [[ -s "/Users/nabetama/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/nabetama/.sdkman/bin/sdkman-init.sh"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/nabetama/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# pnpm
+export PNPM_HOME="/Users/nabetama/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
