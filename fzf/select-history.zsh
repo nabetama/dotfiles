@@ -8,6 +8,7 @@ function fzf-select-history() {
     fi
     BUFFER=$(history -n 1 | \
                     grep -v "ls" | \
+                    awk '!seen[$0]++' | \
                     eval $tac | \
                     fzf --query "$LBUFFER")
     CURSOR=$#BUFFER
