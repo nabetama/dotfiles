@@ -65,3 +65,67 @@ function do_enter() {
 
 zle -N do_enter
 bindkey '^m' do_enter
+
+# ------------------------------------
+# GitHub Issue to Branch Name
+# ------------------------------------
+# Convert GitHub issue URL to branch name
+# Usage: gh-issue-to-branch <github-issue-url>
+# Example: gh-issue-to-branch https://github.com/<ORG>/<REPO>/issues/1292
+# Output: feature/issue-1292
+function gh-issue-to-branch() {
+    if [ -z "$1" ]; then
+        echo "Usage: gh-issue-to-branch <github-issue-url>" >&2
+        return 1
+    fi
+
+    local url="$1"
+
+    # Extract issue number from GitHub URL
+    # Supports formats:
+    # - https://github.com/owner/repo/issues/1292
+    # - http://github.com/owner/repo/issues/1292
+    # - github.com/owner/repo/issues/1292
+    local issue_number=$(echo "$url" | sed -E 's#.*github\.com/[^/]+/[^/]+/issues/([0-9]+).*#\1#')
+
+    if [ -z "$issue_number" ] || [ "$issue_number" = "$url" ]; then
+        echo "Error: Invalid GitHub issue URL" >&2
+        return 1
+    fi
+
+    echo "feature/issue-${issue_number}"
+}
+
+# ------------------------------------
+# Create Git Branch
+# ------------------------------------
+# Create a git branch with the given name
+# Usage: gh-create-branch <branch-name>
+#        echo <branch-name> | gh-create-branch
+# Example: gh-create-branch feature/issue-1292
+#          gh-issue-to-branch https://github.com/owner/repo/issues/1292 | gh-create-branch
+function gh-create-branch() {
+    local branch_name
+
+    # Read from argument or stdin
+    if [ -n "$1" ]; then
+        branch_name="$1"
+    else
+        read branch_name
+    fi
+
+    if [ -z "$branch_name" ]; then
+        echo "Usage: gh-create-branch <branch-name>" >&2
+        echo "       echo <branch-name> | gh-create-branch" >&2
+        return 1
+    fi
+
+    # Check if we're in a git repository
+    if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+        echo "Error: Not in a git repository" >&2
+        return 1
+    fi
+
+    # Create and checkout the branch
+    git checkout -b "$branch_name"
+}
