@@ -24,6 +24,5 @@ function gpr() {
   url="https://${url[12, -12]}"
   push_url=`echo ${url} | sed 's/:/\//2'`
   echo "pull request to: ${push_url}"
-  open "${push_url}/compare/master...${local_branch}"
+  open "${push_url}/compare/main...${local_branch}"
 }
-
