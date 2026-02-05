@@ -268,7 +268,17 @@ require("lazy").setup({
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('bufferline').setup()
-    end
+    end,
+    keys = {
+      { '<leader>]', '<cmd>BufferLineCycleNext<CR>', desc = 'Next buffer' },
+      { '<leader>[', '<cmd>BufferLineCyclePrev<CR>', desc = 'Prev buffer' },
+      { '<leader>x', '<cmd>bdelete<CR>', desc = 'Close buffer' },
+      { '<leader>1', '<cmd>BufferLineGoToBuffer 1<CR>' },
+      { '<leader>2', '<cmd>BufferLineGoToBuffer 2<CR>' },
+      { '<leader>3', '<cmd>BufferLineGoToBuffer 3<CR>' },
+      { '<leader>4', '<cmd>BufferLineGoToBuffer 4<CR>' },
+      { '<leader>5', '<cmd>BufferLineGoToBuffer 5<CR>' },
+    },
   },
 
   -- Color scheme
