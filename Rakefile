@@ -17,7 +17,12 @@ end
 
 cleans = [
           ".vim",
-          ".config",
+          ".config/gocode",
+          ".config/htop",
+          ".config/karabiner",
+          ".config/nvim",
+          ".config/peco",
+          ".config/git",
           ".zshrc",
           ".tigrc",
           ".tmux.conf",
@@ -32,7 +37,7 @@ CLEAN.concat(cleans.map{|c| File.join(HOME,c)})
 task :default => :setup
 task :setup => [
               "vim:link",
-              "nvim:link",
+              "config:link",
               "git:link",
               "tig:link",
               "tmux:link",
@@ -54,16 +59,24 @@ namespace :vim do
   end
 end
 
-namespace :nvim do
-  desc "Create symbolic link to HOME"
+namespace :config do
+  desc "Create symbolic links for config directories"
   task :link do
+    config_home = File.join(HOME, ".config")
+    Dir.mkdir(config_home) unless File.exist?(config_home)
 
-    # If .config is already exist, backup it
-    if File.exist?(File.join(HOME, ".config")) && !File.symlink?(File.join(HOME, ".config"))
-      mv File.join(HOME, ".config"), File.join(HOME, ".config.org")
+    # 管理対象のディレクトリ/ファイルを個別にリンク
+    managed_configs = %w[gocode htop karabiner nvim peco git]
+    managed_configs.each do |name|
+      src = File.join(PWD, "config", name)
+      dest = File.join(config_home, name)
+      next unless File.exist?(src)
+
+      if File.exist?(dest) && !File.symlink?(dest)
+        mv dest, "#{dest}.org"
+      end
+      symlink_ src, dest
     end
-
-    symlink_ File.join(PWD, "config"), File.join(HOME,".config")
   end
 end
 
