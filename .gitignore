@@ -1,12 +1,5 @@
-# config/ - 管理対象外のディレクトリを除外
-config/*
-!config/gocode/
-!config/htop/
-!config/karabiner/
-!config/nvim/
-!config/peco/
-!config/git/
-!config/.gitkeep
+# config/ - 管理対象外（xdg/ に移動済み）
+config/
 
 # karabiner の自動バックアップは除外
-config/karabiner/automatic_backups/
+xdg/.config/karabiner/automatic_backups/
