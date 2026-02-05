@@ -3,6 +3,7 @@ print('init.lua')
 vim.cmd.packadd "packer.nvim"
 
 require("packer").startup(function()
+	use 'wbthomason/packer.nvim'
 	use 'tpope/vim-fugitive'
 	use 'airblade/vim-gitgutter'
 	use 'nvim-tree/nvim-web-devicons'
