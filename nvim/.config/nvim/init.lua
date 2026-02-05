@@ -1,183 +1,376 @@
-print('init.lua')
+----------------------------------------------
+-- Bootstrap lazy.nvim
+----------------------------------------------
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git", "clone", "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-vim.cmd.packadd "packer.nvim"
+-- Set leader before lazy
+vim.g.mapleader = ','
 
-require("packer").startup(function()
-	use 'wbthomason/packer.nvim'
-	use 'tpope/vim-fugitive'
-	use 'airblade/vim-gitgutter'
-	use 'nvim-tree/nvim-web-devicons'
-	use 'prabirshrestha/vim-lsp'
-	use 'mattn/vim-lsp-settings'
-	use 'neovim/nvim-lspconfig'
-	use 'glepnir/lspsaga.nvim'
+----------------------------------------------
+-- Plugins
+----------------------------------------------
+require("lazy").setup({
+  -- Git
+  'tpope/vim-fugitive',
+  {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup({
+        signs = {
+          add          = { text = '✚' },
+          change       = { text = '➜' },
+          delete       = { text = '✘' },
+          topdelete    = { text = '‾' },
+          changedelete = { text = '~' },
+        },
+      })
+    end
+  },
 
-	-- Auto-complete
-	use 'prabirshrestha/asyncomplete.vim'
-	use 'prabirshrestha/asyncomplete-lsp.vim'
-	use 'onsails/lspkind.nvim' -- VSCode like pictograms
-	use 'L3MON4D3/LuaSnip'	-- Snippet engine
+  -- LSP
+  {
+    'williamboman/mason.nvim',
+    config = function()
+      require('mason').setup()
+    end
+  },
+  {
+    'williamboman/mason-lspconfig.nvim',
+    dependencies = { 'williamboman/mason.nvim' },
+    config = function()
+      require('mason-lspconfig').setup({
+        ensure_installed = { 'ts_ls', 'gopls', 'lua_ls' },
+      })
+    end
+  },
+  {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+    },
+    config = function()
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-	-- Syntax highlightings
-	use 'nvim-treesitter/nvim-treesitter'
+      -- TypeScript
+      vim.lsp.config.ts_ls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable('ts_ls')
 
-	-- fuzzy finder over lists
-	use 'nvim-lua/plenary.nvim'
-	use 'nvim-telescope/telescope.nvim'
+      -- Go
+      vim.lsp.config.gopls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable('gopls')
 
-	-- bufferline
-	use 'akinsho/nvim-bufferline.lua'
+      -- Lua
+      vim.lsp.config.lua_ls = {
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            diagnostics = { globals = { 'vim' } },
+          },
+        },
+      }
+      vim.lsp.enable('lua_ls')
+
+      -- LSP keymaps
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(args)
+          local opts = { buffer = args.buf, silent = true }
+          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+          vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
+          vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+          vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+          vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+          vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+          vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+          vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+        end,
+      })
+    end
+  },
+
+  -- Completion
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+      'onsails/lspkind.nvim',
+    },
+    config = function()
+      local cmp = require('cmp')
+      local luasnip = require('luasnip')
+      local lspkind = require('lspkind')
+
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          ['<Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+        }),
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+        }, {
+          { name = 'buffer' },
+          { name = 'path' },
+        }),
+        formatting = {
+          format = lspkind.cmp_format({
+            mode = 'symbol_text',
+            maxwidth = 50,
+          }),
+        },
+      })
+    end
+  },
+
+  -- Treesitter
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = function()
+      -- Neovim 0.11+ uses vim.treesitter directly
+      local langs = { 'lua', 'vim', 'vimdoc', 'javascript', 'typescript', 'tsx', 'go', 'html', 'css', 'json', 'yaml', 'markdown' }
+      for _, lang in ipairs(langs) do
+        pcall(function()
+          vim.treesitter.language.add(lang)
+        end)
+      end
+      -- Enable treesitter-based highlighting
+      vim.api.nvim_create_autocmd('FileType', {
+        callback = function()
+          pcall(vim.treesitter.start)
+        end,
+      })
+    end
+  },
+
+  -- Autopairs
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = function()
+      require('nvim-autopairs').setup()
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
+    end
+  },
+
+  -- Autotag for HTML/JSX
+  { 'windwp/nvim-ts-autotag' },
+
+  -- Fuzzy finder
+  {
+    'nvim-telescope/telescope.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    keys = {
+      { '<C-p>', '<cmd>Telescope git_files<CR>' },
+      { '<leader>ff', '<cmd>Telescope find_files<CR>' },
+      { '<leader>fg', '<cmd>Telescope live_grep<CR>' },
+      { '<leader>fb', '<cmd>Telescope buffers<CR>' },
+      { '<leader>fh', '<cmd>Telescope help_tags<CR>' },
+    },
+  },
+
+  -- Formatter & Linter
+  {
+    'stevearc/conform.nvim',
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
+    config = function()
+      require('conform').setup({
+        formatters_by_ft = {
+          javascript = { 'prettier' },
+          typescript = { 'prettier' },
+          typescriptreact = { 'prettier' },
+          javascriptreact = { 'prettier' },
+          json = { 'prettier' },
+          html = { 'prettier' },
+          css = { 'prettier' },
+          go = { 'goimports', 'gofmt' },
+          lua = { 'stylua' },
+        },
+        format_on_save = {
+          timeout_ms = 500,
+          lsp_fallback = true,
+        },
+      })
+    end
+  },
+
+  -- UI
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('lualine').setup({
+        options = {
+          icons_enabled = true,
+          theme = 'auto',
+        },
+        sections = {
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch', 'diff', 'diagnostics' },
+          lualine_c = { 'filename' },
+          lualine_x = { 'encoding', 'fileformat', 'filetype' },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location' },
+        },
+      })
+    end
+  },
+  { 'nvim-tree/nvim-web-devicons' },
+  {
+    'akinsho/bufferline.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('bufferline').setup()
+    end
+  },
 
   -- Color scheme
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-  }
-  use 'folke/tokyonight.nvim'
-	use 't9md/vim-quickhl'
+  {
+    'folke/tokyonight.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd([[colorscheme tokyonight]])
+    end
+  },
 
-	-- grep tool
-	use 'rking/ag.vim'
-	-- fzf
-	use 'junegunn/fzf'
-	use 'junegunn/fzf.vim'
-
-	-- QuickRun
-	use 'thinca/vim-quickrun'
-
-	-- CoC
-	use 'neoclide/coc.nvim'
-
-	-- golang
-	use 'mattn/vim-goimports'
-
-	-- React
-	use 'windwp/nvim-ts-autotag'	-- close tags quickly
-	use 'windwp/nvim-autopairs'	-- for closing brackets
-
-	-- HTML/JSX
-	use 'mattn/emmet-vim'
-
-	-- Code formatter
-	use 'jose-elias-alvarez/null-ls.nvim'
-
-	-- Run jest
-	use 'mattkubej/jest.nvim'
-end)
-
-----------------------------------------------
---  General settings
-----------------------------------------------
-vim.opt.autoindent = true                    -- take indent for new line from previous line
-vim.opt.smartindent = true                   -- enable smart indentation
-vim.opt.autoread = true            -- reload file if the file changes on the disk
-vim.opt.autowrite = true                    -- write when switching buffers
-vim.opt.autowriteall= true                  -- write on :quit
-vim.opt.colorcolumn='101'               -- highlight the 100th column as an indicator
-vim.opt.completeopt= {"menuone", "preview", "noinsert" }          -- remove the horrendous preview window
-vim.keymap.set('i', '<silent><expr> <CR>', 'coc#pum#visible() ? coc#pum#confirm() : "<CR>"')
-vim.opt.encoding='utf-8'
-vim.opt.expandtab= true                     -- expands tabs to spaces
-vim.opt.list= true                          -- show trailing whitespace
-vim.opt.listchars:append "space:⋅"
-vim.opt.listchars:append "eol:↴"
-vim.opt.spell= false                       -- disable spelling
-vim.opt.swapfile = true                    -- disable swapfile usage
-vim.opt.wrap= false
-vim.opt.errorbells= false                  -- No bells!
-vim.opt.visualbell= false                  -- I said, no bells!
-vim.opt.ruler= true                         -- show cursor position
-vim.opt.formatoptions=tcqron          -- set vims text formatting options
-vim.opt.softtabstop=2
-vim.opt.tabstop=2
-vim.opt.textwidth=100
-vim.opt.title= true                         -- let vim set the terminal title
-vim.opt.titlelen=95                   -- let vim set the terminal title
-vim.opt.updatetime=100                -- redraw the status bar often
-vim.opt.laststatus=2                  -- statusline height is 2
-vim.opt.matchpairs = '(:),{:},[:],<:>'
-vim.opt.cmdheight=2                   -- command line height
-vim.opt.wildmenu= true                      -- enables a menu at the bottom
-vim.opt.wildmode={'longest:full'}    -- do completion in the command line via tab
-vim.opt.backspace=indent,eol,start    -- Enable backspace deletes indent and new line
-vim.opt.clipboard = 'unnamedplus'            -- Share the clipboard between vim and Mac OS
-vim.opt.syntax = 'off'
-
--- set the leader
-vim.g.mapleader = ',' -- set the leader button
-
--- " Autosave buffers before leaving them
-vim.api.nvim_create_autocmd({'BufLeave'}, {
-        pattern = {'*'},
-        command = 'silent! :wa'
+  -- Misc
+  { 't9md/vim-quickhl' },
+  { 'thinca/vim-quickrun' },
+  { 'mattn/emmet-vim' },
 })
 
--- Command mode keymappings
--- :h lua-keymap
+----------------------------------------------
+-- General settings
+----------------------------------------------
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.autoread = true
+vim.opt.autowrite = true
+vim.opt.autowriteall = true
+vim.opt.colorcolumn = '101'
+vim.opt.completeopt = { 'menuone', 'noselect' }
+vim.opt.encoding = 'utf-8'
+vim.opt.expandtab = true
+vim.opt.list = true
+vim.opt.listchars:append('space:⋅')
+vim.opt.listchars:append('eol:↴')
+vim.opt.spell = false
+vim.opt.swapfile = false
+vim.opt.wrap = false
+vim.opt.errorbells = false
+vim.opt.visualbell = false
+vim.opt.ruler = true
+vim.opt.formatoptions = 'tcqron'
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.textwidth = 100
+vim.opt.title = true
+vim.opt.titlelen = 95
+vim.opt.updatetime = 100
+vim.opt.laststatus = 2
+vim.opt.matchpairs = '(:),{:},[:],<:>'
+vim.opt.cmdheight = 2
+vim.opt.wildmenu = true
+vim.opt.wildmode = { 'longest:full' }
+vim.opt.backspace = { 'indent', 'eol', 'start' }
+vim.opt.clipboard = 'unnamedplus'
+vim.opt.number = true
+vim.opt.signcolumn = 'yes'
+vim.opt.termguicolors = true
+
+----------------------------------------------
+-- Autosave
+----------------------------------------------
+vim.api.nvim_create_autocmd({ 'BufLeave' }, {
+  pattern = { '*' },
+  command = 'silent! :wa',
+})
+
+----------------------------------------------
+-- Keymaps: Command mode (emacs-like)
+----------------------------------------------
 vim.keymap.set('c', '<C-a>', '<Home>')
 vim.keymap.set('c', '<C-b>', '<Left>')
 vim.keymap.set('c', '<C-d>', '<Del>')
 vim.keymap.set('c', '<C-e>', '<End>')
 vim.keymap.set('c', '<C-f>', '<Right>')
 
--- easy escape
-vim.keymap.set('i', 'jj', '<esc>')
--- go to last edited point
-vim.keymap.set('n', ';l', '\'.')
-
-
--- jump to pair
-vim.keymap.set('n', '<Tab>', '%')
-vim.keymap.set('v', '<Tab>', '%')
-
--- show full path of file
-vim.keymap.set('n', '<leader>fp', ':echo expand("%:p")<CR>')
-
--- insert mode keymaps like emacs
+----------------------------------------------
+-- Keymaps: Insert mode
+----------------------------------------------
+vim.keymap.set('i', 'jj', '<Esc>')
 vim.keymap.set('i', '<C-p>', '<Up>')
 vim.keymap.set('i', '<C-n>', '<Down>')
 vim.keymap.set('i', '<C-b>', '<Left>')
 vim.keymap.set('i', '<C-f>', '<Right>')
-vim.keymap.set('i', '<C-e>', '<end>')
-vim.keymap.set('i', '<C-d>', '<del>')
+vim.keymap.set('i', '<C-e>', '<End>')
+vim.keymap.set('i', '<C-d>', '<Del>')
 vim.keymap.set('i', '<C-h>', '<BS>')
 
+----------------------------------------------
+-- Keymaps: Normal mode
+----------------------------------------------
+vim.keymap.set('n', ';l', "'.")
+vim.keymap.set('n', '<Tab>', '%')
+vim.keymap.set('v', '<Tab>', '%')
+vim.keymap.set('n', '<leader>fp', ':echo expand("%:p")<CR>')
 
-----------------------------------------------
---  Colors
-----------------------------------------------
-vim.cmd[[colorscheme tokyonight]]
-
-----------------------------------------------
---  Terminal mode
-----------------------------------------------
--- Press ESC to NORMAL Mode
-vim.keymap.set('t', '<esc>', '<C-\\><C-N>', {silent = true})
--- always INSERT MODE in open the terminal
-vim.api.nvim_create_autocmd({'TermOpen'}, {
-        pattern = {'*'},
-        command = 'startinsert'
-})
-
-
-----------------------------------------------
--- Searching  
-----------------------------------------------
+-- Searching
 vim.opt.incsearch = true
 vim.opt.hlsearch = true
 vim.opt.ignorecase = true
-
--- Clear search highlights
+vim.opt.smartcase = true
 vim.keymap.set('n', '<Leader>c', ':nohlsearch<CR>')
-
--- These mappings will make it so that going to the next one in a search will
--- center on the line it's found in.
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 
-----------------------------------------------
--- Navigation
-----------------------------------------------
 -- Disable arrow keys
 vim.keymap.set('n', '<Up>', '<NOP>')
 vim.keymap.set('n', '<Down>', '<NOP>')
@@ -189,94 +382,31 @@ vim.keymap.set('n', '<Right>', '<NOP>')
 ----------------------------------------------
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-
--- Creating splits
 vim.keymap.set('n', '<Leader>v', ':vsplit<CR>')
 vim.keymap.set('n', '<Leader>h', ':split<CR>')
-
--- Move window
 vim.keymap.set('n', 'sh', '<C-w>h')
 vim.keymap.set('n', 'sk', '<C-w>k')
 vim.keymap.set('n', 'sj', '<C-w>j')
 vim.keymap.set('n', 'sl', '<C-w>l')
-
--- Close window splited
 vim.keymap.set('n', '<leader>q', ':close<CR>')
 
+----------------------------------------------
+-- Terminal mode
+----------------------------------------------
+vim.keymap.set('t', '<Esc>', '<C-\\><C-N>', { silent = true })
+vim.api.nvim_create_autocmd({ 'TermOpen' }, {
+  pattern = { '*' },
+  command = 'startinsert',
+})
 
 ----------------------------------------------
--- Plugin: QuickRun
+-- Plugin keymaps
 ----------------------------------------------
-vim.keymap.set('n', '<Leader>r', ':QuickRun<enter>')
+-- QuickRun
+vim.keymap.set('n', '<Leader>r', ':QuickRun<CR>')
 
-----------------------------------------------
--- Plugin: vim-quickhl
-----------------------------------------------
+-- vim-quickhl
 vim.keymap.set('n', '<Leader>m', '<Plug>(quickhl-manual-this)')
 vim.keymap.set('x', '<Leader>m', '<Plug>(quickhl-manual-this)')
 vim.keymap.set('n', '<Leader>M', '<Plug>(quickhl-manual-reset)')
 vim.keymap.set('x', '<Leader>M', '<Plug>(quickhl-manual-reset)')
-
-----------------------------------------------
--- Plugin: mattkubej/jest.nvim
-----------------------------------------------
-vim.keymap.set('n', '<Leader>j', ':JestFile<CR>')
-
-----------------------------------------------
--- Plugin: nvim-telescope/telescope.nvim
-----------------------------------------------
-vim.keymap.set('n', '<C-p>', ':Telescope git_files<CR>')
-vim.keymap.set('n', '<Leader>ff', '<cmd>Telescope find_files<CR>')
-vim.keymap.set('n', '<Leader>fg', '<cmd>Telescope live_grep<CR>')
-vim.keymap.set('n', '<Leader>fb', '<cmd>Telescope buffers<CR>')
-vim.keymap.set('n', '<Leader>fh', '<cmd>Telescope help_tags<CR>')
-
-----------------------------------------------
--- Plugin: lualine.nvim
-----------------------------------------------
-require('lualine').setup {
-        options = {
-                icons_enabled = true,      
-                theme = "auto",
-        },
-        sections = {
-                lualine_a = {'mode'},
-                lualine_b = {'branch', 'diff', 'diagnostics'},
-                lualine_c = {'filename'},
-                lualine_x = {'encoding', 'fileformat', 'filetype'},
-                lualine_y = {'progress'},
-                lualine_z = {'location'}
-        },
-        inactive_sections = {
-                lualine_a = {},
-                lualine_b = {},
-                lualine_c = {'filename'},
-                lualine_x = {'location'},
-                lualine_y = {},
-                lualine_z = {}
-        },
-
-}
-
-----------------------------------------------
--- Plugin: airblade/vim-gitgutter
-----------------------------------------------
-vim.cmd 'let g:gitgutter_max_signs = 1024'
-vim.cmd 'let g:gitgutter_sign_added = "✚"'
-vim.cmd 'let g:gitgutter_sign_modified = "➜"'
-vim.cmd 'let g:gitgutter_sign_removed = "✘"'
-
-----------------------------------------------
--- Plugin: coc
-----------------------------------------------
-vim.keymap.set('n', 'gd', '<Plug>(coc-definition)', {silent = true})
-vim.keymap.set('n', 'gt', '<Plug>(coc-type-definition)', {silent = true})
-vim.keymap.set('n', 'gi', '<Plug>(coc-implementation)', {silent = true})
-vim.keymap.set('n', 'gr', '<Plug>(coc-references)', {silent = true})
-vim.keymap.set('n', 'gds', ':sp<CR><Plug>(coc-definition)', {silent = true})
-vim.keymap.set('n', 'gdv', ':vs<CR><Plug>(coc-definition)', {silent = true})
-
-----------------------------------------------
--- Language: golang
-----------------------------------------------
-
