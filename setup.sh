@@ -20,6 +20,7 @@ packages=(
     nvim
     ctags
     xdg
+    ghostty
 )
 
 echo "Stowing packages..."
