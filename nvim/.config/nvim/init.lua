@@ -47,7 +47,17 @@ require("lazy").setup({
     dependencies = { 'williamboman/mason.nvim' },
     config = function()
       require('mason-lspconfig').setup({
-        ensure_installed = { 'ts_ls', 'gopls', 'lua_ls' },
+        ensure_installed = {
+          'ts_ls',       -- TypeScript/JavaScript/JSX/TSX
+          'gopls',       -- Go
+          'lua_ls',      -- Lua
+          'rust_analyzer', -- Rust
+          'pyright',     -- Python
+          'html',        -- HTML
+          'cssls',       -- CSS
+          'biome',       -- Biome (JS/TS linter/formatter)
+          'astro',       -- Astro
+        },
       })
     end
   },
@@ -83,6 +93,50 @@ require("lazy").setup({
       }
       vim.lsp.enable('lua_ls')
 
+      -- Rust
+      vim.lsp.config.rust_analyzer = {
+        capabilities = capabilities,
+        settings = {
+          ['rust-analyzer'] = {
+            inlayHints = {
+              parameterHints = { enable = true },
+              typeHints = { enable = true },
+            },
+          },
+        },
+      }
+      vim.lsp.enable('rust_analyzer')
+
+      -- Python
+      vim.lsp.config.pyright = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable('pyright')
+
+      -- HTML
+      vim.lsp.config.html = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable('html')
+
+      -- CSS
+      vim.lsp.config.cssls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable('cssls')
+
+      -- Biome (JS/TS linter/formatter)
+      vim.lsp.config.biome = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable('biome')
+
+      -- Astro
+      vim.lsp.config.astro = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable('astro')
+
       -- LSP keymaps
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
@@ -98,6 +152,16 @@ require("lazy").setup({
           vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
           vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts)
           vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
+
+          -- Inlay hints toggle
+          vim.keymap.set('n', '<leader>ih', function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+          end, opts)
+
+          -- Enable inlay hints by default
+          if vim.lsp.inlay_hint then
+            vim.lsp.inlay_hint.enable(true)
+          end
         end,
       })
     end
@@ -173,7 +237,7 @@ require("lazy").setup({
     build = ':TSUpdate',
     config = function()
       -- Neovim 0.11+ uses vim.treesitter directly
-      local langs = { 'lua', 'vim', 'vimdoc', 'javascript', 'typescript', 'tsx', 'go', 'html', 'css', 'json', 'yaml', 'markdown' }
+      local langs = { 'lua', 'vim', 'vimdoc', 'javascript', 'typescript', 'tsx', 'go', 'html', 'css', 'json', 'yaml', 'markdown', 'rust', 'python', 'astro' }
       for _, lang in ipairs(langs) do
         pcall(function()
           vim.treesitter.language.add(lang)
@@ -223,15 +287,17 @@ require("lazy").setup({
     config = function()
       require('conform').setup({
         formatters_by_ft = {
-          javascript = { 'prettier' },
-          typescript = { 'prettier' },
-          typescriptreact = { 'prettier' },
-          javascriptreact = { 'prettier' },
-          json = { 'prettier' },
+          javascript = { 'biome', 'prettier', stop_after_first = true },
+          typescript = { 'biome', 'prettier', stop_after_first = true },
+          typescriptreact = { 'biome', 'prettier', stop_after_first = true },
+          javascriptreact = { 'biome', 'prettier', stop_after_first = true },
+          json = { 'biome', 'prettier', stop_after_first = true },
           html = { 'prettier' },
           css = { 'prettier' },
           go = { 'goimports', 'gofmt' },
           lua = { 'stylua' },
+          rust = { 'rustfmt' },
+          python = { 'black' },
         },
         format_on_save = {
           timeout_ms = 500,
