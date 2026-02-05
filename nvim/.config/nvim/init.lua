@@ -227,6 +227,16 @@ require("lazy").setup({
             maxwidth = 50,
           }),
         },
+        window = {
+          completion = cmp.config.window.bordered({
+            border = 'rounded',
+            winhighlight = 'Normal:Pmenu,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None',
+          }),
+          documentation = cmp.config.window.bordered({
+            border = 'rounded',
+            winhighlight = 'Normal:Pmenu,FloatBorder:FloatBorder',
+          }),
+        },
       })
     end
   },
@@ -361,6 +371,82 @@ require("lazy").setup({
   { 't9md/vim-quickhl' },
   { 'thinca/vim-quickrun' },
   { 'mattn/emmet-vim' },
+
+  -- UI Enhancement
+  {
+    'folke/noice.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
+    },
+    config = function()
+      require('noice').setup({
+        lsp = {
+          override = {
+            ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+            ['vim.lsp.util.stylize_markdown'] = true,
+            ['cmp.entry.get_documentation'] = true,
+          },
+          hover = {
+            enabled = true,
+            silent = true,
+            view = nil,
+            opts = {
+              border = {
+                style = 'rounded',
+                padding = { 0, 1 },
+              },
+              position = { row = 2, col = 2 },
+            },
+          },
+          signature = {
+            enabled = true,
+            opts = {
+              border = {
+                style = 'rounded',
+                padding = { 0, 1 },
+              },
+            },
+          },
+          documentation = {
+            view = 'hover',
+            opts = {
+              lang = 'markdown',
+              replace = true,
+              render = 'plain',
+              format = { '{message}' },
+              win_options = { concealcursor = 'n', conceallevel = 3 },
+            },
+          },
+        },
+        presets = {
+          bottom_search = true,
+          command_palette = true,
+          long_message_to_split = true,
+          lsp_doc_border = true,
+        },
+        views = {
+          hover = {
+            border = {
+              style = 'rounded',
+              padding = { 1, 2 },
+            },
+            win_options = {
+              winhighlight = 'Normal:NormalFloat,FloatBorder:FloatBorder',
+            },
+          },
+        },
+      })
+
+      -- nvim-notify styling
+      require('notify').setup({
+        background_colour = '#292e42',
+        stages = 'fade',
+        timeout = 3000,
+      })
+    end,
+  },
 })
 
 ----------------------------------------------
@@ -402,6 +488,26 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.number = true
 vim.opt.signcolumn = 'yes'
 vim.opt.termguicolors = true
+
+----------------------------------------------
+-- Float window styling
+----------------------------------------------
+vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#292e42', fg = '#c0caf5' })
+vim.api.nvim_set_hl(0, 'FloatBorder', { bg = '#292e42', fg = '#7aa2f7' })
+
+-- Completion menu styling
+vim.api.nvim_set_hl(0, 'Pmenu', { bg = '#292e42', fg = '#c0caf5' })
+vim.api.nvim_set_hl(0, 'PmenuSel', { bg = '#3d4966', fg = '#c0caf5', bold = true })
+vim.api.nvim_set_hl(0, 'PmenuSbar', { bg = '#292e42' })
+vim.api.nvim_set_hl(0, 'PmenuThumb', { bg = '#7aa2f7' })
+
+
+vim.diagnostic.config({
+  float = {
+    border = 'rounded',
+    source = true,
+  },
+})
 
 ----------------------------------------------
 -- Autosave
