@@ -3,7 +3,6 @@
 # Export current: brew bundle dump --file=~/.dotfiles/Brewfile --force
 
 # Taps
-tap "homebrew/cask-fonts"
 tap "universal-ctags/universal-ctags"
 
 # Core utilities
@@ -51,7 +50,7 @@ brew "go"
 
 # Fonts
 cask "font-fira-code"
-cask "font-moralerspace-nf"
+cask "font-moralerspace"
 cask "font-source-code-pro"
 
 # GUI Apps
