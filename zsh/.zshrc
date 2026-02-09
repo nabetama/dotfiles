@@ -114,19 +114,20 @@ RPROMPT=''
 export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/Users/nabetama/.sdkman"
-[[ -s "/Users/nabetama/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/nabetama/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/nabetama/.docker/completions $fpath)
+fpath=($HOME/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
 
 # pnpm
-export PNPM_HOME="/Users/nabetama/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 export PATH="$HOME/.local/bin:$PATH"
+export NODE_EXTRA_CA_CERTS="$HOME/netskope-ca.pem"
