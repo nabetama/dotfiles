@@ -38,7 +38,7 @@ packages=(
 echo "Stowing packages..."
 for pkg in "${packages[@]}"; do
     echo "  - $pkg"
-    stow -t "$HOME" "$pkg"
+    stow -R -t "$HOME" "$pkg"
 done
 
 echo "Done!"
