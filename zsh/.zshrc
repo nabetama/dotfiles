@@ -96,8 +96,8 @@ RPROMPT=''
 # ------------------------------------
 # Read settings
 # ------------------------------------
-[ -f ~/.dotfiles/zsh/git/contrib/completion/git-completion.zsh ] && \
-	 zstyle ':completion:*:*:git:*' script ~/.dotfiles/zsh/git/contrib/completion/git-completion.zsh
+[ -f ~/.dotfiles/zsh/git-completion.zsh ] && \
+	 zstyle ':completion:*:*:git:*' script ~/.dotfiles/zsh/git-completion.zsh
 [ -f ~/.dotfiles/zsh/global    ] && source ~/.dotfiles/zsh/global
 [ -f ~/.dotfiles/zsh/alias     ] && source ~/.dotfiles/zsh/alias
 [ -f ~/.dotfiles/zsh/functions ] && source ~/.dotfiles/zsh/functions
@@ -130,4 +130,5 @@ case ":$PATH:" in
 esac
 # pnpm end
 export PATH="$HOME/.local/bin:$PATH"
-export NODE_EXTRA_CA_CERTS="$HOME/netskope-ca.pem"
+
+# NOTE: Machine-specific settings (e.g., NODE_EXTRA_CA_CERTS) should be in ~/.localrc

@@ -18,8 +18,38 @@ cd ~/.dotfiles
 
 ```sh
 # Link individual packages
-stow -t ~ zsh git vim nvim
+stow -t ~ zsh git nvim
 
 # Unlink
 stow -t ~ -D zsh
 ```
+
+## Customization
+
+### Machine-specific settings
+
+Add local configurations to `~/.localrc` (not tracked by git):
+
+```sh
+# Example ~/.localrc
+export NODE_EXTRA_CA_CERTS="$HOME/company-ca.pem"
+export WORK_PROJECT_PATH="$HOME/work"
+```
+
+### Installing Homebrew packages
+
+```sh
+brew bundle --file=~/.dotfiles/Brewfile
+```
+
+### Go tools
+
+```sh
+~/.dotfiles/go/gets.sh
+```
+
+## Version Managers
+
+- **Python**: [uv](https://docs.astral.sh/uv/)
+- **Node.js**: [Volta](https://volta.sh/)
+- **Go**: Homebrew
