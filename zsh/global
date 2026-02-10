@@ -61,3 +61,8 @@ for f (~/.dotfiles/fzf/*.zsh) source "${f}"
 bindkey '^r' fzf-select-history
 bindkey '^j' fzf-ghq
 bindkey '^g' fzf-git-branch-checkout
+
+# ------------------------------------
+# zoxide (smart cd)
+# ------------------------------------
+eval "$(zoxide init zsh)"

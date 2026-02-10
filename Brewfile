@@ -30,7 +30,13 @@ brew "ghq"
 # Search & Navigation
 brew "fzf"
 brew "ripgrep"
+brew "fd"
 brew "tree"
+
+# Modern CLI tools
+brew "eza"
+brew "bat"
+brew "zoxide"
 
 # Tags
 brew "universal-ctags"
