@@ -36,17 +36,17 @@ brew "tree"
 brew "universal-ctags"
 
 # Utils
-brew "colordiff"
+brew "git-delta"
 brew "direnv"
 brew "wget"
 brew "curl"
 brew "nkf"
 brew "jq"
 
-# Languages & Version managers
-brew "pyenv"
-brew "nvm"
+# Languages & Tools
 brew "go"
+brew "uv"
+# NOTE: volta is installed via its own installer (https://volta.sh)
 
 # Fonts
 cask "font-fira-code"

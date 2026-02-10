@@ -17,13 +17,18 @@ if [ -f "$DOTFILES_DIR/Brewfile" ]; then
     brew bundle --file="$DOTFILES_DIR/Brewfile"
 fi
 
+# Install Volta (JavaScript toolchain manager)
+if ! command -v volta &> /dev/null; then
+    echo "Installing Volta..."
+    curl https://get.volta.sh | bash -s -- --skip-setup
+fi
+
 # Packages to stow
 packages=(
     zsh
     git
     tig
     tmux
-    vim
     nvim
     ctags
     xdg

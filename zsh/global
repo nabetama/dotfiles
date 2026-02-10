@@ -8,17 +8,11 @@
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/src/github.com/nabetama/scripts/bin
-export PATH="/usr/local/opt/avr-gcc@7/bin:$PATH"
 
 # ------------------------------------
 # homebrew for apple silicon
 # ------------------------------------
 export PATH=$PATH:/opt/homebrew/bin
-
-# ------------------------------------
-# Heroku
-# ------------------------------------
-export PATH="$PATH:/usr/local/heroku/bin"
 
 # ====================================
 # ENVIRONMENT
@@ -27,7 +21,6 @@ export PATH="$PATH:/usr/local/heroku/bin"
 # ------------------------------------
 # LANGUAGE
 # ------------------------------------
-export LANG=ja_JP.UTF-8
 export LANG=en_US.UTF-8
 
 # ------------------------------------
@@ -40,28 +33,21 @@ export EDITOR='vim'
 # ====================================
 
 # ------------------------------------
-# Go
+# Go (Homebrew)
 # ------------------------------------
-export GOVERSION=$(cat ${HOME}/.go/.goversion)
-export GOROOT=${HOME}/.go/${GOVERSION}
 export GOPATH=${HOME}
-export PATH=${GOROOT}/bin:${GOPATH}/bin:${PATH}
+export PATH=${GOPATH}/bin:${PATH}
 
 # ------------------------------------
-# Python
+# Python (uv)
 # ------------------------------------
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-# portry
 export PATH=$PATH:$HOME/.local/bin
 
 # ------------------------------------
-# JavaScript
+# JavaScript (Volta)
 # ------------------------------------
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
 
 # ------------------------------------
 # Rust
@@ -75,8 +61,3 @@ for f (~/.dotfiles/fzf/*.zsh) source "${f}"
 bindkey '^r' fzf-select-history
 bindkey '^j' fzf-ghq
 bindkey '^g' fzf-git-branch-checkout
-
-# ------------------------------------
-# flutter
-# ------------------------------------
-export PATH="$PATH:$HOME/src/github.com/flutter/flutter/bin"

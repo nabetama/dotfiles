@@ -21,6 +21,15 @@
 [core]
   editor = vim
   precomposeunicode = true
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true
+  line-numbers = true
+  side-by-side = true
 
 [merge]
   ff = false
