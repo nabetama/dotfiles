@@ -1,10 +1,13 @@
 # aliases.
 # General
-alias ls='eza --icons --git'
-alias ll='eza -l --icons --git --time-style=relative'
+# alias ls='eza --icons --git'  # POSIXのlsを使用
+# alias ll='eza -l --icons --git --time-style=relative'
+# alias l='ll'
+# alias la='eza -la --icons --git'
+# alias tree='eza --tree --icons'
+alias ll='ls -l'
 alias l='ll'
-alias la='eza -la --icons --git'
-alias tree='eza --tree --icons'
+alias la='ls -la'
 alias cat='bat --paging=never'
 alias c='clear'
 alias h='history'
