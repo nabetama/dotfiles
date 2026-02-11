@@ -280,6 +280,19 @@ require("lazy").setup({
   {
     'nvim-telescope/telescope.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('telescope').setup({
+        defaults = {
+          file_ignore_patterns = { '^.git/' },
+        },
+        pickers = {
+          find_files = {
+            hidden = true,
+            find_command = { 'fd', '--type', 'f', '--hidden', '--exclude', '.git' },
+          },
+        },
+      })
+    end,
     keys = {
       { '<C-p>', '<cmd>Telescope find_files<CR>' },
       { '<leader>ff', '<cmd>Telescope git_files<CR>' },
@@ -594,3 +607,254 @@ vim.keymap.set('n', '<Leader>m', '<Plug>(quickhl-manual-this)')
 vim.keymap.set('x', '<Leader>m', '<Plug>(quickhl-manual-this)')
 vim.keymap.set('n', '<Leader>M', '<Plug>(quickhl-manual-reset)')
 vim.keymap.set('x', '<Leader>M', '<Plug>(quickhl-manual-reset)')
+
+----------------------------------------------
+-- Git Status UI (tig-like)
+----------------------------------------------
+local GitStatus = {}
+
+function GitStatus.open()
+  -- Get git status
+  local output = vim.fn.systemlist('git status --porcelain 2>/dev/null')
+  if vim.v.shell_error ~= 0 then
+    vim.notify('Not a git repository', vim.log.levels.WARN)
+    return
+  end
+
+  -- Get branch info
+  local branch = vim.fn.system('git branch --show-current 2>/dev/null'):gsub('\n', '')
+  local remote_status = vim.fn.system('git status -sb 2>/dev/null'):match('%[(.-)%]') or ''
+
+  -- Parse status into categories
+  local staged = {}
+  local unstaged = {}
+  local untracked = {}
+
+  for _, line in ipairs(output) do
+    if line ~= '' then
+      local idx = line:sub(1, 1)  -- staged status
+      local wt = line:sub(2, 2)   -- worktree status
+      local file = line:sub(4)
+
+      if line:sub(1, 2) == '??' then
+        table.insert(untracked, { status = '?', file = file })
+      else
+        -- Staged changes (first column)
+        if idx ~= ' ' and idx ~= '?' then
+          table.insert(staged, { status = idx, file = file })
+        end
+        -- Unstaged changes (second column)
+        if wt ~= ' ' and wt ~= '?' then
+          table.insert(unstaged, { status = wt, file = file })
+        end
+      end
+    end
+  end
+
+  -- Create buffer
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.bo[buf].bufhidden = 'wipe'
+  vim.bo[buf].filetype = 'gitstatus'
+
+  -- Build display lines
+  local lines = {}
+  local file_map = {}  -- line number -> file info
+  local first_file_line = nil
+
+  -- Branch info
+  local branch_line = 'On branch ' .. branch
+  if remote_status ~= '' then
+    branch_line = branch_line .. ' [' .. remote_status .. ']'
+  end
+  table.insert(lines, branch_line)
+  table.insert(lines, '')
+
+  -- Staged section
+  table.insert(lines, 'Changes to be committed:')
+  if #staged == 0 then
+    table.insert(lines, '  (no files)')
+  else
+    for _, f in ipairs(staged) do
+      table.insert(lines, '  ' .. f.status .. ' ' .. f.file)
+      file_map[#lines] = { file = f.file, section = 'staged' }
+      if not first_file_line then first_file_line = #lines end
+    end
+  end
+  table.insert(lines, '')
+
+  -- Unstaged section
+  table.insert(lines, 'Changes not staged for commit:')
+  if #unstaged == 0 then
+    table.insert(lines, '  (no files)')
+  else
+    for _, f in ipairs(unstaged) do
+      table.insert(lines, '  ' .. f.status .. ' ' .. f.file)
+      file_map[#lines] = { file = f.file, section = 'unstaged' }
+      if not first_file_line then first_file_line = #lines end
+    end
+  end
+  table.insert(lines, '')
+
+  -- Untracked section
+  table.insert(lines, 'Untracked files:')
+  if #untracked == 0 then
+    table.insert(lines, '  (no files)')
+  else
+    for _, f in ipairs(untracked) do
+      table.insert(lines, '  ' .. f.status .. ' ' .. f.file)
+      file_map[#lines] = { file = f.file, section = 'untracked' }
+      if not first_file_line then first_file_line = #lines end
+    end
+  end
+
+  table.insert(lines, '')
+  table.insert(lines, '[j/k] move  [Enter/d] diff  [u] stage/unstage  [C] commit  [q] close')
+
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.bo[buf].modifiable = false
+
+  -- Window size
+  local width = math.min(80, vim.o.columns - 4)
+  local height = math.min(#lines + 2, vim.o.lines - 4)
+
+  -- Open float window
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = width,
+    height = height,
+    col = math.floor((vim.o.columns - width) / 2),
+    row = math.floor((vim.o.lines - height) / 2),
+    style = 'minimal',
+    border = 'rounded',
+    title = ' Git ',
+    title_pos = 'center',
+  })
+
+  -- カーソル行をハイライト
+  vim.wo[win].cursorline = true
+
+  -- Highlighting
+  vim.api.nvim_set_hl(0, 'GitStatusHeader', { fg = '#7aa2f7', bold = true })
+  vim.api.nvim_set_hl(0, 'GitStatusStaged', { fg = '#9ece6a' })
+  vim.api.nvim_set_hl(0, 'GitStatusUnstaged', { fg = '#e0af68' })
+  vim.api.nvim_set_hl(0, 'GitStatusUntracked', { fg = '#f7768e' })
+  vim.api.nvim_set_hl(0, 'GitStatusBranch', { fg = '#bb9af7' })
+
+  local ns = vim.api.nvim_create_namespace('gitstatus')
+  for i, line in ipairs(lines) do
+    if line:match('^On branch') then
+      vim.api.nvim_buf_add_highlight(buf, ns, 'GitStatusBranch', i - 1, 0, -1)
+    elseif line:match('^Changes to be committed') then
+      vim.api.nvim_buf_add_highlight(buf, ns, 'GitStatusHeader', i - 1, 0, -1)
+    elseif line:match('^Changes not staged') then
+      vim.api.nvim_buf_add_highlight(buf, ns, 'GitStatusHeader', i - 1, 0, -1)
+    elseif line:match('^Untracked files') then
+      vim.api.nvim_buf_add_highlight(buf, ns, 'GitStatusHeader', i - 1, 0, -1)
+    elseif file_map[i] then
+      local hl = ({
+        staged = 'GitStatusStaged',
+        unstaged = 'GitStatusUnstaged',
+        untracked = 'GitStatusUntracked',
+      })[file_map[i].section]
+      vim.api.nvim_buf_add_highlight(buf, ns, hl, i - 1, 0, -1)
+    end
+  end
+
+  -- Move cursor to first file
+  if first_file_line then
+    vim.api.nvim_win_set_cursor(win, { first_file_line, 0 })
+  end
+
+  -- Helper: get file under cursor
+  local function get_current_file()
+    local row = vim.api.nvim_win_get_cursor(win)[1]
+    return file_map[row]
+  end
+
+  -- Helper: find next/prev file line
+  local function find_file_line(start, direction)
+    local row = start
+    while row >= 1 and row <= #lines do
+      row = row + direction
+      if file_map[row] then return row end
+    end
+    return nil
+  end
+
+  -- Helper: refresh
+  local function refresh()
+    vim.api.nvim_win_close(win, true)
+    GitStatus.open()
+  end
+
+  -- Keymaps
+  local opts = { buffer = buf, silent = true, nowait = true }
+
+  vim.keymap.set('n', 'q', function() vim.api.nvim_win_close(win, true) end, opts)
+  vim.keymap.set('n', '<Esc>', function() vim.api.nvim_win_close(win, true) end, opts)
+
+  vim.keymap.set('n', 'j', function()
+    local row = vim.api.nvim_win_get_cursor(win)[1]
+    local next = find_file_line(row, 1)
+    if next then
+      vim.api.nvim_win_set_cursor(win, { next, 0 })
+    end
+  end, opts)
+
+  vim.keymap.set('n', 'k', function()
+    local row = vim.api.nvim_win_get_cursor(win)[1]
+    local prev = find_file_line(row, -1)
+    if prev then
+      vim.api.nvim_win_set_cursor(win, { prev, 0 })
+    end
+  end, opts)
+
+  local function open_diff(f)
+    vim.api.nvim_win_close(win, true)
+    if f.section == 'untracked' then
+      -- Untracked: プレビュー表示
+      vim.cmd('view ' .. vim.fn.fnameescape(f.file))
+    elseif f.section == 'staged' then
+      vim.cmd('Git diff --cached ' .. vim.fn.fnameescape(f.file))
+    else
+      vim.cmd('Git diff ' .. vim.fn.fnameescape(f.file))
+    end
+    vim.keymap.set('n', 'q', function()
+      vim.cmd('bdelete')
+      vim.schedule(GitStatus.open)
+    end, { buffer = true, silent = true })
+  end
+
+  vim.keymap.set('n', '<CR>', function()
+    local f = get_current_file()
+    if f then
+      open_diff(f)
+    end
+  end, opts)
+
+  vim.keymap.set('n', 'u', function()
+    local f = get_current_file()
+    if f then
+      if f.section == 'staged' then
+        vim.fn.system('git restore --staged ' .. vim.fn.shellescape(f.file))
+      else
+        vim.fn.system('git add ' .. vim.fn.shellescape(f.file))
+      end
+      refresh()
+    end
+  end, opts)
+
+  vim.keymap.set('n', 'd', function()
+    local f = get_current_file()
+    if f then
+      open_diff(f)
+    end
+  end, opts)
+
+  vim.keymap.set('n', 'C', function()
+    vim.api.nvim_win_close(win, true)
+    vim.cmd('Git commit')
+  end, opts)
+end
+
+vim.keymap.set('n', '<Leader>gs', GitStatus.open, { desc = 'Git status UI' })
