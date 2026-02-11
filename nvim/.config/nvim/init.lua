@@ -290,6 +290,9 @@ require("lazy").setup({
             hidden = true,
             find_command = { 'fd', '--type', 'f', '--hidden', '--exclude', '.git' },
           },
+          live_grep = {
+            additional_args = { '--hidden', '--glob', '!.git/' },
+          },
         },
       })
     end,
