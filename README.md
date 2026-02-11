@@ -47,9 +47,3 @@ brew bundle --file=~/.dotfiles/Brewfile
 ```sh
 ~/.dotfiles/go/gets.sh
 ```
-
-## Version Managers
-
-- **Python**: [uv](https://docs.astral.sh/uv/)
-- **Node.js**: [Volta](https://volta.sh/)
-- **Go**: Homebrew
