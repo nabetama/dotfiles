@@ -388,6 +388,52 @@ require("lazy").setup({
   { 'thinca/vim-quickrun' },
   { 'mattn/emmet-vim' },
 
+  -- Which-key (show keybindings)
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    config = function()
+      local wk = require('which-key')
+      wk.setup({
+        preset = 'modern',
+        delay = 300,
+        icons = {
+          mappings = false,
+        },
+      })
+      -- Register key groups
+      wk.add({
+        { '<leader>f', group = 'Find/File' },
+        { '<leader>g', group = 'Git' },
+        { '<leader>c', desc = 'Clear search highlight' },
+        { '<leader>r', desc = 'QuickRun' },
+        { '<leader>v', desc = 'Vertical split' },
+        { '<leader>h', desc = 'Horizontal split' },
+        { '<leader>q', desc = 'Close window' },
+        { '<leader>x', desc = 'Close buffer' },
+        { '<leader>m', desc = 'Highlight word' },
+        { '<leader>M', desc = 'Clear highlights' },
+        { '<leader>e', desc = 'Show diagnostic' },
+        { '<leader>rn', desc = 'Rename symbol' },
+        { '<leader>ca', desc = 'Code action' },
+        { '<leader>ih', desc = 'Toggle inlay hints' },
+        { '<leader>fp', desc = 'Show file path' },
+        { '<leader>ff', desc = 'Find git files' },
+        { '<leader>fg', desc = 'Live grep' },
+        { '<leader>fb', desc = 'Find buffers' },
+        { '<leader>fh', desc = 'Help tags' },
+        { '<leader>gs', desc = 'Git status UI' },
+        { '<leader>]', desc = 'Next buffer' },
+        { '<leader>[', desc = 'Prev buffer' },
+        { '<leader>1', desc = 'Buffer 1' },
+        { '<leader>2', desc = 'Buffer 2' },
+        { '<leader>3', desc = 'Buffer 3' },
+        { '<leader>4', desc = 'Buffer 4' },
+        { '<leader>5', desc = 'Buffer 5' },
+      })
+    end,
+  },
+
   -- UI Enhancement
   {
     'folke/noice.nvim',
