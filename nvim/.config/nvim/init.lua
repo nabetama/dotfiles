@@ -48,15 +48,15 @@ require("lazy").setup({
     config = function()
       require('mason-lspconfig').setup({
         ensure_installed = {
-          'ts_ls',       -- TypeScript/JavaScript/JSX/TSX
-          'gopls',       -- Go
-          'lua_ls',      -- Lua
+          'ts_ls',         -- TypeScript/JavaScript/JSX/TSX
+          'gopls',         -- Go
+          'lua_ls',        -- Lua
           'rust_analyzer', -- Rust
-          'pyright',     -- Python
-          'html',        -- HTML
-          'cssls',       -- CSS
-          'biome',       -- Biome (JS/TS linter/formatter)
-          'astro',       -- Astro
+          'pyright',       -- Python
+          'html',          -- HTML
+          'cssls',         -- CSS
+          'biome',         -- Biome (JS/TS linter/formatter)
+          'astro',         -- Astro
         },
       })
     end
@@ -88,6 +88,10 @@ require("lazy").setup({
         settings = {
           Lua = {
             diagnostics = { globals = { 'vim' } },
+            hint = {
+              enable = true,
+              arrayIndex = 'Disable', -- 配列インデックス[01][02]を非表示
+            },
           },
         },
       }
@@ -247,7 +251,8 @@ require("lazy").setup({
     build = ':TSUpdate',
     config = function()
       -- Neovim 0.11+ uses vim.treesitter directly
-      local langs = { 'lua', 'vim', 'vimdoc', 'javascript', 'typescript', 'tsx', 'go', 'html', 'css', 'json', 'yaml', 'markdown', 'rust', 'python', 'astro' }
+      local langs = { 'lua', 'vim', 'vimdoc', 'javascript', 'typescript', 'tsx', 'go', 'html', 'css', 'json', 'yaml',
+        'markdown', 'rust', 'python', 'astro' }
       for _, lang in ipairs(langs) do
         pcall(function()
           vim.treesitter.language.add(lang)
@@ -297,7 +302,7 @@ require("lazy").setup({
       })
     end,
     keys = {
-      { '<C-p>', '<cmd>Telescope find_files<CR>' },
+      { '<C-p>',      '<cmd>Telescope find_files<CR>' },
       { '<leader>ff', '<cmd>Telescope git_files<CR>' },
       { '<leader>fg', '<cmd>Telescope live_grep<CR>' },
       { '<leader>fb', '<cmd>Telescope buffers<CR>' },
@@ -362,9 +367,9 @@ require("lazy").setup({
       require('bufferline').setup()
     end,
     keys = {
-      { '<leader>]', '<cmd>BufferLineCycleNext<CR>', desc = 'Next buffer' },
-      { '<leader>[', '<cmd>BufferLineCyclePrev<CR>', desc = 'Prev buffer' },
-      { '<leader>x', '<cmd>bdelete<CR>', desc = 'Close buffer' },
+      { '<leader>]', '<cmd>BufferLineCycleNext<CR>',   desc = 'Next buffer' },
+      { '<leader>[', '<cmd>BufferLineCyclePrev<CR>',   desc = 'Prev buffer' },
+      { '<leader>x', '<cmd>bdelete<CR>',               desc = 'Close buffer' },
       { '<leader>1', '<cmd>BufferLineGoToBuffer 1<CR>' },
       { '<leader>2', '<cmd>BufferLineGoToBuffer 2<CR>' },
       { '<leader>3', '<cmd>BufferLineGoToBuffer 3<CR>' },
@@ -381,6 +386,24 @@ require("lazy").setup({
     config = function()
       vim.cmd([[colorscheme tokyonight]])
     end
+  },
+
+  -- Indent guides
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
+    config = function()
+      require('ibl').setup({
+        indent = {
+          char = '│', -- 細い縦線
+        },
+        scope = {
+          enabled = true,
+          show_start = false,
+          show_end = false,
+        },
+      })
+    end,
   },
 
   -- Misc
@@ -403,17 +426,17 @@ require("lazy").setup({
       })
       -- Register key groups
       wk.add({
-        { '<leader>f', group = 'Find/File' },
-        { '<leader>g', group = 'Git' },
-        { '<leader>c', desc = 'Clear search highlight' },
-        { '<leader>r', desc = 'QuickRun' },
-        { '<leader>v', desc = 'Vertical split' },
-        { '<leader>h', desc = 'Horizontal split' },
-        { '<leader>q', desc = 'Close window' },
-        { '<leader>x', desc = 'Close buffer' },
-        { '<leader>m', desc = 'Highlight word' },
-        { '<leader>M', desc = 'Clear highlights' },
-        { '<leader>e', desc = 'Show diagnostic' },
+        { '<leader>f',  group = 'Find/File' },
+        { '<leader>g',  group = 'Git' },
+        { '<leader>c',  desc = 'Clear search highlight' },
+        { '<leader>r',  desc = 'QuickRun' },
+        { '<leader>v',  desc = 'Vertical split' },
+        { '<leader>h',  desc = 'Horizontal split' },
+        { '<leader>q',  desc = 'Close window' },
+        { '<leader>x',  desc = 'Close buffer' },
+        { '<leader>m',  desc = 'Highlight word' },
+        { '<leader>M',  desc = 'Clear highlights' },
+        { '<leader>e',  desc = 'Show diagnostic' },
         { '<leader>rn', desc = 'Rename symbol' },
         { '<leader>ca', desc = 'Code action' },
         { '<leader>ih', desc = 'Toggle inlay hints' },
@@ -423,13 +446,13 @@ require("lazy").setup({
         { '<leader>fb', desc = 'Find buffers' },
         { '<leader>fh', desc = 'Help tags' },
         { '<leader>gs', desc = 'Git status UI' },
-        { '<leader>]', desc = 'Next buffer' },
-        { '<leader>[', desc = 'Prev buffer' },
-        { '<leader>1', desc = 'Buffer 1' },
-        { '<leader>2', desc = 'Buffer 2' },
-        { '<leader>3', desc = 'Buffer 3' },
-        { '<leader>4', desc = 'Buffer 4' },
-        { '<leader>5', desc = 'Buffer 5' },
+        { '<leader>]',  desc = 'Next buffer' },
+        { '<leader>[',  desc = 'Prev buffer' },
+        { '<leader>1',  desc = 'Buffer 1' },
+        { '<leader>2',  desc = 'Buffer 2' },
+        { '<leader>3',  desc = 'Buffer 3' },
+        { '<leader>4',  desc = 'Buffer 4' },
+        { '<leader>5',  desc = 'Buffer 5' },
       })
     end,
   },
@@ -524,7 +547,6 @@ vim.opt.completeopt = { 'menuone', 'noselect' }
 vim.opt.encoding = 'utf-8'
 vim.opt.expandtab = true
 vim.opt.list = true
-vim.opt.listchars:append('space:⋅')
 vim.opt.listchars:append('eol:↴')
 vim.opt.spell = false
 vim.opt.swapfile = false
@@ -681,8 +703,8 @@ function GitStatus.open()
 
   for _, line in ipairs(output) do
     if line ~= '' then
-      local idx = line:sub(1, 1)  -- staged status
-      local wt = line:sub(2, 2)   -- worktree status
+      local idx = line:sub(1, 1) -- staged status
+      local wt = line:sub(2, 2)  -- worktree status
       local file = line:sub(4)
 
       if line:sub(1, 2) == '??' then
@@ -707,7 +729,7 @@ function GitStatus.open()
 
   -- Build display lines
   local lines = {}
-  local file_map = {}  -- line number -> file info
+  local file_map = {} -- line number -> file info
   local first_file_line = nil
 
   -- Branch info
