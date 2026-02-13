@@ -35,6 +35,13 @@ packages=(
     ghostty
 )
 
+# Download git completion scripts
+echo "Downloading git completion scripts..."
+curl -sL -o "$DOTFILES_DIR/zsh/git-completion.bash" \
+    https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+curl -sL -o "$DOTFILES_DIR/zsh/git-completion.zsh" \
+    https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
+
 echo "Stowing packages..."
 for pkg in "${packages[@]}"; do
     echo "  - $pkg"
