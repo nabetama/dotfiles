@@ -129,6 +129,14 @@
                         "is_pointing_device": true
                     },
                     "ignore": false
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": true,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 37,
+                        "vendor_id": 1278
+                    }
                 }
             ],
             "fn_function_keys": [
