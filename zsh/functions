@@ -129,3 +129,37 @@ function gh-create-branch() {
     # Create and checkout the branch
     git checkout -b "$branch_name"
 }
+
+# ------------------------------------
+# Dev process management
+# ------------------------------------
+# Kill process(es) holding a given TCP port (default: 8080)
+# Usage: killport [port]
+function killport() {
+    local port="${1:-8080}"
+    local pids
+    pids=$(lsof -ti ":$port" 2>/dev/null)
+    if [ -z "$pids" ]; then
+        echo "no process on port $port"
+        return 0
+    fi
+    echo "killing: $pids"
+    echo "$pids" | xargs kill
+}
+
+# Kill stale data-api related processes (listening binary, built tmp/api, and orphaned `go run ./cmd/api/...`)
+# Usage: killdataapi
+function killdataapi() {
+    local pids
+    pids=$({
+        lsof -ti :8080 2>/dev/null
+        pgrep -f "data-api/tmp/api"
+        pgrep -f "go run.*cmd/api/main.go"
+    } | sort -u)
+    if [ -z "$pids" ]; then
+        echo "no data-api processes"
+        return 0
+    fi
+    echo "killing: $pids"
+    echo "$pids" | xargs kill
+}
