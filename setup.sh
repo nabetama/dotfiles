@@ -29,6 +29,7 @@ packages=(
     git
     tig
     tmux
+    herdr
     nvim
     ctags
     xdg

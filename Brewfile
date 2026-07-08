@@ -20,6 +20,7 @@ brew "vim"
 
 # Terminal multiplexer
 brew "tmux"
+brew "herdr"
 brew "reattach-to-user-namespace"
 
 # Git

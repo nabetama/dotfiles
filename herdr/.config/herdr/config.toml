@@ -1,0 +1,47 @@
+# herdr configuration
+# Symlinked to ~/.config/herdr/config.toml by GNU Stow.
+
+[theme]
+name = "vesper"
+auto_switch = false
+
+[keys]
+# Match tmux/.tmux.conf: unbind C-b; set-option -g prefix C-t
+prefix = "ctrl+t"
+
+# Keep tmux's prefix+r behavior for reloading configuration.
+reload_config = "prefix+r"
+resize_mode = "prefix+shift+r"
+
+# tmux prefix+s splits top/bottom, so move Herdr settings off prefix+s.
+settings = "prefix+shift+s"
+split_horizontal = "prefix+s"
+split_vertical = "prefix+v"
+
+# tmux pane navigation.
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+
+# tmux window navigation maps to Herdr tabs.
+previous_tab = ["prefix+ctrl+p", "prefix+p"]
+next_tab = ["prefix+ctrl+n", "prefix+n"]
+switch_tab = "prefix+1..9"
+new_tab = "prefix+c"
+rename_tab = ["prefix+comma", "prefix+shift+t"]
+close_tab = ["prefix+ampersand", "prefix+shift+x"]
+
+# tmux prefix+space popup window selector is closest to Herdr's goto picker.
+goto = ["prefix+space", "prefix+g"]
+
+# Herdr reserves pressing the prefix twice for sending a literal prefix key to
+# the pane, so tmux prefix+C-t cannot be mapped directly. Use prefix+Tab for
+# Herdr's closest equivalent: the last focused pane across workspaces/tabs.
+last_pane = "prefix+tab"
+cycle_pane_next = "prefix+o"
+open_notification_target = "prefix+shift+o"
+
+# prefix+e/E synchronized panes do not have a Herdr equivalent. Move scrollback
+# edit off prefix+e so the old sync key does not trigger an unrelated action.
+edit_scrollback = "prefix+shift+e"
