@@ -131,4 +131,10 @@ esac
 # pnpm end
 export PATH="$HOME/.local/bin:$PATH"
 
+# Homebrew を PATH 先頭に固定する。
+# 非ログインシェルや path_helper の並べ替えで /usr/bin が優先されると、
+# 対話シェルの git が Apple git(古い) に解決され、Homebrew の新しい git 補完スクリプト
+# (git help --aliases-for-completion を呼ぶ) と不一致になり補完エラーになるため。
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+
 # NOTE: Machine-specific settings (e.g., NODE_EXTRA_CA_CERTS) should be in ~/.localrc
