@@ -1,3 +1,4 @@
+onboarding = false
 # herdr configuration
 # Symlinked to ~/.config/herdr/config.toml by GNU Stow.
 
@@ -23,6 +24,10 @@ focus_pane_left = "prefix+h"
 focus_pane_down = "prefix+j"
 focus_pane_up = "prefix+k"
 focus_pane_right = "prefix+l"
+
+# Workspace up/down navigation in navigate mode: keep arrows, add emacs keys.
+navigate_workspace_up = ["up", "ctrl+p"]
+navigate_workspace_down = ["down", "ctrl+n"]
 
 # tmux window navigation maps to Herdr tabs.
 previous_tab = ["prefix+ctrl+p", "prefix+p"]
