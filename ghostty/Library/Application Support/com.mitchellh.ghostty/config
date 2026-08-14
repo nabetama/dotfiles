@@ -13,6 +13,10 @@ font-style-bold-italic = false
 font-thicken = true
 font-thicken-strength = 1
 
+# 丸数字 ①-⑳ は Moralerspace だと ①-⑨ が半角グリフ(0.6em)で描かれて潰れるため、
+# 全角で描かれるヒラギノに逃がす。1カラムからはみ出すが ⑩ 以降と大きさが揃う。
+font-codepoint-map = U+2460-U+2473=Hiragino Sans
+
 alpha-blending = linear
 
 adjust-cell-width = -1
