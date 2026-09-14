@@ -19,7 +19,7 @@
   ui = auto
 
 [core]
-  editor = vim
+  editor = nvim
   precomposeunicode = true
   pager = delta
 
