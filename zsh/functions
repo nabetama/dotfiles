@@ -4,6 +4,9 @@
 # Execute after moving directory
 # ディレクトリを移動したら実行する
 chpwd() {
+    # stdout が端末でない場合 (Claude Code 等のエージェントが実行する Bash) は
+    # 出力がコンテキストを消費するだけなので何も出さない
+    [[ -t 1 ]] || return 0
     ls_abbrev
     show_git_status
 }

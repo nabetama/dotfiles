@@ -138,3 +138,11 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 
 # NOTE: Machine-specific settings (e.g., NODE_EXTRA_CA_CERTS) should be in ~/.localrc
+
+# >>> nscli shell integration >>>
+case ":$PATH:" in
+  *":$HOME/.local/bin:"*) ;;
+  *) export PATH="$HOME/.local/bin:$PATH" ;;
+esac
+eval "$(nscli env zsh)"
+# <<< nscli shell integration <<<
