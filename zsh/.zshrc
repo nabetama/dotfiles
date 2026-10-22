@@ -103,6 +103,11 @@ RPROMPT=''
 [ -f ~/.dotfiles/zsh/functions ] && source ~/.dotfiles/zsh/functions
 [ -f ~/.dotfiles/zsh/helper/http_status ] && source ~/.dotfiles/zsh/helper/http_status
 
+# Nix: global が PATH を上書きして /etc/zshrc (nix-daemon.sh) が足した nix の PATH が消えるため足し直す。
+if [ -d /nix/var/nix/profiles/default/bin ]; then
+  export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
+fi
+
 # ------------------------------------
 # Read local settings
 # ------------------------------------
