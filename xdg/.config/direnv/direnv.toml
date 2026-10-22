@@ -1,0 +1,6 @@
+[global]
+# 環境変数の差分 (direnv: export +... ~PATH) を出さない
+hide_env_diff = true
+# 通常ログはこの正規表現にマッチしたものだけ出る。どれにもマッチさせず
+# "loading ..." / "using flake" を消す。.envrc が blocked などのエラーは常に出る
+log_filter = "^$"
