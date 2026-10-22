@@ -151,3 +151,6 @@ case ":$PATH:" in
 esac
 eval "$(nscli env zsh)"
 # <<< nscli shell integration <<<
+
+# direnv: repo の .envrc (nix devShell など) を cd 時に読み込む。PATH を触る設定より後に置く。
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
