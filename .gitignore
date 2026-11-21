@@ -1,2 +1,5 @@
+# config/ は追跡しない実ディレクトリ (古い ~/.config の名残りで、認証情報を含む)
+config/
+
 # karabiner の自動バックアップは除外
 xdg/.config/karabiner/automatic_backups/
