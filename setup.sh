@@ -16,7 +16,7 @@
 #   bundle  Brewfile の CLI・アプリ・Go のツール (brew bundle install)
 #   stow    設定ファイルのリンク (GNU Stow)
 #   local   追跡しないローカル上書きファイルのテンプレート
-#   node    Volta で Node と npm のグローバルツール
+#   node    Volta で Node (LTS)
 #   rust    rustup で Rust
 #   tmux    TPM と tmux のプラグイン
 #   nvim    neovim のプラグイン (lazy-lock.json の版で)
@@ -34,9 +34,6 @@ PACKAGES="zsh git tig tmux herdr nvim xdg ghostty claude"
 #   herdr:   ~/.config/herdr (ログ・ソケット)
 #   ghostty: ~/Library/Application Support/com.mitchellh.ghostty
 NO_FOLDING_PACKAGES="claude herdr ghostty"
-
-# Volta で入れる npm のグローバルツール (パッケージ名:コマンド名)
-VOLTA_PACKAGES="@openai/codex:codex"
 
 DRY_RUN=0
 STEPS="$ALL_STEPS"
@@ -316,15 +313,6 @@ step_node() {
   else
     run volta install node@lts
   fi
-  local entry pkg bin
-  for entry in $VOLTA_PACKAGES; do
-    pkg="${entry%%:*}" bin="${entry#*:}"
-    if [ -x "$VOLTA_HOME/bin/$bin" ]; then
-      info "入っている: $pkg"
-    else
-      run volta install "$pkg"
-    fi
-  done
 }
 
 step_rust() {

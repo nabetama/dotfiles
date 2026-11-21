@@ -81,6 +81,7 @@ brew "fortune"
 # AI
 # ------------------------------------
 cask "claude-code"
+cask "codex"
 cask "claude"
 cask "chatgpt"
 
