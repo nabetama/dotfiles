@@ -47,29 +47,17 @@ export VOLTA_HOME="$HOME/.volta"
 # pnpm のグローバルインストール先
 export PNPM_HOME="$HOME/Library/pnpm"
 
-# PATH の優先順 (上ほど先に探す)
+# PATH の優先順 (上ほど先に探す)。Homebrew を先頭に置く: path_helper などで
+# /usr/bin が先になると git が Apple の古い git に解決され、Homebrew の git 補完
+# (git help --aliases-for-completion を呼ぶ) と合わずに補完がエラーになるため。
+# Node は Volta、Python は uv で入れる。Java が要るときは Homebrew の openjdk。
 path=(
   ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/bin}
   ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/sbin}
-  "$HOME/.local/bin"   # uv などスタンドアロンのインストーラが入れる先
+  "$HOME/.local/bin"   # uv tool などが入れる先
   "$PNPM_HOME"
   "$HOME/.cargo/bin"   # Rust (rustup)
   "$VOLTA_HOME/bin"
   "$GOPATH/bin"
-  $path
-)
-
-# Java (SDKMAN)。入っているときだけ読む。candidates を PATH の先頭に足す
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
-
-# Homebrew を SDKMAN より前、先頭に戻す。path_helper などで /usr/bin が先に
-# なると git が Apple の古い git に解決され、Homebrew の git 補完
-# (git help --aliases-for-completion を呼ぶ) と合わずに補完がエラーになるため。
-path=(
-  ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/bin}
-  ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/sbin}
-  "$HOME/.local/bin"
-  "$PNPM_HOME"
   $path
 )

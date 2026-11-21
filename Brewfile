@@ -56,12 +56,14 @@ brew "direnv"
 brew "go"
 go "golang.org/x/tools/cmd/goimports"   # nvim (conform) の Go の整形
 
-# JavaScript。Node は Volta で入れる (setup.sh)
+# JavaScript。Node は Volta だけで管理する (setup.sh が LTS を入れる)
 brew "volta"
 brew "pnpm"
 
-# Python
+# Python。uv だけで管理する (uv python install / uv tool install)
 brew "uv"
+
+# Java は今は使っていない。要るときは brew "openjdk" を足す
 
 # Rust。rustup 本体は公式のインストーラで入れる (setup.sh)
 brew "cargo-make"
