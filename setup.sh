@@ -385,6 +385,9 @@ fi
 info "dotfiles: $DOTFILES_DIR"
 info "HOME:     $HOME"
 
+# Homebrew が入っていれば、どの手順を選んでも PATH に入れておく (--only stow などのため)
+load_brew_env 2>/dev/null || true
+
 # 手順の順番は ALL_STEPS で決まる (--only の並びにはよらない)
 for s in $ALL_STEPS; do
   if want "$s"; then
