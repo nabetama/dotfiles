@@ -83,8 +83,7 @@ $ '
 RPROMPT=''
 
 # vim から一時的にシェルに出たときにプロンプトに出す
-[[ -n "$VIMRUNTIME" ]] && \
-  PROMPT="%{${bg[black]}${fg[green]}%}(vim)%{${reset_color}%} $PROMPT"
+[[ -n "$VIMRUNTIME" ]] && PROMPT="%K{black}%F{green}(vim)%f%k $PROMPT"
 
 # ------------------------------------
 # 分けた設定
