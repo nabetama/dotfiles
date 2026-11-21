@@ -104,7 +104,6 @@ cask "zoom"
 cask "vlc"
 cask "calibre"
 cask "transmission"
-cask "adobe-creative-cloud"
 
 # ------------------------------------
 # フォント
