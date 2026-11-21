@@ -5,7 +5,7 @@
 # 足す:       brew bundle add --file=Brewfile <名前>  (cask は --cask)
 #
 # 「入っている」だけでなく「使っている」ものだけを書く。依存で入るものは書かない。
-# Mac App Store のアプリは mas を入れていないのでここには書かない (README を参照)。
+# Mac App Store のアプリは mas で入れる (末尾。App Store にサインインしておく)。
 
 # ------------------------------------
 # 基本
@@ -111,3 +111,20 @@ cask "adobe-creative-cloud"
 cask "font-moralerspace"    # ghostty で使う
 cask "font-fira-code"
 cask "font-source-code-pro"
+
+# ------------------------------------
+# Mac App Store (mas)
+# ------------------------------------
+# ID は App Store の URL (apps.apple.com/app/id<ID>) の数字
+brew "mas"
+mas "Xcode", id: 497799835
+mas "TestFlight", id: 899247664
+mas "Developer", id: 640199958
+mas "Keynote", id: 409183694
+mas "Slack", id: 803453959
+mas "Hidden Bar", id: 1452453066
+mas "The Unarchiver", id: 425424353
+mas "Amazon Kindle", id: 302584613
+mas "ComicViewer", id: 1455702185
+mas "ToyViewer", id: 414298354
+mas "AVIF Converter", id: 1617089333

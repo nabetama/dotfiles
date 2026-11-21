@@ -98,7 +98,17 @@ Go のツールは Brewfile の `go "..."` で入れる (`GOPATH=$HOME` なの�
 
 ## Mac App Store
 
-`mas` を入れていないので、App Store のアプリは Brewfile に書かず、手で入れる。
+App Store のアプリも Brewfile の `mas "名前", id: <ID>` で入れる (`mas` は Brewfile で入る)。
+先に App Store.app でサインインしておく。ID は App Store の URL (`apps.apple.com/app/id<ID>`)
+の数字か、入っているアプリなら `mdls -raw -name kMDItemAppStoreAdamID /Applications/<名前>.app`。
+
+## 言語のツールチェーン
+
+- Node: Volta だけ (`volta install node@lts`、プロジェクトでは `volta pin`)
+- Python: uv だけ (`uv python install`、`uv tool install`)
+- Go: Homebrew の go。`GOPATH=$HOME`
+- Rust: rustup (公式のインストーラ)
+- Java: 今は使っていない。要るときは Homebrew の `openjdk`
 
 ## Claude Code と Herdr
 

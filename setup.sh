@@ -404,7 +404,8 @@ fi
 log "完了"
 cat <<'EOF'
     手で行うこと:
-    - Mac App Store のアプリを入れる (README の「Mac App Store」)
+    - App Store のアプリ (mas) が入らなかったら、App Store.app でサインインしてもう一度実行する
+    - macOS の設定を当てるなら ./setup.sh --only macos (先に --dry-run で見る)
     - 新しいシェルを開く (exec zsh)
     - ~/.localrc と ~/.gitconfig.local にこのマシンだけの設定を書く
 EOF
