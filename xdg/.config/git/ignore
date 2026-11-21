@@ -1,1 +1,12 @@
+# グローバルな gitignore (git の既定の場所 ~/.config/git/ignore)
+
+# macOS
+.DS_Store
+
+# エディタのバックアップ・一時ファイル
+*~
+\#*#
+.#*
+
+# Claude Code のリポジトリごとのローカル設定
 **/.claude/settings.local.json
