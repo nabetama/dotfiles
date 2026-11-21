@@ -96,6 +96,7 @@ cask "raycast"
 cask "rectangle"
 cask "appcleaner"
 cask "docker-desktop"       # docker CLI もこれが入れる
+brew "docker-completion"   # docker の zsh 補完 (Docker Desktop は入れない)
 cask "obsidian"
 cask "smoothcsv"
 cask "discord"
