@@ -33,7 +33,11 @@ clone する場所はどこでもよい (設定はリンク先から読むので
 
 一部だけ実行するには `./setup.sh --only stow,local` のようにする。
 
-終わったら、Mac App Store のアプリを入れ (下の「Mac App Store」)、新しいシェルを開く。
+macOS の設定 (`macos.sh`。キーリピート・Dock・Finder など) は今の設定を上書きするので、
+既定では実行しない。`./setup.sh --only macos --dry-run` で内容を見てから
+`./setup.sh --only macos` で当てる (`./macos.sh` を直接実行してもよい)。
+
+終わったら新しいシェルを開く。
 
 ## パッケージ
 

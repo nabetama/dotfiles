@@ -20,10 +20,15 @@
 #   rust    rustup で Rust
 #   tmux    TPM と tmux のプラグイン
 #   nvim    neovim のプラグイン (lazy-lock.json の版で)
+#
+# 次の手順は既定では実行しない。--only で名前を指定したときだけ実行する:
+#   macos   macOS の設定 (macos.sh。defaults write で今の設定を上書きする)
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 ALL_STEPS="clt brew bundle stow local node rust tmux nvim"
+# 明示的に --only で指定したときだけ実行する手順
+OPTIONAL_STEPS="macos"
 
 # stow するパッケージ
 PACKAGES="zsh git tig tmux herdr nvim xdg ghostty claude"
@@ -55,9 +60,9 @@ while [ $# -gt 0 ]; do
 done
 
 for s in $STEPS; do
-  case " $ALL_STEPS " in
+  case " $ALL_STEPS $OPTIONAL_STEPS " in
     *" $s "*) ;;
-    *) printf 'unknown step: %s (steps: %s)\n' "$s" "$ALL_STEPS" >&2; exit 2 ;;
+    *) printf 'unknown step: %s (steps: %s %s)\n' "$s" "$ALL_STEPS" "$OPTIONAL_STEPS" >&2; exit 2 ;;
   esac
 done
 
@@ -363,6 +368,14 @@ step_nvim() {
   run nvim --headless "+Lazy! restore" +qa
 }
 
+step_macos() {
+  log "macOS の設定 (macos.sh)"
+  local args=""
+  [ "$DRY_RUN" -eq 1 ] && args="--dry-run"
+  # shellcheck disable=SC2086  # args は空か --dry-run
+  /bin/bash "$DOTFILES_DIR/macos.sh" $args
+}
+
 # ------------------------------------
 # main
 # ------------------------------------
@@ -377,7 +390,7 @@ info "HOME:     $HOME"
 load_brew_env 2>/dev/null || true
 
 # 手順の順番は ALL_STEPS で決まる (--only の並びにはよらない)
-for s in $ALL_STEPS; do
+for s in $ALL_STEPS $OPTIONAL_STEPS; do
   if want "$s"; then
     "step_$s"
   fi
