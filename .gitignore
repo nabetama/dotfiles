@@ -1,5 +1,2 @@
-# config/ - 管理対象外（xdg/ に移動済み）
-config/
-
 # karabiner の自動バックアップは除外
 xdg/.config/karabiner/automatic_backups/

@@ -44,9 +44,3 @@ export WORK_PROJECT_PATH="$HOME/work"
 ```sh
 brew bundle --file=~/.dotfiles/Brewfile
 ```
-
-### Go tools
-
-```sh
-~/.dotfiles/go/gets.sh
-```

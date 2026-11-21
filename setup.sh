@@ -31,7 +31,6 @@ packages=(
     tmux
     herdr
     nvim
-    ctags
     xdg
     ghostty
     claude
