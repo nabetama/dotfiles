@@ -201,11 +201,27 @@ stow_simulate() {
   local out
   if out="$(stow -d "$DOTFILES_DIR" -t "$HOME" -n -v "$@" 2>&1)"; then
     if [ "$DRY_RUN" -eq 1 ]; then
-      printf '%s\n' "$out" | grep -E '^(LINK|UNLINK|MKDIR|RMDIR):' | sed 's/^/    /' || true
+      # -R は張り直しになるので、外してすぐ同じリンクを張る組 (reverts previous action)
+      # は表示しない。実際に変わるものだけが残る
+      printf '%s\n' "$out" | awk '
+        /^(LINK|UNLINK|MKDIR|RMDIR): / {
+          line[++n] = $0
+          if ($0 ~ /\(reverts previous action\)$/) {
+            path = $0; sub(/^[A-Z]+: /, "", path); sub(/ => .*/, "", path); reverted[path] = 1
+          }
+        }
+        END {
+          for (i = 1; i <= n; i++) {
+            path = line[i]; sub(/^[A-Z]+: /, "", path); sub(/ => .*/, "", path)
+            if (line[i] ~ /\(reverts previous action\)$/) continue
+            if (line[i] ~ /^UNLINK: / && (path in reverted)) continue
+            print "    " line[i]
+          }
+        }'
     fi
     return 0
   fi
-  STOW_CONFLICTS="$STOW_CONFLICTS$(printf '%s\n' "$out" | grep -v '^WARNING: in simulation mode')"$'\n'
+  STOW_CONFLICTS="$STOW_CONFLICTS$(printf '%s\n' "$out" | grep -E '^(WARNING!|  \*)')"$'\n'
   return 1
 }
 
@@ -327,19 +343,21 @@ step_rust() {
 }
 
 step_tmux() {
-  log "tmux (TPM)"
-  local tpm="$HOME/.tmux/plugins/tpm"
-  if [ -d "$tpm" ]; then
-    info "入っている: $tpm"
-  else
-    run git clone --depth 1 https://github.com/tmux-plugins/tpm "$tpm"
-  fi
-  if ! has tmux; then
-    warn "tmux がない。プラグインのインストールを飛ばす"
-    return 0
-  fi
-  # .tmux.conf の @plugin を入れる。入っているものは飛ばす
-  run "$tpm/bin/install_plugins"
+  log "tmux (TPM とプラグイン)"
+  # .tmux.conf の @plugin (TPM 自身も含む) を、TPM と同じ ~/.tmux/plugins/<名前> に
+  # clone する。TPM の bin/install_plugins は TPM を読み込んだ tmux サーバーが
+  # 動いていないと使えないので使わない。入っているものは飛ばす (更新は prefix + U)
+  local conf="$DOTFILES_DIR/tmux/.tmux.conf" plugins_dir="$HOME/.tmux/plugins" plugins plugin dir
+  plugins="$(sed -n "s/^[[:space:]]*set\(-option\)\{0,1\}[[:space:]]\{1,\}-g[[:space:]]\{1,\}@plugin[[:space:]]\{1,\}['\"]\([^'\"]*\)['\"].*/\2/p" "$conf")"
+  [ -n "$plugins" ] || { warn "$conf に @plugin がない"; return 0; }
+  for plugin in $plugins; do
+    dir="$plugins_dir/${plugin##*/}"
+    if [ -d "$dir" ]; then
+      info "入っている: $plugin"
+    else
+      run git clone --depth 1 "https://github.com/$plugin" "$dir"
+    fi
+  done
 }
 
 step_nvim() {
