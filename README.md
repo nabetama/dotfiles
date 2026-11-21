@@ -20,6 +20,9 @@ cd ~/.dotfiles
 # Link individual packages
 stow -t ~ zsh git nvim
 
+# claude: link files only, keep ~/.claude a real directory
+stow -t ~ --no-folding claude
+
 # Unlink
 stow -t ~ -D zsh
 ```

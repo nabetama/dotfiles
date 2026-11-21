@@ -34,6 +34,7 @@ packages=(
     ctags
     xdg
     ghostty
+    claude
 )
 
 # Download git completion scripts
@@ -46,7 +47,14 @@ curl -sL -o "$DOTFILES_DIR/zsh/git-completion.zsh" \
 echo "Stowing packages..."
 for pkg in "${packages[@]}"; do
     echo "  - $pkg"
-    stow -R -t "$HOME" "$pkg"
+    if [ "$pkg" = "claude" ]; then
+        # ~/.claude はログやキャッシュを置く実ディレクトリ。全体や hooks/ を
+        # リンクにしないよう、ファイル単位で張る
+        mkdir -p "$HOME/.claude"
+        stow -R --no-folding -t "$HOME" "$pkg"
+    else
+        stow -R -t "$HOME" "$pkg"
+    fi
 done
 
 echo "Done!"
