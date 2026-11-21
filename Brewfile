@@ -1,65 +1,110 @@
-# Brewfile - managed by `brew bundle`
-# Install: brew bundle --file=~/.dotfiles/Brewfile
-# Export current: brew bundle dump --file=~/.dotfiles/Brewfile --force
+# Brewfile - `brew bundle` で入れるもの
+#
+# 入れる:     ./setup.sh (中で brew bundle install --file=Brewfile を実行する)
+# 足りないか: brew bundle check --file=Brewfile --verbose
+# 足す:       brew bundle add --file=Brewfile <名前>  (cask は --cask)
+#
+# 「入っている」だけでなく「使っている」ものだけを書く。依存で入るものは書かない。
+# Mac App Store のアプリは mas を入れていないのでここには書かない (README を参照)。
 
-# Taps
-tap "universal-ctags/universal-ctags"
-
-# Core utilities
-brew "coreutils"
-brew "findutils"
-brew "stow"
-
-# Shell
+# ------------------------------------
+# 基本
+# ------------------------------------
+brew "coreutils"     # gls (zsh の ls_abbrev が使う)
+brew "stow"          # dotfiles のリンク
+brew "bash"          # macOS の bash は 3.2 と古い
 brew "zsh"
-brew "bash"
 
-# Editor
+# ------------------------------------
+# エディタ・端末
+# ------------------------------------
 brew "neovim"
 brew "vim"
-
-# Terminal multiplexer
 brew "tmux"
 brew "herdr"
-brew "reattach-to-user-namespace"
-
-# Git
-brew "git"
-brew "tig"
-brew "ghq"
-
-# Search & Navigation
-brew "fzf"
-brew "ripgrep"
-brew "fd"
-brew "tree"
-
-# Modern CLI tools
-brew "eza"
-brew "bat"
-brew "zoxide"
-
-# Tags
-brew "universal-ctags"
-
-# Utils
-brew "git-delta"
-brew "direnv"
-brew "wget"
-brew "curl"
-brew "nkf"
-brew "jq"
-
-# Languages & Tools
-brew "go"
-brew "uv"
-# NOTE: volta is installed via its own installer (https://volta.sh)
-
-# Fonts
-cask "font-fira-code"
-cask "font-moralerspace"
-cask "font-source-code-pro"
-
-# GUI Apps
 cask "ghostty"
 cask "visual-studio-code"
+
+# ------------------------------------
+# Git / GitHub
+# ------------------------------------
+brew "git"           # zsh の git 補完もこれが入れる _git を使う
+brew "git-delta"     # git の pager
+brew "tig"
+brew "ghq"
+brew "gh"
+brew "act"           # GitHub Actions をローカルで動かす
+
+# ------------------------------------
+# 検索・ファイル操作
+# ------------------------------------
+brew "fzf"
+brew "ripgrep"
+brew "fd"            # nvim の telescope が使う
+brew "tree"
+brew "eza"           # fzf-ghq のプレビューが使う
+brew "bat"
+brew "zoxide"
+brew "jq"            # claude の通知フックも使う
+brew "gnu-sed"
+brew "direnv"
+
+# ------------------------------------
+# 言語・ツールチェーン
+# ------------------------------------
+# Go。go install したツールは GOPATH (= $HOME) の bin に入る
+brew "go"
+go "golang.org/x/tools/cmd/goimports"   # nvim (conform) の Go の整形
+
+# JavaScript。Node は Volta で入れる (setup.sh)
+brew "volta"
+brew "pnpm"
+
+# Python
+brew "uv"
+
+# Rust。rustup 本体は公式のインストーラで入れる (setup.sh)
+brew "cargo-make"
+brew "cargo-llvm-cov"
+brew "mold"          # リンカ
+
+# ------------------------------------
+# そのほかの CLI
+# ------------------------------------
+brew "ffmpeg"
+brew "cowsay"
+brew "fortune"
+
+# ------------------------------------
+# AI
+# ------------------------------------
+cask "claude-code"
+cask "claude"
+cask "chatgpt"
+
+# ------------------------------------
+# GUI アプリ
+# ------------------------------------
+cask "1password"
+cask "google-chrome"
+cask "google-japanese-ime"
+cask "karabiner-elements"   # 設定は xdg/.config/karabiner
+cask "raycast"
+cask "rectangle"
+cask "appcleaner"
+cask "docker-desktop"       # docker CLI もこれが入れる
+cask "obsidian"
+cask "smoothcsv"
+cask "discord"
+cask "zoom"
+cask "vlc"
+cask "calibre"
+cask "transmission"
+cask "adobe-creative-cloud"
+
+# ------------------------------------
+# フォント
+# ------------------------------------
+cask "font-moralerspace"    # ghostty で使う
+cask "font-fira-code"
+cask "font-source-code-pro"
