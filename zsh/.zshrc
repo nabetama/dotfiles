@@ -1,23 +1,27 @@
 # .zshrc
+#
+# 分けたファイルは ~/.config/zsh/ に置く (stow の zsh パッケージがリンクする)。
+# このリポジトリをどこに clone しても、リンク先から読むので動く。
+# マシン固有・仕事用の設定は ~/.localrc に書く (追跡しない)。
 
-# completion
-# 補完. インストール時のfunctionsをつかう
-fpath=(/usr/local/share/zsh/functions ${fpath})
-autoload -Uz compinit -C && compinit -C
+ZSH_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
-# Asking
+# PATH・環境変数。補完の fpath もここで決まるので compinit より前に読む
+source "$ZSH_CONFIG_DIR/env.zsh"
+
+# ------------------------------------
+# Completion
+# ------------------------------------
+autoload -Uz compinit && compinit
+
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*:descriptions' format '%B%d%b'
 zstyle ':completion:*:default' menu select=1
 
-# Completion candidate displayed compactly
-# 補完候補コンパクトに表示
+# 補完候補をコンパクトに表示
 setopt list_packed
 
-# Color a file completion candidate
 # ファイル補完候補に色を付ける
-zstyle ':completion:*' list-colorsP
-
 export LSCOLORS=gxfxcxdxbxegedabagacad
 export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
@@ -29,16 +33,18 @@ HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
 
-# Exclude duplicate history (all duplicates, not just consecutive ones)
 # 重複した履歴は除く（連続するものだけでなく、すべての重複）
 setopt hist_ignore_all_dups
 
-# Share command input history with other tabs, consoles and other windows
 # コンソールの他のタブや、他のウィンドウとコマンド入力履歴を共有
 setopt share_history
 
-# Activate history completion on input.
-# 入力途中の履歴補完を有効化する
+# ------------------------------------
+# Key bindings
+# ------------------------------------
+bindkey -e
+
+# 入力途中の文字列で履歴を前方一致検索する
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
@@ -46,110 +52,55 @@ bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
 # ------------------------------------
-# emacs keybind
-# ------------------------------------
-bindkey -e
-
-# ------------------------------------
 # cd
 # ------------------------------------
 setopt auto_pushd
-# that you can get dirs list by cd -[tab]
 setopt auto_cd
 
-# ------------------------------------
-# Corrected if the entered command name is incorrect
 # 入力コマンドが間違ってたら修正してくれる
-# ------------------------------------
 setopt correct
-
 
 # ------------------------------------
 # Prompt
 # ------------------------------------
-# Execute variable expansion / command substitution / arithmetic operation
-# 変数展開・コマンド置換・算術演算を実行する。
+# 変数展開・コマンド置換・算術演算を実行する
 setopt prompt_subst
-# Enable replacement function starting with "%"
-# 「%」文字から始まる置換機能を有効にする。
+# 「%」文字から始まる置換機能を有効にする
 setopt prompt_percent
-# To make it easy to copy, delete the right prompt after executing the command
-# コピペしやすいようにコマンド実行後は右プロンプトを消す。
+# コピペしやすいようにコマンド実行後は右プロンプトを消す
 setopt transient_rprompt
 
-# vcs(mainly git)
+# vcs (主に git)
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats '[%b]'
 zstyle ':vcs_info:*' actionformats '[%b|%a]'
 
 _vcs_precmd () { vcs_info }
 autoload -Uz add-zsh-hook
-add-zsh-hook precmd _vcs_precmd 
+add-zsh-hook precmd _vcs_precmd
 PROMPT='%F{cyan}${HOST}%f %~ %F{yellow}${vcs_info_msg_0_}%f
 $ '
 RPROMPT=''
 
-# Displayed in prompt when temporarily leaving vim
+# vim から一時的にシェルに出たときにプロンプトに出す
 [[ -n "$VIMRUNTIME" ]] && \
   PROMPT="%{${bg[black]}${fg[green]}%}(vim)%{${reset_color}%} $PROMPT"
 
 # ------------------------------------
-# Read settings
+# 分けた設定
 # ------------------------------------
-[ -f ~/.dotfiles/zsh/git-completion.bash ] && \
-	 zstyle ':completion:*:*:git:*' script ~/.dotfiles/zsh/git-completion.bash
-[ -f ~/.dotfiles/zsh/global    ] && source ~/.dotfiles/zsh/global
-[ -f ~/.dotfiles/zsh/alias     ] && source ~/.dotfiles/zsh/alias
-[ -f ~/.dotfiles/zsh/functions ] && source ~/.dotfiles/zsh/functions
+source "$ZSH_CONFIG_DIR/alias.zsh"
+source "$ZSH_CONFIG_DIR/functions.zsh"
+source "$ZSH_CONFIG_DIR/fzf.zsh"
 
-# Nix: global が PATH を上書きして /etc/zshrc (nix-daemon.sh) が足した nix の PATH が消えるため足し直す。
-if [ -d /nix/var/nix/profiles/default/bin ]; then
-  export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
-fi
+# zoxide (smart cd)
+(( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
 
 # ------------------------------------
-# Read local settings
+# マシン固有・仕事用の設定 (追跡しない)
 # ------------------------------------
-[ -f ~/.localrc ] && source ~/.localrc
+[[ -f ~/.localrc ]] && source ~/.localrc
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# for Claude Code
-export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=($HOME/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
-# End of Docker CLI completions
-
-# pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-export PATH="$HOME/.local/bin:$PATH"
-
-# Homebrew を PATH 先頭に固定する。
-# 非ログインシェルや path_helper の並べ替えで /usr/bin が優先されると、
-# 対話シェルの git が Apple git(古い) に解決され、Homebrew の新しい git 補完スクリプト
-# (git help --aliases-for-completion を呼ぶ) と不一致になり補完エラーになるため。
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
-
-# NOTE: Machine-specific settings (e.g., NODE_EXTRA_CA_CERTS) should be in ~/.localrc
-
-# >>> nscli shell integration >>>
-case ":$PATH:" in
-  *":$HOME/.local/bin:"*) ;;
-  *) export PATH="$HOME/.local/bin:$PATH" ;;
-esac
-eval "$(nscli env zsh)"
-# <<< nscli shell integration <<<
-
-# direnv: repo の .envrc (nix devShell など) を cd 時に読み込む。PATH を触る設定より後に置く。
-command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
+# direnv: repo の .envrc (nix devShell など) を cd 時に読み込む。
+# PATH を触る設定 (~/.localrc を含む) より後に置く。
+(( $+commands[direnv] )) && eval "$(direnv hook zsh)"

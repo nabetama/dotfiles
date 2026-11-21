@@ -1,4 +1,6 @@
-# aliases.
+# ====================================
+# alias
+# ====================================
 # General
 alias ls='ls -FG'
 alias ll='ls -tlrh'
@@ -8,9 +10,8 @@ alias cat='bat --paging=never'
 alias c='clear'
 alias h='history'
 
-# git, github
+# git
 alias gc="git checkout"
 alias gcb="git checkout -b"
 alias glog="git log -n 30 --oneline --reverse"
 alias gdiff='git diff --color=auto'
-

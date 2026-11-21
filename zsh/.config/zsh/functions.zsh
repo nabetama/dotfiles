@@ -1,6 +1,6 @@
-# ------------------------------------
-# Functions
-# ------------------------------------
+# ====================================
+# 関数
+# ====================================
 # Execute after moving directory
 # ディレクトリを移動したら実行する
 chpwd() {
@@ -86,19 +86,34 @@ function killport() {
     echo "$pids" | xargs kill
 }
 
-# Kill stale data-api related processes (listening binary, built tmp/api, and orphaned `go run ./cmd/api/...`)
-# Usage: killdataapi
-function killdataapi() {
-    local pids
-    pids=$({
-        lsof -ti :8080 2>/dev/null
-        pgrep -f "data-api/tmp/api"
-        pgrep -f "go run.*cmd/api/main.go"
-    } | sort -u)
-    if [ -z "$pids" ]; then
-        echo "no data-api processes"
-        return 0
-    fi
-    echo "killing: $pids"
-    echo "$pids" | xargs kill
+# ------------------------------------
+# Pull request
+# ------------------------------------
+# 差分を見せてから、今のブランチと main の比較ページをブラウザで開く
+# Usage: gpr
+function gpr() {
+  local st local_branch
+
+  gdiff
+  local_branch=`git symbolic-ref --short HEAD`
+  echo "Would you push to origin/${local_branch} and create pull request? yes/no"
+  read answer
+  case $answer in
+    "no" )
+      echo "stopped process."
+      return
+  esac
+  st=`git status 2> /dev/null`
+  if [[ -n `echo "$st" | grep -E "^nothing to commit"` ]]; then
+    echo 'working directory is clean'
+  else
+    echo 'should be clean working directory!!'
+    echo 'stopped process'
+    return
+  fi
+  url=`git remote -v | sed -e '2!d'`
+  url="https://${url[12, -12]}"
+  push_url=`echo ${url} | sed 's/:/\//2'`
+  echo "pull request to: ${push_url}"
+  open "${push_url}/compare/main...${local_branch}"
 }
