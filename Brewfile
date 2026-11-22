@@ -82,6 +82,7 @@ brew "fortune"
 # ------------------------------------
 cask "claude-code"
 cask "codex"
+brew "gemini-cli"
 cask "claude"
 cask "chatgpt"
 
