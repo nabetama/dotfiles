@@ -56,8 +56,8 @@ brew "direnv"
 brew "go"
 go "golang.org/x/tools/cmd/goimports"   # nvim (conform) の Go の整形
 
-# JavaScript。Node は Volta だけで管理する (setup.sh が LTS を入れる)
-brew "volta"
+# JavaScript。Node は fnm だけで管理する (setup.sh が LTS を入れる)
+brew "fnm"
 brew "pnpm"
 
 # Python。uv だけで管理する (uv python install / uv tool install)

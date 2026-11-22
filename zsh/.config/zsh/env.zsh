@@ -41,23 +41,23 @@ export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
 # Go (Homebrew)。go install したツールは ~/bin に入る
 export GOPATH="$HOME"
 
-# JavaScript (Volta)
-export VOLTA_HOME="$HOME/.volta"
-
 # pnpm のグローバルインストール先
 export PNPM_HOME="$HOME/Library/pnpm"
 
 # PATH の優先順 (上ほど先に探す)。Homebrew を先頭に置く: path_helper などで
 # /usr/bin が先になると git が Apple の古い git に解決され、Homebrew の git 補完
 # (git help --aliases-for-completion を呼ぶ) と合わずに補完がエラーになるため。
-# Node は Volta、Python は uv で入れる。Java が要るときは Homebrew の openjdk。
+# Node は fnm (下の fnm env が PATH の先頭に足す)、Python は uv で入れる。Java が要るときは Homebrew の openjdk。
 path=(
   ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/bin}
   ${HOMEBREW_PREFIX:+$HOMEBREW_PREFIX/sbin}
   "$HOME/.local/bin"   # uv tool などが入れる先
   "$PNPM_HOME"
   "$HOME/.cargo/bin"   # Rust (rustup)
-  "$VOLTA_HOME/bin"
   "$GOPATH/bin"
   $path
 )
+
+# Node (fnm)。PATH の先頭に今の Node を足し、cd したときに .node-version /
+# .nvmrc を見て切り替える (親ディレクトリもさかのぼって探す)
+(( $+commands[fnm] )) && eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)"

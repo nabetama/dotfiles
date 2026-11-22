@@ -26,7 +26,7 @@ clone する場所はどこでもよい (設定はリンク先から読むので
 | `bundle` | `brew bundle install --no-upgrade` (Brewfile の CLI・アプリ・Go のツール) |
 | `stow` | 全パッケージのリンク。既存のファイルと衝突したら何も変えずに止まる |
 | `local` | `~/.localrc` と `~/.gitconfig.local` のテンプレート (なければ作る) |
-| `node` | Volta で Node (LTS) |
+| `node` | fnm で Node (LTS) |
 | `rust` | rustup |
 | `tmux` | TPM と `.tmux.conf` の `@plugin` |
 | `nvim` | lazy.nvim のプラグイン (初回だけ。`lazy-lock.json` の版で) |
@@ -104,7 +104,7 @@ App Store のアプリも Brewfile の `mas "名前", id: <ID>` で入れる (`m
 
 ## 言語のツールチェーン
 
-- Node: Volta だけ (`volta install node@lts`、プロジェクトでは `volta pin`)
+- Node: fnm だけ (`fnm install --lts`、プロジェクトでは `.node-version` に版を書く。cd で切り替わる)
 - Python: uv だけ (`uv python install`、`uv tool install`)
 - Go: Homebrew の go。`GOPATH=$HOME`
 - Rust: rustup (公式のインストーラ)

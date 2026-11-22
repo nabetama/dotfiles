@@ -16,7 +16,7 @@
 #   bundle  Brewfile の CLI・アプリ・Go のツール (brew bundle install)
 #   stow    設定ファイルのリンク (GNU Stow)
 #   local   追跡しないローカル上書きファイルのテンプレート
-#   node    Volta で Node (LTS)
+#   node    fnm で Node (LTS)
 #   rust    rustup で Rust
 #   tmux    TPM と tmux のプラグイン
 #   nvim    neovim のプラグイン (lazy-lock.json の版で)
@@ -123,8 +123,7 @@ load_brew_env() {
 
 # zsh の env.zsh と同じ場所を使う
 export GOPATH="${GOPATH:-$HOME}"
-export VOLTA_HOME="${VOLTA_HOME:-$HOME/.volta}"
-export PATH="$VOLTA_HOME/bin:$HOME/.cargo/bin:$GOPATH/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$GOPATH/bin:$PATH"
 
 # ------------------------------------
 # steps
@@ -307,16 +306,17 @@ step_local() {
 }
 
 step_node() {
-  log "Node (Volta)"
-  if ! has volta; then
-    [ "$DRY_RUN" -eq 1 ] && { info "[dry-run] brew bundle で volta を入れたあとに Node を入れる"; return 0; }
-    warn "volta がない (brew bundle で入る)。飛ばす"
+  log "Node (fnm)"
+  if ! has fnm; then
+    [ "$DRY_RUN" -eq 1 ] && { info "[dry-run] brew bundle で fnm を入れたあとに Node を入れる"; return 0; }
+    warn "fnm がない (brew bundle で入る)。飛ばす"
     return 0
   fi
-  if volta which node >/dev/null 2>&1; then
-    info "既定の Node がある: $(volta which node)"
+  if fnm exec --using=default node --version >/dev/null 2>&1; then
+    info "既定の Node がある: $(fnm exec --using=default node --version)"
   else
-    run volta install node@lts
+    run fnm install --lts
+    run fnm default lts-latest
   fi
 }
 
