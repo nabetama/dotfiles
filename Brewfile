@@ -8,6 +8,11 @@
 # Mac App Store のアプリは mas で入れる (末尾。App Store にサインインしておく)。
 
 # ------------------------------------
+# tap (サードパーティのリポジトリ)
+# ------------------------------------
+tap "immurok/tap"
+
+# ------------------------------------
 # 基本
 # ------------------------------------
 brew "coreutils"     # gls (zsh の ls_abbrev が使う)
@@ -105,6 +110,7 @@ cask "zoom"
 cask "vlc"
 cask "calibre"
 cask "transmission"
+cask "immurok/tap/immurok"  # 指紋で画面ロック解除・sudo (Bluetooth)
 
 # ------------------------------------
 # フォント
