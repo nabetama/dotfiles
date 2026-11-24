@@ -92,6 +92,30 @@
                                 "type": "basic"
                             }
                         ]
+                    },
+                    {
+                        "description": "BUFFALO BSTBB700WHX wheel button to Mission Control",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "identifiers": [
+                                            {
+                                                "product_id": 1046,
+                                                "vendor_id": 1041
+                                            }
+                                        ],
+                                        "type": "device_if"
+                                    }
+                                ],
+                                "from": {
+                                    "modifiers": { "optional": ["any"] },
+                                    "pointing_button": "button3"
+                                },
+                                "to": [{ "apple_vendor_keyboard_key_code": "mission_control" }],
+                                "type": "basic"
+                            }
+                        ]
                     }
                 ]
             },
