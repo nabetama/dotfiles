@@ -29,6 +29,11 @@
     "rust-analyzer-lsp@claude-plugins-official": true,
     "swift-lsp@claude-plugins-official": true
   },
+  "tui": "fullscreen",
   "theme": "dark-daltonized",
-  "tui": "fullscreen"
+  "voiceEnabled": true,
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  }
 }
