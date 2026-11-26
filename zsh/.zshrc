@@ -103,7 +103,3 @@ source "$ZSH_CONFIG_DIR/fzf.zsh"
 # direnv: repo の .envrc (nix devShell など) を cd 時に読み込む。
 # PATH を触る設定 (~/.localrc を含む) より後に置く。
 (( $+commands[direnv] )) && eval "$(direnv hook zsh)"
-
-
-# Added by Antigravity CLI installer
-export PATH="/Users/mao/.local/bin:$PATH"
